@@ -1,6 +1,6 @@
+import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { getClient } from "@/lib/payload"
-import Image from "next/image"
 
 export default async function HomePage() {
   const payload = await getClient()
@@ -20,15 +20,7 @@ export default async function HomePage() {
       <Button variant="outline">Click me</Button>
       <Button variant="secondary">Click me</Button>
 
-      {media.url && (
-        <Image
-          src={media.url}
-          alt={media.alt}
-          width={media.width}
-          height={media.height}
-          className="h-auto"
-        />
-      )}
+      {media.url && <Image media={media} className="h-auto" />}
     </div>
   )
 }
