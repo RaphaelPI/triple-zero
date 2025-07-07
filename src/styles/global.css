@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./layout";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Light theme colors */
+  --color-primary: #151515;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #7aa8da;
+  --color-secondary-foreground: #151515;
+  --color-tertiary: #151515;
+  --color-muted: oklch(0.97 0 0);
+  --color-muted-foreground: oklch(0.556 0 0);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-ring: oklch(0.708 0 0);
+
+  /* Custom brand colors */
+  --color-dark: #151515;
+  --color-blue: #7aa8da;
+  --color-blue-light: #edf4ff;
+  --color-blue-grey: #c8d8f0;
+  --color-blue-logo: #007ec3;
+  --color-green: #c2ff75;
+  --color-grey-light: #f5f8fc;
+
+  /* Typography */
+  --text-xs: 0.8rem;
+  --text-sm: 1rem;
+  --text-base: 1.1rem;
+  --text-lg: 1.3rem;
+  --text-xl: 1.5rem;
+  --text-h1: clamp(3rem, 4vmax, 4.5rem);
+  --text-h1-line-height: clamp(3.5rem, 4vmax, 4.5rem);
+  --text-h2: clamp(2rem, 3vmax, 3.5rem);
+  --text-h2-line-height: clamp(2.5rem, 3vmax, 3.5rem);
+
+  /* Shadows */
+  --shadow-panel:
+    0px 30px 60px -30px rgba(63, 63, 63, 0.1), 0px 50px 100px -20px rgba(50, 50, 93, 0.1),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.1) inset;
+  --shadow-color-picker: 0px 0px 0px 3px #151515;
+}
+
+/* Dark theme overrides */
+.dark {
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --ring: oklch(0.556 0 0);
+}
+
+html,
+body {
+  @apply text-dark text-base;
+}
+
+body {
+  @apply from-blue-grey to-blue-light bg-gradient-to-br;
+}
+
+main {
+  /* @apply pt-24 min-h-content; */
+  /* @apply min-h-content; */
+}
+
+h1 {
+  @apply text-h1 font-bold italic;
+}
+
+strong {
+  @apply font-semibold;
+}

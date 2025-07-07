@@ -21,15 +21,28 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  localization: {
+    locales: [
+      {
+        label: "English",
+        code: "en",
+      },
+      {
+        label: "Français",
+        code: "fr",
+      },
+    ], // required
+    defaultLocale: "fr", // required
+  },
   collections: [Users, Media],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: process.env.SERVER_PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "",
+      connectionString: process.env.SERVER_DATABASE_URI || "",
     },
   }),
   sharp,
@@ -39,13 +52,13 @@ export default buildConfig({
       collections: {
         media: true,
       },
-      bucket: process.env.S3_BUCKET!,
+      bucket: process.env.SERVER_S3_BUCKET!,
       config: {
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+          accessKeyId: process.env.SERVER_S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.SERVER_S3_SECRET_ACCESS_KEY!,
         },
-        region: process.env.S3_REGION!,
+        region: process.env.SERVER_S3_REGION!,
       },
     }),
   ],

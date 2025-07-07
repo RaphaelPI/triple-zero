@@ -2,7 +2,11 @@ import { routing } from "@/i18n/routing"
 import { NextIntlClientProvider, hasLocale } from "next-intl"
 import { setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
-import "./global.css"
+import { barlow } from "./fonts"
+
+import { setDefaultOptions } from "date-fns"
+import { enGB, fr } from "date-fns/locale"
+import Header from "./_components/header"
 
 export default async function LocaleLayout({
   children,
@@ -20,10 +24,16 @@ export default async function LocaleLayout({
   // Enable static rendering
   setRequestLocale(locale)
 
+  // Set the locale for date-fns
+  setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
+
   return (
     <html lang={locale}>
-      <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+      <body className={`${barlow.className}`}>
+        <NextIntlClientProvider>
+          <Header />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   )
