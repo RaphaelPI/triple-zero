@@ -1,15 +1,15 @@
-import { s3Storage } from "@payloadcms/storage-s3"
-
 import { postgresAdapter } from "@payloadcms/db-postgres"
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
 import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import { s3Storage } from "@payloadcms/storage-s3"
+import { en } from "@payloadcms/translations/languages/en"
+import { fr } from "@payloadcms/translations/languages/fr"
 import path from "path"
 import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
-import { Media } from "./collections/Media"
-import { Users } from "./collections/Users"
+import { Category, Media, Nav, Users } from "./app/(payload)/_collections"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,7 +34,12 @@ export default buildConfig({
     ], // required
     defaultLocale: "fr", // required
   },
-  collections: [Users, Media],
+  i18n: {
+    fallbackLanguage: "fr",
+    supportedLanguages: { en, fr },
+  },
+  collections: [Users, Media, Category],
+  globals: [Nav],
   editor: lexicalEditor(),
   secret: process.env.SERVER_PAYLOAD_SECRET || "",
   typescript: {

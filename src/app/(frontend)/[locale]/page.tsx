@@ -1,4 +1,3 @@
-import Logo from "@/assets/logo.svg"
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { getClient } from "@/lib/payload"
@@ -20,8 +19,6 @@ export default async function HomePage() {
       <Button variant="link">Click me</Button>
       <Button variant="outline">Click me</Button>
       <Button variant="secondary">Click me</Button>
-
-      <Logo />
 
       {media.url && <Image media={media} className="h-auto" />}
     </div>
