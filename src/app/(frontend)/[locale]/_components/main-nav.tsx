@@ -42,8 +42,8 @@ export const MainNav = async () => {
               <NavigationMenuContent className="bg-white px-12 py-10 shadow-lg shadow-[#00000011]">
                 <div className="grid w-96 grid-cols-2 gap-10">
                   <div className="space-y-4">
-                    {item.category.map((category: Category | number) => {
-                      if (typeof category === "number") {
+                    {item.category.map((category: Category | string) => {
+                      if (typeof category === "string") {
                         return null
                       }
 
@@ -88,8 +88,8 @@ export const MainNav = async () => {
                 <DrawerTitle>
                   <div className="text-h1">{item.title}</div>
                 </DrawerTitle>
-                {item.category.map((category: Category | number) => {
-                  if (typeof category === "number") {
+                {item.category.map((category: Category | string) => {
+                  if (typeof category === "string") {
                     return null
                   }
 
