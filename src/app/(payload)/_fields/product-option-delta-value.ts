@@ -1,10 +1,10 @@
 import { Field } from "payload"
 
-interface DeltaDefinition {
-  type: keyof typeof DELTA_VALUES_DEFINITION
-  unit: "€" | "%"
-  value: number
-}
+// interface DeltaDefinition {
+//   type: keyof typeof DELTA_VALUES_DEFINITION
+//   unit: "€" | "%"
+//   value: number
+// }
 
 const DELTA_VALUES_DEFINITION = {
   price: {
@@ -42,7 +42,7 @@ const DELTA_VALUES_DEFINITION = {
 //   return DELTA_VALUES_DEFINITION[type].unit
 // }
 
-export const optionDeltaValue = (name: string): Field => ({
+export const optionDeltaValue = (): Field => ({
   name: "delta",
   type: "array",
   label: "Impact produit",

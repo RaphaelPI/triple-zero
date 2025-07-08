@@ -38,7 +38,7 @@ export const TableInput = (props: Props) => {
       )
       setValue(newValue)
     }
-  }, [rows, cols])
+  }, [rows, cols, value, setValue])
 
   const handleChange =
     (rowIndex: number, colIndex: number) => (e: { target: { value: string } }) => {

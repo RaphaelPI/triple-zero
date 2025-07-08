@@ -25,7 +25,7 @@ export const optionValues = (name: string): Field => ({
       required: true,
       localized: true,
     },
-    optionDeltaValue(name),
+    optionDeltaValue(),
     {
       label: "Valeur par défaut ?",
       name: "defaultValue",
