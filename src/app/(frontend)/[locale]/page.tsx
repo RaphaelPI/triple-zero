@@ -9,6 +9,11 @@ export default async function HomePage() {
     limit: 1,
   })
 
+  // await payload.delete({
+  //   collection: "product",
+  //   where: { id: { exists: true } },
+  // })
+
   const media = medias.docs[0]
 
   return (

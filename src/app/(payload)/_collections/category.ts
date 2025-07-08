@@ -9,6 +9,7 @@ export const Category: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
+    group: "Produits",
   },
   hooks: {
     beforeValidate: [
@@ -42,6 +43,12 @@ export const Category: CollectionConfig = {
       type: "textarea",
       required: true,
       localized: true,
+    },
+    {
+      label: "Active ?",
+      name: "active",
+      type: "checkbox",
+      defaultValue: true,
     },
   ],
 }

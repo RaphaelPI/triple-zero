@@ -3,6 +3,9 @@ import { GlobalConfig } from "payload"
 export const Nav: GlobalConfig = {
   slug: "nav",
   label: "Menu",
+  admin: {
+    group: "Contenu",
+  },
   fields: [
     {
       name: "items",

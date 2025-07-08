@@ -1,6 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres"
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
-import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import { FixedToolbarFeature, lexicalEditor, LinkFeature } from "@payloadcms/richtext-lexical"
 import { s3Storage } from "@payloadcms/storage-s3"
 import { en } from "@payloadcms/translations/languages/en"
 import { fr } from "@payloadcms/translations/languages/fr"
@@ -9,16 +9,23 @@ import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
-import { Category, Media, Nav, Users } from "./app/(payload)/_collections"
+import * as collections from "./app/(payload)/_collections"
+import * as globals from "./app/(payload)/_globals"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    user: collections.Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      graphics: {
+        Logo: "/app/(payload)/_ui/admin/logo#Logo",
+        Icon: "/app/(payload)/_ui/admin/icon#Icon",
+      },
     },
   },
   localization: {
@@ -38,9 +45,32 @@ export default buildConfig({
     fallbackLanguage: "fr",
     supportedLanguages: { en, fr },
   },
-  collections: [Users, Media, Category],
-  globals: [Nav],
-  editor: lexicalEditor(),
+  collections: Object.values(collections),
+  globals: Object.values(globals),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      FixedToolbarFeature(),
+      LinkFeature({
+        // Example showing how to customize the built-in fields
+        // of the Link feature
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          {
+            name: "rel",
+            label: "Rel Attribute",
+            type: "select",
+            hasMany: true,
+            options: ["noopener", "noreferrer", "nofollow"],
+            admin: {
+              description:
+                "The rel attribute defines the relationship between a linked resource and the current document. This is a custom link field.",
+            },
+          },
+        ],
+      }),
+    ],
+  }),
   secret: process.env.SERVER_PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

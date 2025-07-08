@@ -67,18 +67,26 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
+    blocInfo: BlocInfo;
     category: Category;
+    color: Color;
+    media: Media;
+    product: Product;
+    sizeGuide: SizeGuide;
+    users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
+    blocInfo: BlocInfoSelect<false> | BlocInfoSelect<true>;
     category: CategorySelect<false> | CategorySelect<true>;
+    color: ColorSelect<false> | ColorSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    product: ProductSelect<false> | ProductSelect<true>;
+    sizeGuide: SizeGuideSelect<false> | SizeGuideSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -87,9 +95,11 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
+    message: Message;
     nav: Nav;
   };
   globalsSelect: {
+    message: MessageSelect<false> | MessageSelect<true>;
     nav: NavSelect<false> | NavSelect<true>;
   };
   locale: 'en' | 'fr';
@@ -121,6 +131,221 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocInfo".
+ */
+export interface BlocInfo {
+  id: number;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description: string;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color".
+ */
+export interface Color {
+  id: number;
+  name: string;
+  color?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product".
+ */
+export interface Product {
+  id: number;
+  category: number | Category;
+  title: string;
+  slug?: string | null;
+  description: string;
+  images?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  sizeGuide?: (number | null) | SizeGuide;
+  colors?:
+    | {
+        default?: boolean | null;
+        color: number | Color;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  colorsSecondary?:
+    | {
+        default?: boolean | null;
+        color: number | Color;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  options?:
+    | {
+        title: string;
+        values?:
+          | {
+              title: string;
+              delta?:
+                | {
+                    type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
+                    value: number;
+                    unit: '€' | '%';
+                    id?: string | null;
+                  }[]
+                | null;
+              defaultValue?: boolean | null;
+              /**
+               * Facultatif. Image permettant d'illustrer cette option.
+               */
+              image?: (number | null) | Media;
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  advanced?:
+    | {
+        title: string;
+        values?:
+          | {
+              title: string;
+              delta?:
+                | {
+                    type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
+                    value: number;
+                    unit: '€' | '%';
+                    id?: string | null;
+                  }[]
+                | null;
+              defaultValue?: boolean | null;
+              /**
+               * Facultatif. Image permettant d'illustrer cette option.
+               */
+              image?: (number | null) | Media;
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  technicalInfos?:
+    | {
+        /**
+         * Remplace le titre par défaut du bloc d'information pour ce produit.
+         */
+        title?: string | null;
+        info?: (number | BlocInfo)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  materials?:
+    | {
+        /**
+         * Remplace le titre par défaut du bloc d'information pour ce produit.
+         */
+        title?: string | null;
+        info?: (number | BlocInfo)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  care?:
+    | {
+        /**
+         * Remplace le titre par défaut du bloc d'information pour ce produit.
+         */
+        title?: string | null;
+        info?: (number | BlocInfo)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizeGuide".
+ */
+export interface SizeGuide {
+  id: number;
+  title: string;
+  rows: number;
+  cols: number;
+  table?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -145,53 +370,38 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category".
- */
-export interface Category {
-  id: number;
-  title: string;
-  slug?: string | null;
-  description: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'blocInfo';
+        value: number | BlocInfo;
+      } | null)
+    | ({
+        relationTo: 'category';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'color';
+        value: number | Color;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'category';
-        value: number | Category;
+        relationTo: 'product';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'sizeGuide';
+        value: number | SizeGuide;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -237,25 +447,35 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "blocInfo_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface BlocInfoSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category_select".
+ */
+export interface CategorySelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color_select".
+ */
+export interface ColorSelect<T extends boolean = true> {
+  name?: T;
+  color?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -277,14 +497,141 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category_select".
+ * via the `definition` "product_select".
  */
-export interface CategorySelect<T extends boolean = true> {
+export interface ProductSelect<T extends boolean = true> {
+  category?: T;
   title?: T;
   slug?: T;
   description?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  sizeGuide?: T;
+  colors?:
+    | T
+    | {
+        default?: T;
+        color?: T;
+        image?: T;
+        id?: T;
+      };
+  colorsSecondary?:
+    | T
+    | {
+        default?: T;
+        color?: T;
+        image?: T;
+        id?: T;
+      };
+  options?:
+    | T
+    | {
+        title?: T;
+        values?:
+          | T
+          | {
+              title?: T;
+              delta?:
+                | T
+                | {
+                    type?: T;
+                    value?: T;
+                    unit?: T;
+                    id?: T;
+                  };
+              defaultValue?: T;
+              image?: T;
+              value?: T;
+              id?: T;
+            };
+        description?: T;
+        id?: T;
+      };
+  advanced?:
+    | T
+    | {
+        title?: T;
+        values?:
+          | T
+          | {
+              title?: T;
+              delta?:
+                | T
+                | {
+                    type?: T;
+                    value?: T;
+                    unit?: T;
+                    id?: T;
+                  };
+              defaultValue?: T;
+              image?: T;
+              value?: T;
+              id?: T;
+            };
+        description?: T;
+        id?: T;
+      };
+  technicalInfos?:
+    | T
+    | {
+        title?: T;
+        info?: T;
+        id?: T;
+      };
+  materials?:
+    | T
+    | {
+        title?: T;
+        info?: T;
+        id?: T;
+      };
+  care?:
+    | T
+    | {
+        title?: T;
+        info?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizeGuide_select".
+ */
+export interface SizeGuideSelect<T extends boolean = true> {
+  title?: T;
+  rows?: T;
+  cols?: T;
+  table?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -320,6 +667,32 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "message".
+ */
+export interface Message {
+  id: number;
+  message: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image?: (number | null) | Media;
+  active?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "nav".
  */
 export interface Nav {
@@ -332,6 +705,18 @@ export interface Nav {
   }[];
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "message_select".
+ */
+export interface MessageSelect<T extends boolean = true> {
+  message?: T;
+  image?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

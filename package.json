@@ -13,17 +13,19 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "test": "pnpm run test:int && pnpm run test:e2e",
-    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test": "npm run test:int && npm run test:e2e",
+    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" npm exec playwright test",
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "import:sanity": "tsx src/scripts/test.ts"
   },
   "dependencies": {
+    "@innovixx/payload-color-picker-field": "^2.0.2",
     "@payloadcms/db-postgres": "3.45.0",
     "@payloadcms/next": "3.45.0",
     "@payloadcms/payload-cloud": "3.45.0",
     "@payloadcms/richtext-lexical": "3.45.0",
-    "@payloadcms/storage-s3": "^3.45.0",
-    "@payloadcms/translations": "^3.45.0",
+    "@payloadcms/storage-s3": "3.45.0",
+    "@payloadcms/translations": "3.45.0",
     "@payloadcms/ui": "3.45.0",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-navigation-menu": "^1.2.13",
@@ -38,15 +40,17 @@
     "date-fns": "^4.1.0",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
+    "graphql-request": "^7.2.0",
     "lucide-react": "^0.525.0",
     "next": "15.3.2",
     "next-intl": "^4.3.4",
     "nuqs": "^2.4.3",
     "payload": "3.45.0",
     "postcss": "^8.5.6",
-    "presets": "link:@t3-oss/env-nextjs/presets",
-    "react": "19.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "sharp": "0.32.6",
+    "short-unique-id": "^5.3.2",
     "slugify": "^1.6.6",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
@@ -84,5 +88,5 @@
       "unrs-resolver"
     ]
   },
-  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
+  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184"
 }
