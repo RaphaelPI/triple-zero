@@ -9,13 +9,6 @@ export default async function HomePage() {
     limit: 1,
   })
 
-  // await payload.delete({
-  //   collection: "product",
-  //   where: { id: { exists: true } },
-  // })
-
-  const media = medias.docs[0]
-
   return (
     <div className="space-y-10 p-10">
       <Button variant="destructive">Click me</Button>
@@ -25,7 +18,7 @@ export default async function HomePage() {
       <Button variant="outline">Click me</Button>
       <Button variant="secondary">Click me</Button>
 
-      {media.url && <Image media={media} className="h-auto" />}
+      {medias.docs[0]?.url && <Image media={medias.docs[0]} className="h-auto" />}
     </div>
   )
 }
