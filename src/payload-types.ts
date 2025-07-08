@@ -92,7 +92,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     message: Message;
@@ -134,7 +134,7 @@ export interface UserAuthOperations {
  * via the `definition` "blocInfo".
  */
 export interface BlocInfo {
-  id: number;
+  id: string;
   title: string;
   content?: {
     root: {
@@ -159,7 +159,7 @@ export interface BlocInfo {
  * via the `definition` "category".
  */
 export interface Category {
-  id: number;
+  id: string;
   title: string;
   slug?: string | null;
   description: string;
@@ -172,7 +172,7 @@ export interface Category {
  * via the `definition` "color".
  */
 export interface Color {
-  id: number;
+  id: string;
   name: string;
   color?: string | null;
   updatedAt: string;
@@ -183,7 +183,7 @@ export interface Color {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -202,31 +202,31 @@ export interface Media {
  * via the `definition` "product".
  */
 export interface Product {
-  id: number;
-  category: number | Category;
+  id: string;
+  category: string | Category;
   title: string;
   slug?: string | null;
   description: string;
   images?:
     | {
-        image?: (number | null) | Media;
+        image?: (string | null) | Media;
         id?: string | null;
       }[]
     | null;
-  sizeGuide?: (number | null) | SizeGuide;
+  sizeGuide?: (string | null) | SizeGuide;
   colors?:
     | {
         default?: boolean | null;
-        color: number | Color;
-        image?: (number | null) | Media;
+        color: string | Color;
+        image?: (string | null) | Media;
         id?: string | null;
       }[]
     | null;
   colorsSecondary?:
     | {
         default?: boolean | null;
-        color: number | Color;
-        image?: (number | null) | Media;
+        color: string | Color;
+        image?: (string | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -248,7 +248,7 @@ export interface Product {
               /**
                * Facultatif. Image permettant d'illustrer cette option.
                */
-              image?: (number | null) | Media;
+              image?: (string | null) | Media;
               value?: string | null;
               id?: string | null;
             }[]
@@ -278,7 +278,7 @@ export interface Product {
               /**
                * Facultatif. Image permettant d'illustrer cette option.
                */
-              image?: (number | null) | Media;
+              image?: (string | null) | Media;
               value?: string | null;
               id?: string | null;
             }[]
@@ -296,7 +296,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (number | BlocInfo)[] | null;
+        info?: (string | BlocInfo)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -306,7 +306,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (number | BlocInfo)[] | null;
+        info?: (string | BlocInfo)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -316,7 +316,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (number | BlocInfo)[] | null;
+        info?: (string | BlocInfo)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -328,7 +328,7 @@ export interface Product {
  * via the `definition` "sizeGuide".
  */
 export interface SizeGuide {
-  id: number;
+  id: string;
   title: string;
   rows: number;
   cols: number;
@@ -349,7 +349,7 @@ export interface SizeGuide {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -373,40 +373,40 @@ export interface User {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'blocInfo';
-        value: number | BlocInfo;
+        value: string | BlocInfo;
       } | null)
     | ({
         relationTo: 'category';
-        value: number | Category;
+        value: string | Category;
       } | null)
     | ({
         relationTo: 'color';
-        value: number | Color;
+        value: string | Color;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'product';
-        value: number | Product;
+        value: string | Product;
       } | null)
     | ({
         relationTo: 'sizeGuide';
-        value: number | SizeGuide;
+        value: string | SizeGuide;
       } | null)
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -416,10 +416,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -439,7 +439,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -670,7 +670,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "message".
  */
 export interface Message {
-  id: number;
+  id: string;
   message: {
     root: {
       type: string;
@@ -686,7 +686,7 @@ export interface Message {
     };
     [k: string]: unknown;
   };
-  image?: (number | null) | Media;
+  image?: (string | null) | Media;
   active?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -696,11 +696,11 @@ export interface Message {
  * via the `definition` "nav".
  */
 export interface Nav {
-  id: number;
+  id: string;
   items: {
     title: string;
-    image?: (number | null) | Media;
-    category: (number | Category)[];
+    image?: (string | null) | Media;
+    category: (string | Category)[];
     id?: string | null;
   }[];
   updatedAt?: string | null;

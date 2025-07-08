@@ -1,4 +1,6 @@
-import { postgresAdapter } from "@payloadcms/db-postgres"
+// import { postgresAdapter } from "@payloadcms/db-postgres"
+import { mongooseAdapter } from "@payloadcms/db-mongodb"
+
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
 import { FixedToolbarFeature, lexicalEditor, LinkFeature } from "@payloadcms/richtext-lexical"
 import { s3Storage } from "@payloadcms/storage-s3"
@@ -75,10 +77,13 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.SERVER_DATABASE_URI || "",
-    },
+  // db: postgresAdapter({
+  //   pool: {
+  //     connectionString: process.env.SERVER_DATABASE_URI || "",
+  //   },
+  // }),
+  db: mongooseAdapter({
+    url: process.env.SERVER_DATABASE_URI!,
   }),
   sharp,
   plugins: [

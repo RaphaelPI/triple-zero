@@ -6,11 +6,12 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
-    "mb": "payload migrate && pnpm build",
+    "ci": "payload migrate && pnpm build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create --skip-empty",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "@innovixx/payload-color-picker-field": "^2.0.2",
+    "@payloadcms/db-mongodb": "3.45.0",
     "@payloadcms/db-postgres": "3.45.0",
     "@payloadcms/next": "3.45.0",
     "@payloadcms/payload-cloud": "3.45.0",
