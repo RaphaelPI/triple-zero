@@ -2,7 +2,7 @@ import { uuid } from "@/lib/uuid"
 import { Field } from "payload"
 import { optionDeltaValue } from "./product-option-delta-value"
 
-export const optionValues = (name: string): Field => ({
+export const optionValues = (): Field => ({
   name: "values",
   type: "array",
   label: "Valeurs",

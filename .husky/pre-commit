@@ -1,2 +1,2 @@
-pnpm payload migrate:create --skip-empty
 pnpm lint
+pnpm payload migrate:status

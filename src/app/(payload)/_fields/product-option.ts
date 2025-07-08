@@ -24,7 +24,7 @@ export const options = (name: string, label: string): Field => ({
       required: true,
       localized: true,
     },
-    optionValues(name),
+    optionValues(),
     {
       name: "description",
       label: "Description",
