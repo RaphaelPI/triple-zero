@@ -17,7 +17,6 @@
     "test": "npm run test:int && npm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation\" npm exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
-    "import:sanity": "tsx src/scripts/test.ts",
     "prepare": "husky"
   },
   "dependencies": {
