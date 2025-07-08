@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "mb": "payload migrate && pnpm build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -14,9 +15,10 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "npm run test:int && npm run test:e2e",
-    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" npm exec playwright test",
+    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation\" npm exec playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
-    "import:sanity": "tsx src/scripts/test.ts"
+    "import:sanity": "tsx src/scripts/test.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@innovixx/payload-color-picker-field": "^2.0.2",
@@ -58,6 +60,7 @@
     "zod": "^3.25.75"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@playwright/test": "1.50.0",
     "@testing-library/react": "16.3.0",
     "@types/node": "^22.5.4",
@@ -66,6 +69,7 @@
     "@vitejs/plugin-react": "4.5.2",
     "eslint": "^9.16.0",
     "eslint-config-next": "15.3.0",
+    "husky": "^9.1.7",
     "jsdom": "26.1.0",
     "playwright": "1.50.0",
     "playwright-core": "1.50.0",
