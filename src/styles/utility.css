@@ -5,8 +5,11 @@
   background-position: top -600px right -740px;
 }
 @utility scrollable {
-  @apply px-section relative flex w-full snap-x snap-mandatory scroll-px-4 flex-nowrap gap-x-4 overflow-x-auto scroll-smooth lg:px-4;
+  @apply px-section no-scrollbar relative flex w-full snap-x snap-mandatory scroll-px-4 flex-nowrap gap-x-4 overflow-x-auto scroll-smooth lg:px-4;
 }
 @utility link {
   @apply hover:underline;
+}
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }

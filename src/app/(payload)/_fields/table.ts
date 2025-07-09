@@ -4,6 +4,19 @@ export const Table: Field = {
   name: "table",
   type: "json",
   label: "Contenu",
+  jsonSchema: {
+    uri: "https://json-schema.org/draft/2020-12/schema",
+    fileMatch: ["*.json"],
+    schema: {
+      type: "array",
+      items: {
+        type: "array",
+        items: {
+          type: "string",
+        },
+      },
+    },
+  },
   admin: {
     components: {
       Field: {

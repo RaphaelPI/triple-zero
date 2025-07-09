@@ -29,7 +29,7 @@ export const Product: CollectionConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "Informations produits",
+          label: "Informations produit",
           fields: [
             {
               name: "category",
@@ -144,7 +144,7 @@ export const Product: CollectionConfig = {
           ],
         },
         {
-          label: "Informations produit",
+          label: "Fiche technique",
           fields: [
             {
               name: "technicalInfos",

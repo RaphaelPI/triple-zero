@@ -280,15 +280,7 @@ export interface SizeGuide {
   title: string;
   rows: number;
   cols: number;
-  table?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  table?: string[][];
   updatedAt: string;
   createdAt: string;
 }

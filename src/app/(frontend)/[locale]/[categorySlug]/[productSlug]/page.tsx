@@ -6,23 +6,25 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
+import { getCategoryData } from "../data"
 import { ProductDynamicContent } from "./_components/product-dynamic-content"
-import { getCategoryData, getProductData } from "./data"
+import { getProductData } from "./data"
+
 export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
     locale: Locale
-    category: string
-    product: string
+    categorySlug: string
+    productSlug: string
   }>
 }
 
 const getData = cache(async ({ params }: Props) => {
-  const { locale, category, product } = await params
+  const { locale, categorySlug, productSlug } = await params
   const [productData, categoryData] = await Promise.all([
-    getProductData(product, locale),
-    getCategoryData(category, locale),
+    getProductData(productSlug, locale),
+    getCategoryData(categorySlug, locale),
   ])
 
   if (!productData.docs[0] || !categoryData.docs[0]) {

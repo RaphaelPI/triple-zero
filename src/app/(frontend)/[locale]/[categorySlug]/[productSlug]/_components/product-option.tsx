@@ -4,7 +4,7 @@ import { useQueryState } from "nuqs"
 import { ReactNode } from "react"
 import Info from "src/assets/info.svg"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Popover } from "@/components/popover"
 import { cn } from "@/lib/utils"
 import type { Media, ProductOption as ProductOptionType, ProductOptionValue } from "@/payload-types"
 import { getOptionSlug } from "../utils"
@@ -56,31 +56,47 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
   let title = <>{option.title}</>
   if (option.description) {
     title = (
-      <Tooltip>
-        <TooltipTrigger>
-          <div className="flex cursor-default items-center text-sm leading-3">
-            {option.title}
-            <Info className="ml-1 h-3 w-3" />
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>{option.description}</TooltipContent>
-      </Tooltip>
+      <Popover content={option.description} variant="dark">
+        <div className="flex cursor-default items-center text-sm leading-3">
+          {option.title}
+          <Info className="ml-1 h-3 w-3" />
+        </div>
+      </Popover>
     )
   }
 
   return (
-    <div className="w-full items-center gap-1 py-3 sm:flex md:gap-2" key={getOptionSlug(option)}>
-      <label className="block pb-1 sm:w-32 sm:pb-0">{title}</label>
-      <div className="flex flex-1 flex-wrap">
+    <div
+      className="w-full items-center gap-1 space-y-2 py-3 md:gap-2 xl:flex"
+      key={getOptionSlug(option)}
+    >
+      <label className="block self-baseline leading-4 lg:w-32">{title}</label>
+      <div className="flex flex-1 flex-wrap gap-2">
         {option.values?.map((optionValue) => {
           const active = Boolean(
             value ? optionValue.value.value === value : optionValue.value.defaultValue,
           )
 
-          const optionRender = (
+          // const optionRender = (
+
+          // )
+
+          // if (optionValue.image) {
+          //   const optionImage = (
+          //     <div className="rounded-xl bg-white p-2">
+          //       <Image image={optionValue.image} className="rounded-xl max-w-52 max-h-52" />
+          //     </div>
+          //   )
+          //   return (
+          //     <Popover key={optionValue?._key} content={optionImage}>
+          //       {optionRender}
+          //     </Tooltip>
+          //   )
+          // }
+
+          return (
             <div
               key={optionValue.value.value}
-              className="p-1 md:p-2"
               onClick={handleClick(optionValue.value)}
               onMouseEnter={handleHover(optionValue.value)}
               onMouseLeave={handleOut(optionValue.value)}
@@ -97,21 +113,6 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
               </div>
             </div>
           )
-
-          // if (optionValue.image) {
-          //   const optionImage = (
-          //     <div className="rounded-xl bg-white p-2">
-          //       <Image image={optionValue.image} className="rounded-xl max-w-52 max-h-52" />
-          //     </div>
-          //   )
-          //   return (
-          //     <Tooltip key={optionValue?._key} content={optionImage}>
-          //       {optionRender}
-          //     </Tooltip>
-          //   )
-          // }
-
-          return optionRender
         })}
         {guide}
       </div>
