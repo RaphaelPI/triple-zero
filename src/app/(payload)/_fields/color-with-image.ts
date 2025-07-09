@@ -1,9 +1,10 @@
 import type { Field } from "payload"
 
-export const colorWithImage = (name: string, label: string): Field => ({
-  name,
-  label,
-  type: "array",
+export const ColorWithImage: Field = {
+  name: "color",
+  label: "Couleur",
+  type: "group",
+  interfaceName: "ColorWithImage",
   fields: [
     {
       name: "default",
@@ -22,4 +23,4 @@ export const colorWithImage = (name: string, label: string): Field => ({
       relationTo: "media",
     },
   ],
-})
+}

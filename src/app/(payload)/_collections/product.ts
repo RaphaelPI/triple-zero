@@ -1,7 +1,7 @@
 import { slugify } from "@/lib/slugify"
 import { CollectionConfig } from "payload"
-import { colorWithImage } from "../_fields/color-with-image"
-import { options } from "../_fields/product-option"
+import { ColorWithImage } from "../_fields/color-with-image"
+import { ProductOption } from "../_fields/product-option"
 
 export const Product: CollectionConfig = {
   slug: "product",
@@ -46,6 +46,7 @@ export const Product: CollectionConfig = {
             {
               name: "slug",
               type: "text",
+              index: true,
               admin: {
                 readOnly: true,
               },
@@ -80,17 +81,67 @@ export const Product: CollectionConfig = {
         {
           label: "Couleurs",
           fields: [
-            colorWithImage("colors", "Couleurs"),
-            colorWithImage("colorsSecondary", "Couleurs secondaires (bas)"),
+            {
+              name: "colors",
+              type: "array",
+              fields: [ColorWithImage],
+              admin: {
+                initCollapsed: true,
+              },
+            },
+            {
+              name: "colorsSecondary",
+              type: "array",
+              fields: [ColorWithImage],
+              admin: {
+                initCollapsed: true,
+              },
+            },
           ],
         },
         {
           label: "Options",
-          fields: [options("options", "Options")],
+          fields: [
+            {
+              name: "options",
+              type: "array",
+              fields: [ProductOption],
+              admin: {
+                initCollapsed: true,
+                components: {
+                  RowLabel: {
+                    path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+                    clientProps: {
+                      placeholder: "Option",
+                      path: ["option", "title"],
+                    },
+                  },
+                },
+              },
+            },
+          ],
         },
         {
           label: "Options Avancées",
-          fields: [options("advanced", "Options avancées")],
+          fields: [
+            {
+              name: "advanced",
+              type: "array",
+              fields: [ProductOption],
+              admin: {
+                initCollapsed: true,
+                components: {
+                  RowLabel: {
+                    path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+                    clientProps: {
+                      placeholder: "Option",
+                      path: ["option", "title"],
+                    },
+                  },
+                },
+              },
+            },
+          ],
         },
         {
           label: "Informations produit",

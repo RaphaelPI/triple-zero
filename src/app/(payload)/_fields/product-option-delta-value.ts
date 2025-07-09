@@ -42,22 +42,11 @@ const DELTA_VALUES_DEFINITION = {
 //   return DELTA_VALUES_DEFINITION[type].unit
 // }
 
-export const optionDeltaValue = (): Field => ({
+export const ProductOptionDeltaValue: Field = {
   name: "delta",
-  type: "array",
+  type: "group",
   label: "Impact produit",
-  admin: {
-    initCollapsed: true,
-    components: {
-      RowLabel: {
-        path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
-        clientProps: {
-          placeholder: "Impact",
-          objectKey: "type",
-        },
-      },
-    },
-  },
+  interfaceName: "ProductOptionDeltaValue",
   fields: [
     {
       label: "Type",
@@ -86,4 +75,4 @@ export const optionDeltaValue = (): Field => ({
       ],
     },
   ],
-})
+}

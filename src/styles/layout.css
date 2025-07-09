@@ -22,6 +22,3 @@
 @utility section {
   @apply w-section px-section py-section;
 }
-@utility scrollable {
-  @apply relative flex w-full snap-x snap-mandatory scroll-px-4 flex-nowrap gap-x-4 overflow-x-auto scroll-smooth px-4 py-6;
-}

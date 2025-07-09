@@ -33,6 +33,7 @@ export const Category: CollectionConfig = {
     {
       name: "slug",
       type: "text",
+      index: true,
       admin: {
         readOnly: true,
       },

@@ -46,6 +46,10 @@
     "total": "Total à payer",
     "delivery": "Livraison"
   },
+  "product": {
+    "options": "Options",
+    "advancedOptions": "Options avancées"
+  },
   "notFound": "Page introuvable",
   "question": "Une question sur nos produits ou nos services ?",
   "contactUs": "Contactez-nous",

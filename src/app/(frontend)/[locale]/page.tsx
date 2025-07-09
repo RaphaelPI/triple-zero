@@ -1,8 +1,23 @@
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { getClient } from "@/lib/payload"
+import { getMetadata } from "./metadata"
 
-export default async function HomePage() {
+interface Props {
+  params: Promise<{
+    locale: string
+  }>
+}
+
+export const generateMetadata = async ({ params }: Props) => {
+  const { locale } = await params
+  return getMetadata({
+    locale,
+    pathname: "/",
+  })
+}
+
+export default async () => {
   const payload = await getClient()
   const medias = await payload.find({
     collection: "media",

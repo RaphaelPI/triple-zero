@@ -1,0 +1,42 @@
+@utility px-panel {
+  @apply px-4 md:px-8;
+}
+@utility py-panel {
+  @apply py-3 md:py-6;
+}
+
+@utility gap-x-panel {
+  @apply gap-x-4 lg:gap-x-8;
+}
+
+@utility gap-y-panel {
+  @apply gap-y-4 lg:gap-y-8;
+}
+
+@utility gap-panel {
+  @apply gap-x-panel gap-y-panel;
+}
+
+@utility mb-panel {
+  @apply mb-4 lg:mb-8;
+}
+
+@utility mt-panel {
+  @apply mt-4 lg:mt-8;
+}
+
+@utility mr-panel {
+  @apply mr-4 lg:mr-8;
+}
+
+@utility ml-panel {
+  @apply ml-4 lg:ml-8;
+}
+
+@utility panel {
+  @apply shadow-panel rounded-2xl bg-white;
+}
+
+@utility panel-table-cell {
+  @apply px-6 py-4;
+}

@@ -1,6 +1,6 @@
 import { Field } from "payload"
 
-export const table = (): Field => ({
+export const Table: Field = {
   name: "table",
   type: "json",
   label: "Contenu",
@@ -11,4 +11,4 @@ export const table = (): Field => ({
       },
     },
   },
-})
+}

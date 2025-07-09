@@ -216,77 +216,25 @@ export interface Product {
   sizeGuide?: (string | null) | SizeGuide;
   colors?:
     | {
-        default?: boolean | null;
-        color: string | Color;
-        image?: (string | null) | Media;
+        color: ColorWithImage;
         id?: string | null;
       }[]
     | null;
   colorsSecondary?:
     | {
-        default?: boolean | null;
-        color: string | Color;
-        image?: (string | null) | Media;
+        color: ColorWithImage;
         id?: string | null;
       }[]
     | null;
   options?:
     | {
-        title: string;
-        values?:
-          | {
-              title: string;
-              delta?:
-                | {
-                    type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
-                    value: number;
-                    unit: '€' | '%';
-                    id?: string | null;
-                  }[]
-                | null;
-              defaultValue?: boolean | null;
-              /**
-               * Facultatif. Image permettant d'illustrer cette option.
-               */
-              image?: (string | null) | Media;
-              value?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        /**
-         * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
-         */
-        description?: string | null;
+        option: ProductOption;
         id?: string | null;
       }[]
     | null;
   advanced?:
     | {
-        title: string;
-        values?:
-          | {
-              title: string;
-              delta?:
-                | {
-                    type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
-                    value: number;
-                    unit: '€' | '%';
-                    id?: string | null;
-                  }[]
-                | null;
-              defaultValue?: boolean | null;
-              /**
-               * Facultatif. Image permettant d'illustrer cette option.
-               */
-              image?: (string | null) | Media;
-              value?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        /**
-         * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
-         */
-        description?: string | null;
+        option: ProductOption;
         id?: string | null;
       }[]
     | null;
@@ -343,6 +291,68 @@ export interface SizeGuide {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColorWithImage".
+ */
+export interface ColorWithImage {
+  default?: boolean | null;
+  color: string | Color;
+  image?: (string | null) | Media;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOption".
+ */
+export interface ProductOption {
+  title: string;
+  values?:
+    | {
+        value: ProductOptionValue;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
+   */
+  description?: string | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que taille. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  size?: boolean | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  weight?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionValue".
+ */
+export interface ProductOptionValue {
+  title: string;
+  delta?:
+    | {
+        delta: ProductOptionDeltaValue;
+        id?: string | null;
+      }[]
+    | null;
+  defaultValue?: boolean | null;
+  /**
+   * Facultatif. Image permettant d'illustrer cette option.
+   */
+  image?: (string | null) | Media;
+  value?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionDeltaValue".
+ */
+export interface ProductOptionDeltaValue {
+  type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
+  value: number;
+  unit: '€' | '%';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -514,65 +524,25 @@ export interface ProductSelect<T extends boolean = true> {
   colors?:
     | T
     | {
-        default?: T;
-        color?: T;
-        image?: T;
+        color?: T | ColorWithImageSelect<T>;
         id?: T;
       };
   colorsSecondary?:
     | T
     | {
-        default?: T;
-        color?: T;
-        image?: T;
+        color?: T | ColorWithImageSelect<T>;
         id?: T;
       };
   options?:
     | T
     | {
-        title?: T;
-        values?:
-          | T
-          | {
-              title?: T;
-              delta?:
-                | T
-                | {
-                    type?: T;
-                    value?: T;
-                    unit?: T;
-                    id?: T;
-                  };
-              defaultValue?: T;
-              image?: T;
-              value?: T;
-              id?: T;
-            };
-        description?: T;
+        option?: T | ProductOptionSelect<T>;
         id?: T;
       };
   advanced?:
     | T
     | {
-        title?: T;
-        values?:
-          | T
-          | {
-              title?: T;
-              delta?:
-                | T
-                | {
-                    type?: T;
-                    value?: T;
-                    unit?: T;
-                    id?: T;
-                  };
-              defaultValue?: T;
-              image?: T;
-              value?: T;
-              id?: T;
-            };
-        description?: T;
+        option?: T | ProductOptionSelect<T>;
         id?: T;
       };
   technicalInfos?:
@@ -598,6 +568,56 @@ export interface ProductSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColorWithImage_select".
+ */
+export interface ColorWithImageSelect<T extends boolean = true> {
+  default?: T;
+  color?: T;
+  image?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOption_select".
+ */
+export interface ProductOptionSelect<T extends boolean = true> {
+  title?: T;
+  values?:
+    | T
+    | {
+        value?: T | ProductOptionValueSelect<T>;
+        id?: T;
+      };
+  description?: T;
+  size?: T;
+  weight?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionValue_select".
+ */
+export interface ProductOptionValueSelect<T extends boolean = true> {
+  title?: T;
+  delta?:
+    | T
+    | {
+        delta?: T | ProductOptionDeltaValueSelect<T>;
+        id?: T;
+      };
+  defaultValue?: T;
+  image?: T;
+  value?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionDeltaValue_select".
+ */
+export interface ProductOptionDeltaValueSelect<T extends boolean = true> {
+  type?: T;
+  value?: T;
+  unit?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

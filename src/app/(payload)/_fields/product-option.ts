@@ -1,21 +1,11 @@
 import { Field } from "payload"
-import { optionValues } from "./product-option-value"
+import { ProductOptionValue } from "./product-option-value"
 
-export const options = (name: string, label: string): Field => ({
-  name,
-  type: "array",
-  label,
-  admin: {
-    initCollapsed: true,
-    components: {
-      RowLabel: {
-        path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
-        clientProps: {
-          placeholder: "Option",
-        },
-      },
-    },
-  },
+export const ProductOption: Field = {
+  name: "option",
+  type: "group",
+  label: "Option produit",
+  interfaceName: "ProductOption",
   fields: [
     {
       name: "title",
@@ -24,7 +14,23 @@ export const options = (name: string, label: string): Field => ({
       required: true,
       localized: true,
     },
-    optionValues(),
+    {
+      name: "values",
+      type: "array",
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: {
+            path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+            clientProps: {
+              placeholder: "Valeur",
+              path: ["value", "title"],
+            },
+          },
+        },
+      },
+      fields: [ProductOptionValue],
+    },
     {
       name: "description",
       label: "Description",
@@ -34,5 +40,23 @@ export const options = (name: string, label: string): Field => ({
       },
       localized: true,
     },
+    {
+      name: "size",
+      label: "Taille",
+      type: "checkbox",
+      admin: {
+        description:
+          "Si cochée, cette option sera affichée en tant que taille. Pour des calculs supplémentaires sur les valeurs techniques du produit",
+      },
+    },
+    {
+      name: "weight",
+      label: "Poids",
+      type: "checkbox",
+      admin: {
+        description:
+          "Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit",
+      },
+    },
   ],
-})
+}

@@ -50,7 +50,7 @@ export const MainNav = async () => {
                       return (
                         <Link
                           key={category.id}
-                          className="block text-nowrap hover:underline"
+                          className="link block text-nowrap"
                           href={`/c/${category.slug}`}
                         >
                           {category.title}
@@ -96,7 +96,7 @@ export const MainNav = async () => {
                   return (
                     <Link
                       key={category.id}
-                      className="block text-nowrap hover:underline"
+                      className="link block text-nowrap"
                       href={`/c/${category.slug}`}
                     >
                       {category.title}

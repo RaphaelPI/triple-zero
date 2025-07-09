@@ -1,0 +1,12 @@
+@utility bg-flake-bl {
+  background-position: bottom -200px left -400px;
+}
+@utility bg-flake-tr {
+  background-position: top -600px right -740px;
+}
+@utility scrollable {
+  @apply px-section relative flex w-full snap-x snap-mandatory scroll-px-4 flex-nowrap gap-x-4 overflow-x-auto scroll-smooth lg:px-4;
+}
+@utility link {
+  @apply hover:underline;
+}

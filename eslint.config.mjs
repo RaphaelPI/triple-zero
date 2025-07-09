@@ -29,6 +29,7 @@ const eslintConfig = [
         },
       ],
       "jsx-a11y/alt-text": "off",
+      "react/display-name": "off",
     },
   },
   {

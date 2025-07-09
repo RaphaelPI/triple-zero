@@ -1,22 +1,12 @@
 import { uuid } from "@/lib/uuid"
 import { Field } from "payload"
-import { optionDeltaValue } from "./product-option-delta-value"
+import { ProductOptionDeltaValue } from "./product-option-delta-value"
 
-export const optionValues = (): Field => ({
-  name: "values",
-  type: "array",
+export const ProductOptionValue: Field = {
+  name: "value",
+  type: "group",
   label: "Valeurs",
-  admin: {
-    initCollapsed: true,
-    components: {
-      RowLabel: {
-        path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
-        clientProps: {
-          placeholder: "Valeur",
-        },
-      },
-    },
-  },
+  interfaceName: "ProductOptionValue",
   fields: [
     {
       label: "Titre",
@@ -25,7 +15,23 @@ export const optionValues = (): Field => ({
       required: true,
       localized: true,
     },
-    optionDeltaValue(),
+    {
+      name: "delta",
+      type: "array",
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: {
+            path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+            clientProps: {
+              placeholder: "Impact",
+              path: ["delta", "type"],
+            },
+          },
+        },
+      },
+      fields: [ProductOptionDeltaValue],
+    },
     {
       label: "Valeur par défaut ?",
       name: "defaultValue",
@@ -50,4 +56,4 @@ export const optionValues = (): Field => ({
       },
     },
   ],
-})
+}

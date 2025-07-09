@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./layout";
+@import "./utility";
+@import "./panel";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -32,15 +34,16 @@
   --text-lg: 1.3rem;
   --text-xl: 1.5rem;
   --text-h1: clamp(3rem, 4vmax, 4.5rem);
-  --text-h1-line-height: clamp(3.5rem, 4vmax, 4.5rem);
+  --spacing-h1: clamp(3.5rem, 4vmax, 4.5rem);
   --text-h2: clamp(2rem, 3vmax, 3.5rem);
-  --text-h2-line-height: clamp(2.5rem, 3vmax, 3.5rem);
+  --spacing-h2: clamp(2.5rem, 3vmax, 3.5rem);
 
   /* Shadows */
   --shadow-panel:
     0px 30px 60px -30px rgba(63, 63, 63, 0.1), 0px 50px 100px -20px rgba(50, 50, 93, 0.1),
     0px 1px 1px 0px rgba(255, 255, 255, 0.1) inset;
-  --shadow-color-picker: 0px 0px 0px 3px #151515;
+
+  --background-image-flake: url("/flake.webp");
 }
 
 /* Dark theme overrides */
@@ -61,7 +64,7 @@ body {
 }
 
 body {
-  @apply from-blue-grey to-blue-light bg-gradient-to-br;
+  @apply from-blue-grey to-blue-light min-h-screen bg-gradient-to-br;
 }
 
 main {
@@ -70,7 +73,7 @@ main {
 }
 
 h1 {
-  @apply text-h1 font-bold italic;
+  @apply text-h1 leading-h1 font-bold italic;
 }
 
 strong {

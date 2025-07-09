@@ -4,13 +4,15 @@ import { useRowLabel } from "@payloadcms/ui"
 
 interface Props {
   placeholder: string
-  objectKey?: string
+  path?: string[]
 }
 
-export const ListRowLabel = ({ placeholder, objectKey = "title" }: Props) => {
+export const ListRowLabel = ({ placeholder, path }: Props) => {
   const { data, rowNumber } = useRowLabel<Record<string, string | undefined>>()
 
-  const customLabel = data[objectKey] ?? `${placeholder} ${String(rowNumber).padStart(2, "0")} `
+  const customLabel =
+    path?.reduce((acc: any, key) => acc[key], data) ??
+    `${placeholder} ${String(rowNumber).padStart(2, "0")} `
 
   return customLabel
 }

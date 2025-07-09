@@ -15,10 +15,10 @@ const Header = async () => {
     <>
       <div className="bg-dark overflow-hidden" id="top-nav">
         <div className="w-section px-section flex h-8 items-center justify-end gap-x-8 text-sm font-light text-white uppercase">
-          <Link href="/faq" className="hover:underline">
+          <Link href="/faq" className="link">
             FAQ
           </Link>
-          <Link href="/contact" className="hover:underline">
+          <Link href="/contact" className="link">
             Contact
           </Link>
           <div>
@@ -26,7 +26,7 @@ const Header = async () => {
               <Fragment key={l}>
                 <NextLink
                   href={`/${l}`}
-                  className="after:mx-1 after:inline-block after:h-4 after:w-[1px] after:translate-y-[2px] after:bg-white last:after:hidden hover:underline"
+                  className="link after:mx-1 after:inline-block after:h-4 after:w-[1px] after:translate-y-[2px] after:bg-white last:after:hidden"
                 >
                   {l}
                 </NextLink>

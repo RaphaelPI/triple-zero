@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload"
-import { table } from "../_fields/table"
+import { Table } from "../_fields/table"
 
 export const SizeGuide: CollectionConfig = {
   slug: "sizeGuide",
@@ -27,6 +27,6 @@ export const SizeGuide: CollectionConfig = {
       type: "number",
       required: true,
     },
-    table(),
+    Table,
   ],
 }

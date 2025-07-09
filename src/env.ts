@@ -18,8 +18,12 @@ export const env = createEnv({
     SERVER_S3_SECRET_ACCESS_KEY: z.string(),
     SERVER_S3_REGION: z.string(),
   },
+  shared: {
+    NODE_ENV: z.string().default("development"),
+  },
   experimental__runtimeEnv: {
     // client
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+    NODE_ENV: process.env.NODE_ENV,
   },
 })
