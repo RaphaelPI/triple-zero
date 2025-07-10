@@ -15,16 +15,16 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
-import { getClient } from "@/lib/payload"
 import { Category } from "@/payload-types"
 import { getLocale, getTranslations } from "next-intl/server"
 import Bed from "src/assets/bed.svg"
 import Close from "src/assets/close.svg"
 import Mountain from "src/assets/mountain.svg"
+import { getNavData } from "../data"
 
 export const MainNav = async () => {
   const locale = await getLocale()
-  const nav = await (await getClient()).findGlobal({ slug: "nav", locale: locale as Locale })
+  const nav = await getNavData(locale as Locale)
   const t = await getTranslations()
 
   return (
@@ -51,7 +51,7 @@ export const MainNav = async () => {
                         <Link
                           key={category.id}
                           className="link block text-nowrap"
-                          href={`/c/${category.slug}`}
+                          href={`/${category.slug}`}
                         >
                           {category.title}
                         </Link>
@@ -97,7 +97,7 @@ export const MainNav = async () => {
                     <Link
                       key={category.id}
                       className="link block text-nowrap"
-                      href={`/c/${category.slug}`}
+                      href={`/${category.slug}`}
                     >
                       {category.title}
                     </Link>

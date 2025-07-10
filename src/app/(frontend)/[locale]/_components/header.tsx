@@ -6,6 +6,7 @@ import { LOCALES } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getTranslations } from "next-intl/server"
 import NextLink from "next/link"
+import { CartButton } from "./cart-button"
 import { MainNav } from "./main-nav"
 
 const Header = async () => {
@@ -36,15 +37,15 @@ const Header = async () => {
         </div>
       </div>
       <div className="sticky top-0 z-[1] bg-white shadow-lg shadow-[#00000011]">
-        <nav className="w-section px-section flex h-20 items-center justify-between">
+        <nav className="w-section px-section flex h-16 items-center justify-between transition-all duration-100 lg:h-16">
           <div className="flex items-center gap-x-8">
             <Link href="/" aria-label={t("menu.home")} className="">
-              <Logo className="hidden lg:block" height={64} />
-              <LogoMin className="h-14 w-auto lg:hidden" />
+              <Logo className="max-lg:hidden" height={48} />
+              <LogoMin className="h-12 w-auto lg:hidden" />
             </Link>
             <MainNav />
           </div>
-          <div>CART</div>
+          <CartButton />
           {/* <ol className="flex h-full items-center gap-x-4 lg:gap-x-8">
             <li className="leading-[3rem]"></li>
             <BigMenu label={t("menu.products")} categoryList={categoryList} />

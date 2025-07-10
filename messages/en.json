@@ -40,6 +40,7 @@
     "quantity": "Quantité",
     "priceVTA": "Prix TTC",
     "order": "Commande",
+    "resume": "Récapitulatif",
     "removeLine": "Voulez-vous supprimer ce produit de votre panier ?",
     "empty": "Votre panier est vide",
     "totalCart": "Total panier",

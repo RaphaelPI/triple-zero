@@ -12,6 +12,17 @@ export const Nav: GlobalConfig = {
       type: "array",
       required: true,
       maxRows: 4,
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+            clientProps: {
+              placeholder: "Item",
+              path: ["title"],
+            },
+          },
+        },
+      },
       fields: [
         {
           name: "title",

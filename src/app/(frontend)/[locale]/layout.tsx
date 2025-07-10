@@ -6,6 +6,7 @@ import { barlow } from "./fonts"
 
 import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
+import { Footer } from "./_components/footer"
 import Header from "./_components/header"
 import { Providers } from "./providers"
 
@@ -37,6 +38,7 @@ export default async function LocaleLayout({
         <Providers locale={locale} messages={messages}>
           <Header />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

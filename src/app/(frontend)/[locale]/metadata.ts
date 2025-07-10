@@ -26,7 +26,7 @@ export function getMetadata({
   images,
 }: {
   locale?: string
-  pathname: string | null
+  pathname?: string
   title?: string
   description?: string
   robots?: Robots
@@ -37,7 +37,7 @@ export function getMetadata({
   const siteName = "TRIPLE ZERO pur duvet d'oie"
   const pageTitle = title ? `${siteName} - ${title}` : siteName
 
-  if (pathname === null) {
+  if (!pathname) {
     return {
       title: pageTitle,
       robots: {

@@ -1,7 +1,9 @@
 import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
 
-function booleanTransformer(str: string | undefined) {
+export const isDev = () => env.NODE_ENV === "development"
+
+const booleanTransformer = (str: string | undefined) => {
   return str != null && str !== "" && str !== "false" && str !== "0"
 }
 

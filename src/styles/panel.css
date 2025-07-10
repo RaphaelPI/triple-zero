@@ -38,5 +38,5 @@
 }
 
 @utility panel-table-cell {
-  @apply px-6 py-4;
+  @apply p-4 xl:px-6;
 }

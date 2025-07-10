@@ -44,7 +44,7 @@ export const Popover = ({
       >
         {children}
       </TooltipTrigger>
-      <TooltipContent {...props} className={cn(tooltipVariants({ variant }))}>
+      <TooltipContent sideOffset={5} {...props} className={cn(tooltipVariants({ variant }))}>
         {content}
       </TooltipContent>
     </Tooltip>

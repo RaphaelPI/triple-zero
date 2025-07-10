@@ -1,4 +1,4 @@
-import { isDev } from "@/lib/envUtils"
+import { isDev } from "@/env"
 
 const LEVELS: Record<"log" | "error" | "warn", string> = {
   error: "🔴",

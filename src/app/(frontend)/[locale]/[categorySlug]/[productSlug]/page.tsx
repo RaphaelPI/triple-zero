@@ -51,16 +51,18 @@ export default async (props: Props) => {
   const { product, category } = await getData(props)
 
   return (
-    <main className="bg-flake bg-flake-bl bg-no-repeat">
-      <div className="w-section py-section grid gap-8 lg:grid-cols-2">
+    <main className="bg-flake bg-flake-bl pb-section bg-no-repeat">
+      <div className="w-section px-section py-section">
+        <Breadcrumbs
+          items={[
+            { label: category.title, href: `/${category.slug}` },
+            { label: product.title, href: `/${category.slug}/${product.slug}` },
+          ]}
+        />
+        <h1 className="mb-4">{product.title}</h1>
+      </div>
+      <div className="w-section grid gap-8 lg:grid-cols-2">
         <section className="px-section order-1 lg:pr-0">
-          <Breadcrumbs
-            items={[
-              { label: category.title, href: `/${category.slug}` },
-              { label: product.title, href: `/${category.slug}/${product.slug}` },
-            ]}
-          />
-          <h1 className="mb-4">{product.title}</h1>
           <p>{product.description}</p>
         </section>
         <ProductDynamicContent product={product} />

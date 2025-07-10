@@ -1,7 +1,8 @@
 import { Locale } from "@/i18n/config"
 import { getClient } from "@/lib/payload"
+import { cache } from "react"
 
-export const getProductData = async (slug: string, locale: Locale) => {
+export const getProductData = cache(async (slug: string, locale: Locale) => {
   const payload = await getClient()
   const product = await payload.find({
     collection: "product",
@@ -9,9 +10,9 @@ export const getProductData = async (slug: string, locale: Locale) => {
     locale,
   })
   return product
-}
+})
 
-export const getCategoryData = async (slug: string, locale: Locale) => {
+export const getCategoryData = cache(async (slug: string, locale: Locale) => {
   const payload = await getClient()
   const category = await payload.find({
     collection: "category",
@@ -23,4 +24,4 @@ export const getCategoryData = async (slug: string, locale: Locale) => {
     locale,
   })
   return category
-}
+})

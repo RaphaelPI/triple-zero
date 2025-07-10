@@ -4,6 +4,7 @@ import { Product, SizeGuide } from "@/payload-types"
 import { ProductImages } from "./product-images"
 import { ProductOptions } from "./product-options"
 import { ProductProvider } from "./product-provider"
+import { ProductTechnicalValues } from "./product-technical-values"
 
 interface Props {
   product: Product
@@ -24,6 +25,7 @@ export const ProductDynamicContent = ({ product }: Props) => {
       <div className="lg:pl-section order-2 lg:order-3">
         <ProductImages />
       </div>
+      <ProductTechnicalValues />
     </ProductProvider>
   )
 }

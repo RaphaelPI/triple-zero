@@ -2,7 +2,7 @@
 
 import { useSessionStorageState } from "@/hooks/useStorageState"
 import { useRouter } from "@/i18n/navigation"
-import { Product, ProductOption, ProductOptionValue } from "@/payload-types"
+import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { createContext, useContext, useEffect, useState } from "react"
 
 export interface Cart {
@@ -12,11 +12,15 @@ export interface Cart {
 
 export interface CartLine {
   product: string
+  title: string
+  image: string
   colors: string[]
   options: string[][] // [titre, valeur]
   quantity: number
   price: number
   url: string
+  categorySlug: string
+  category: string
 }
 
 const DEFAULT_CART: Cart = {
@@ -65,11 +69,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       newCart.lines.push({
         product: product.id,
+        image: (product.images?.[0]?.image as Media)?.url ?? "",
+        title: product.title,
         options: lineOptions,
         colors: lineColors,
         quantity: 1,
         url: window.location.href,
         price,
+        categorySlug: (product.category as Category).slug ?? "",
+        category: (product.category as Category).title ?? "",
       })
     }
 

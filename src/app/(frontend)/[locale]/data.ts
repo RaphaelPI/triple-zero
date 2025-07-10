@@ -2,17 +2,21 @@ import { Locale } from "@/i18n/config"
 import { getClient } from "@/lib/payload"
 import { cache } from "react"
 
-export const getCategoryData = cache(async (slug: string, locale: Locale) => {
+export const getCategoriesData = cache(async (locale: Locale) => {
   const payload = await getClient()
   const category = await payload.find({
     collection: "category",
-    where: { slug: { equals: slug } },
     select: {
       title: true,
       slug: true,
-      description: true,
     },
     locale,
   })
   return category
+})
+
+export const getNavData = cache(async (locale: Locale) => {
+  const payload = await getClient()
+  const nav = await payload.findGlobal({ slug: "nav", locale })
+  return nav
 })

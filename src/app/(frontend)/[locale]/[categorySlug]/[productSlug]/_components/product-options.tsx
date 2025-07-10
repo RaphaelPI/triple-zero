@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { useCart } from "@/providers/cart"
 import { ProductOption } from "./product-option"
 
+import { Button } from "@/components/ui/button"
 import type { ProductOption as ProductOptionType, SizeGuide } from "@/payload-types"
 import { useTranslations } from "next-intl"
 import { useProduct } from "./product-provider"
@@ -66,7 +67,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
       </div>
       <div className="px-panel py-panel flex flex-wrap items-center gap-4">
         <div className="text-4xl font-bold">{technicalValues?.price}€</div>
-        <button
+        <Button
           className="button"
           onClick={() =>
             addItem({
@@ -78,7 +79,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
           }
         >
           Ajouter au panier
-        </button>
+        </Button>
         <div className="hidden cursor-default items-center text-xs lg:flex">
           <Info className="mr-1 h-3 w-3" /> Guide des frais de port
         </div>
