@@ -32,7 +32,7 @@
   "care": "Entretien",
   "cart": {
     "title": "Panier",
-    "hint": "Validez votre commande afin de procéder au paiement.",
+    "description": "Validez votre commande afin de procéder au paiement.",
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
@@ -47,7 +47,35 @@
     "total": "Total à payer",
     "delivery": "Livraison"
   },
-  "notFound": "Page introuvable",
+  "delivery": {
+    "title": "Vos coordonnées",
+    "description": "Veuillez saisir les informations nécessaires pour votre commande.\nNe remplissez l'adresse de livraison que si elle est différente de la vôtre",
+    "gender": "Civilité",
+    "lastName": "Nom",
+    "firstName": "Prénom",
+    "company": "Société",
+    "address": "Adresse",
+    "address2": "Complément d'adresse",
+    "zip": "Code postal",
+    "city": "Ville",
+    "country": "Pays",
+    "email": "Email",
+    "phone": "Téléphone",
+    "validate": "Passer au paiement"
+  },
+  "product": {
+    "options": "Options",
+    "advancedOptions": "Options avancées"
+  },
+  "checkout": {
+    "step1": "Panier",
+    "step2": "Coordonnées",
+    "step3": "Paiement"
+  },
+  "notFound": {
+    "title": "404 - Page introuvable",
+    "description": "La page que vous cherchez n'existe pas."
+  },
   "question": "Une question sur nos produits ou nos services ?",
   "contactUs": "Contactez-nous",
   "priceFrom": "À partir de ",

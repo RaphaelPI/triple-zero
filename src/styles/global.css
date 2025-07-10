@@ -19,6 +19,8 @@
   --color-muted-foreground: oklch(0.556 0 0);
   --color-destructive: oklch(0.577 0.245 27.325);
   --color-ring: oklch(0.708 0 0);
+  --color-accent: var(--color-grey-light);
+  --color-input: var(--color-grey-light);
 
   /* Custom brand colors */
   --color-dark: #151515;
@@ -35,8 +37,8 @@
   --text-base: 1.1rem;
   --text-lg: 1.3rem;
   --text-xl: 1.5rem;
-  --text-h1: clamp(3rem, 4vmax, 4.5rem);
-  --spacing-h1: clamp(3.5rem, 4vmax, 4.5rem);
+  --text-h1: clamp(2.5rem, 4vmax, 4.5rem);
+  --spacing-h1: clamp(3rem, 4vmax, 4.5rem);
   --text-h2: clamp(2rem, 3vmax, 3.5rem);
   --spacing-h2: clamp(2.5rem, 3vmax, 3.5rem);
 

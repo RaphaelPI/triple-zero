@@ -8,7 +8,7 @@
   @apply px-section no-scrollbar relative flex w-full snap-x snap-mandatory scroll-px-4 flex-nowrap gap-x-4 overflow-x-auto scroll-smooth lg:px-4;
 }
 @utility link {
-  @apply hover:underline;
+  @apply cursor-pointer hover:underline;
 }
 @utility no-scrollbar {
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;

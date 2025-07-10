@@ -35,15 +35,15 @@ interface AddCartItemArgs {
   price: number
 }
 
-interface ICartContext {
+interface ICheckoutContext {
   cart: Cart
   loading: boolean
   addItem: (args: AddCartItemArgs) => void
   updateLineQuantity: (index: number, quantity: number) => void
 }
 
-const CartContext = createContext<ICartContext>({} as ICartContext)
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
+export const CheckoutProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
   const [cart, setCart] = useSessionStorageState<Cart>("cart", DEFAULT_CART)
   const router = useRouter()
@@ -99,16 +99,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <CartContext.Provider value={{ cart, loading, addItem, updateLineQuantity }}>
+    <CheckoutContext.Provider value={{ cart, loading, addItem, updateLineQuantity }}>
       {children}
-    </CartContext.Provider>
+    </CheckoutContext.Provider>
   )
 }
 
-export const useCart = () => {
-  const context = useContext(CartContext)
+export const useCheckout = () => {
+  const context = useContext(CheckoutContext)
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider")
+    throw new Error("useCheckout must be used within a CheckoutProvider")
   }
   return context
 }

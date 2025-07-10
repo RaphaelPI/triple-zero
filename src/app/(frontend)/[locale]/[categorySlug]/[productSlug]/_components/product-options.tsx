@@ -5,7 +5,7 @@ import Info from "src/assets/info.svg"
 import Triangle from "src/assets/triangle.svg"
 
 import { cn } from "@/lib/utils"
-import { useCart } from "@/providers/cart"
+import { useCheckout } from "@/providers/checkout"
 import { ProductOption } from "./product-option"
 
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,7 @@ interface ProductOptionsProps {
 }
 
 export const ProductOptions = ({ options, advanced, sizeGuide, children }: ProductOptionsProps) => {
-  const { addItem } = useCart()
+  const { addItem } = useCheckout()
   const [open, setOpen] = useState(false)
   const { technicalValues, activeOptions, activeColors, product } = useProduct()
   const t = useTranslations("product")

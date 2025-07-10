@@ -7,18 +7,15 @@ import Volume from "src/assets/volume.svg"
 import Weight from "src/assets/weight.svg"
 
 import { Popover } from "@/components/popover"
-import { useCart } from "@/providers/cart"
+import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
 import { useProduct } from "./product-provider"
 
 export const ProductTechnicalValues = () => {
-  const { addItem } = useCart()
+  const { addItem } = useCheckout()
   const { technicalValues, activeOptions, product, activeColors } = useProduct()
   const t = useTranslations()
 
-  const iconClassName = "w-3 h-3 mr-1 hidden md:inline-block"
-  const textClassName = "flex items-center text-sm cursor-default"
-  const valueClassName = "font-semibold md:text-lg"
   return (
     <>
       <div className="bg-grey-light fixed right-0 bottom-0 left-0 border-t border-t-gray-200">
@@ -29,7 +26,7 @@ export const ProductTechnicalValues = () => {
             </IconContainer>
             <div>
               <div className="text-sm leading-3">{t("price")}</div>
-              <div className={valueClassName}>{technicalValues?.price}€</div>
+              <div className="font-semibold md:text-lg">{technicalValues?.price}€</div>
             </div>
           </div>
           <Popover content={t("technicalValues.weight")} variant="dark">
@@ -43,7 +40,7 @@ export const ProductTechnicalValues = () => {
                   <Info className="size-3 md:inline-block" />{" "}
                   <p className="line-clamp-1 inline">{t("md:weight")}</p>
                 </div>
-                <div className={valueClassName}>{technicalValues?.weight}g</div>
+                <div className="font-semibold md:text-lg">{technicalValues?.weight}g</div>
               </div>
             </div>
           </Popover>
@@ -59,7 +56,7 @@ export const ProductTechnicalValues = () => {
                   <p className="line-clamp-1 text-xs leading-3 md:hidden">{t("volume")}</p>
                   <p className="line-clamp-1 hidden md:inline">{t("md:volume")}</p>
                 </div>
-                <div className={valueClassName}>
+                <div className="font-semibold md:text-lg">
                   {technicalValues?.volume} {t("liters")}
                 </div>
               </div>
@@ -76,7 +73,7 @@ export const ProductTechnicalValues = () => {
                   <Info className="size-3 md:inline-block" />
                   {t("temperature")}
                 </div>
-                <div className={valueClassName}>{technicalValues?.temperature} °</div>
+                <div className="font-semibold md:text-lg">{technicalValues?.temperature} °</div>
               </div>
             </div>
           </Popover>

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { formatAmount } from "@/lib/text"
-import { CartLine as CartLineType, useCart } from "@/providers/cart"
+import { CartLine as CartLineType, useCheckout } from "@/providers/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import NextImage from "next/image"
@@ -15,7 +15,7 @@ interface CartLineProps {
 }
 
 export const CartLine = ({ line, index }: CartLineProps) => {
-  const { updateLineQuantity } = useCart()
+  const { updateLineQuantity } = useCheckout()
   // const [product, setProduct] = useState<Product>()
   const t = useTranslations()
 

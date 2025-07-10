@@ -65,12 +65,18 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    'img-block': ImgBlock;
+    'text-block': TextBlock;
+    'text-img-block': TextImgBlock;
+    'title-block': TitleBlock;
+  };
   collections: {
     blocInfo: BlocInfo;
     category: Category;
     color: Color;
     media: Media;
+    pages: Page;
     product: Product;
     sizeGuide: SizeGuide;
     users: User;
@@ -84,6 +90,7 @@ export interface Config {
     category: CategorySelect<false> | CategorySelect<true>;
     color: ColorSelect<false> | ColorSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
     sizeGuide: SizeGuideSelect<false> | SizeGuideSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -128,6 +135,107 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "img-block".
+ */
+export interface ImgBlock {
+  image: string | Media;
+  size?: ('small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'img-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text-block".
+ */
+export interface TextBlock {
+  title?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Si coché, le bloc sera affiché dans un encadré blanc
+   */
+  panel?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text-img-block".
+ */
+export interface TextImgBlock {
+  title?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: string | Media;
+  /**
+   * Si coché, le bloc sera affiché dans un encadré blanc
+   */
+  panel?: boolean | null;
+  align?: ('left' | 'right') | null;
+  size?: ('small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text-img-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "title-block".
+ */
+export interface TitleBlock {
+  title: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'title-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -180,22 +288,98 @@ export interface Color {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "pages".
  */
-export interface Media {
+export interface Page {
   id: string;
-  alt: string;
+  title: string;
+  blocksJson?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  blocks: (
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        /**
+         * Si coché, le bloc sera affiché dans un encadré blanc
+         */
+        panel?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'text-block';
+      }
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        image: string | Media;
+        /**
+         * Si coché, le bloc sera affiché dans un encadré blanc
+         */
+        panel?: boolean | null;
+        align?: ('left' | 'right') | null;
+        size?: ('small' | 'medium' | 'large') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'text-img-block';
+      }
+    | {
+        image: string | Media;
+        size?: ('small' | 'medium' | 'large') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'img-block';
+      }
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'title-block';
+      }
+  )[];
+  slug?: string | null;
+  isPublished?: boolean | null;
+  meta?: {
+    /**
+     * Entre 130 et 160 caractères pour décrire le contenu de la page
+     */
+    description?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -394,6 +578,10 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
         relationTo: 'product';
         value: string | Product;
       } | null)
@@ -496,6 +684,63 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  blocksJson?: T;
+  blocks?:
+    | T
+    | {
+        'text-block'?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              panel?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'text-img-block'?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              image?: T;
+              panel?: T;
+              align?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'img-block'?:
+          | T
+          | {
+              image?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'title-block'?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  slug?: T;
+  isPublished?: T;
+  meta?:
+    | T
+    | {
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

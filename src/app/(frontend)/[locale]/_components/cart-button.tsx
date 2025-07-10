@@ -4,10 +4,10 @@ import Basket from "src/assets/basket.svg"
 
 import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
-import { useCart } from "@/providers/cart"
+import { useCheckout } from "@/providers/checkout"
 
 export const CartButton = () => {
-  const { cart } = useCart()
+  const { cart } = useCheckout()
 
   return (
     <Link

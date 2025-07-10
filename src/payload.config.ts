@@ -11,6 +11,7 @@ import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
+import * as blocks from "./app/(payload)/_blocks"
 import * as collections from "./app/(payload)/_collections"
 import * as globals from "./app/(payload)/_globals"
 
@@ -49,6 +50,7 @@ export default buildConfig({
   },
   collections: Object.values(collections),
   globals: Object.values(globals),
+  blocks: Object.values(blocks),
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

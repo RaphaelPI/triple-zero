@@ -5,12 +5,12 @@ import { formatAmount } from "@/lib/text"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { useCart } from "@/providers/cart"
+import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
 import { CartLine } from "./cart-line"
 
 export const Cart = () => {
-  const { loading, cart } = useCart()
+  const { loading, cart } = useCheckout()
   const t = useTranslations()
 
   if (loading) {
@@ -77,7 +77,7 @@ export const Cart = () => {
           <Button className="mx-auto block">{t("cart.validate")}</Button>
         </div>
       </div>
-      <div className="bg-blue-light border-blue-grey fixed right-0 bottom-0 left-0 flex items-center border-t border-solid p-4 shadow-xl">
+      <div className="bg-blue-light border-blue-grey fixed right-0 bottom-0 left-0 flex items-center border-t border-solid p-4 shadow-xl lg:hidden">
         <div className="max-xs:hidden leading-5">
           <div>{t("cart.total")}</div>
           <strong className="tracking-wider">{formatAmount(totalCart + deliveryFee)}</strong>

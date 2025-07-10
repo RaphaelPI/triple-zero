@@ -1,7 +1,7 @@
-import { slugify } from "@/lib/slugify"
 import { CollectionConfig } from "payload"
 import { ColorWithImage } from "../_fields/color-with-image"
 import { ProductOption } from "../_fields/product-option"
+import { Slug } from "../_fields/slug"
 
 export const Product: CollectionConfig = {
   slug: "product",
@@ -12,17 +12,6 @@ export const Product: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "Produits",
-  },
-  hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        if (!data?.slug) {
-          return { ...data, slug: slugify(data?.title) }
-        }
-
-        return data
-      },
-    ],
   },
   fields: [
     {
@@ -43,14 +32,7 @@ export const Product: CollectionConfig = {
               type: "text",
               required: true,
             },
-            {
-              name: "slug",
-              type: "text",
-              index: true,
-              admin: {
-                readOnly: true,
-              },
-            },
+            Slug,
             {
               name: "description",
               label: "Description",

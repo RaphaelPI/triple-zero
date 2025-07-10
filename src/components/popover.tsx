@@ -29,7 +29,7 @@ export const Popover = ({
   const [open, setOpen] = useState(false)
 
   const handleClick = (e: TouchEvent<HTMLButtonElement>) => {
-    // e.preventDefault()
+    e.preventDefault()
     setOpen((prev) => !prev)
   }
 

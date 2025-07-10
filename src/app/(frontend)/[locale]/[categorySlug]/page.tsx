@@ -1,4 +1,5 @@
 import { Locale } from "@/i18n/config"
+import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getCategoryData } from "./data"
 
@@ -14,6 +15,10 @@ interface Props {
 const getData = cache(async ({ params }: Props) => {
   const { locale, categorySlug } = await params
   const [categoryData] = await Promise.all([getCategoryData(categorySlug, locale)])
+
+  if (!categoryData.docs[0]) {
+    notFound()
+  }
 
   return { category: categoryData.docs[0] }
 })

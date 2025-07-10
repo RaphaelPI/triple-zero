@@ -1,12 +1,4 @@
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -18,9 +10,9 @@ import { Link } from "@/i18n/navigation"
 import { Category } from "@/payload-types"
 import { getLocale, getTranslations } from "next-intl/server"
 import Bed from "src/assets/bed.svg"
-import Close from "src/assets/close.svg"
 import Mountain from "src/assets/mountain.svg"
 import { getNavData } from "../data"
+import { MainNavMobile } from "./main-nav-mobile"
 
 export const MainNav = async () => {
   const locale = await getLocale()
@@ -75,38 +67,7 @@ export const MainNav = async () => {
       </NavigationMenu>
 
       <div className="flex gap-6 md:hidden">
-        {nav.items.map((item) => (
-          <Drawer key={item.id} direction="left">
-            <DrawerTrigger className="cursor-pointer">{item.title}</DrawerTrigger>
-            <DrawerContent className="bg-white">
-              <DrawerHeader>
-                <DrawerClose className="flex justify-end">
-                  <Close className="size-8" />
-                </DrawerClose>
-              </DrawerHeader>
-              <div className="space-y-8 px-8 text-2xl">
-                <DrawerTitle>
-                  <div className="text-h1">{item.title}</div>
-                </DrawerTitle>
-                {item.category.map((category: Category | string) => {
-                  if (typeof category === "string") {
-                    return null
-                  }
-
-                  return (
-                    <Link
-                      key={category.id}
-                      className="link block text-nowrap"
-                      href={`/${category.slug}`}
-                    >
-                      {category.title}
-                    </Link>
-                  )
-                })}
-              </div>
-            </DrawerContent>
-          </Drawer>
-        ))}
+        <MainNavMobile nav={nav} />
       </div>
     </>
   )

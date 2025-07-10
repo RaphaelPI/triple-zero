@@ -1,5 +1,5 @@
-import { slugify } from "@/lib/slugify"
 import { CollectionConfig } from "payload"
+import { Slug } from "../_fields/slug"
 
 export const Category: CollectionConfig = {
   slug: "category",
@@ -11,17 +11,6 @@ export const Category: CollectionConfig = {
     useAsTitle: "title",
     group: "Produits",
   },
-  hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        if (!data?.slug) {
-          return { ...data, slug: slugify(data?.title) }
-        }
-
-        return data
-      },
-    ],
-  },
   fields: [
     {
       name: "title",
@@ -30,14 +19,7 @@ export const Category: CollectionConfig = {
       required: true,
       localized: true,
     },
-    {
-      name: "slug",
-      type: "text",
-      index: true,
-      admin: {
-        readOnly: true,
-      },
-    },
+    Slug,
     {
       name: "description",
       label: "Description",

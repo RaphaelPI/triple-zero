@@ -38,22 +38,14 @@ const Header = async () => {
       </div>
       <div className="sticky top-0 z-[1] bg-white shadow-lg shadow-[#00000011]">
         <nav className="w-section px-section flex h-16 items-center justify-between transition-all duration-100 lg:h-16">
-          <div className="flex items-center gap-x-8">
+          <div className="flex items-center gap-x-2 lg:gap-x-6">
             <Link href="/" aria-label={t("menu.home")} className="">
               <Logo className="max-lg:hidden" height={48} />
-              <LogoMin className="h-12 w-auto lg:hidden" />
+              <LogoMin className="h-12 w-14 lg:hidden" />
             </Link>
             <MainNav />
           </div>
           <CartButton />
-          {/* <ol className="flex h-full items-center gap-x-4 lg:gap-x-8">
-            <li className="leading-[3rem]"></li>
-            <BigMenu label={t("menu.products")} categoryList={categoryList} />
-            <li className="link leading-[3rem]">
-              <Link href="/savoir-faire">{t("menu.knowledge")}</Link>
-            </li>
-          </ol> */}
-          {/* <CartButton lang={lang} /> */}
         </nav>
       </div>
     </>
