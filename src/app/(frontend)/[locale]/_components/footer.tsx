@@ -3,12 +3,11 @@ import { Locale } from "@/i18n/config"
 import { getLocale, getTranslations } from "next-intl/server"
 import Link from "next/link"
 import LogoMin from "src/assets/logo-min.svg"
-import { getCategoriesData, getNavData } from "../data"
+import { getNavData } from "../data"
 
 export const Footer = async () => {
   const locale = await getLocale()
   const t = await getTranslations()
-  const categories = await getCategoriesData(locale as Locale)
   const nav = await getNavData(locale as Locale)
 
   return (
