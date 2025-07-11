@@ -1,11 +1,11 @@
 "use client"
 
-import Info from "@/assets/info.svg"
+import { Amount } from "@/components/amount"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
-import { formatAmount } from "@/lib/text"
 import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
+import { ShippingFees } from "./shipping-fees"
 
 interface Props {
   displayButton?: boolean
@@ -21,16 +21,17 @@ export const CheckoutSummary = ({ displayButton = true }: Props) => {
         {t("cart.resume")}
       </div>
       <div className="panel-table-cell space-y-4 text-lg">
-        {t("cart.totalCart")} : {formatAmount(total)}
-        <br />
-        {t("cart.delivery")} : {formatAmount(deliveryFee)}
-        <div className="mt-1 flex cursor-default items-center gap-1 text-xs">
-          <Info className="size-3" /> {t("cart.shippingFees")}
+        <div className="space-y-1">
+          <div>
+            {t("cart.totalCart")} : <Amount amount={total} taxe />
+          </div>
+          <ShippingFees />
         </div>
-        <br />
         <div className="text-2xl">
           {t("cart.total")} :{" "}
-          <strong className="tracking-wider">{formatAmount(total + deliveryFee)}</strong>
+          <strong className="tracking-wider">
+            <Amount amount={total + (deliveryFee ?? 0)} taxe />
+          </strong>
         </div>
         {displayButton && (
           <Link href="/coordonnees">

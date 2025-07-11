@@ -31,9 +31,6 @@ const getData = cache(async ({ params }: Props) => {
     notFound()
   }
 
-  console.log(productData.docs[0].category)
-  // console.log(categoryData.docs[0])
-
   const pCat = productData.docs[0].category as Category
   if (pCat.slug !== categorySlug) {
     notFound()

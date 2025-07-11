@@ -21,6 +21,20 @@ export const Message: GlobalConfig = {
       name: "active",
       type: "checkbox",
       defaultValue: true,
+      admin: {
+        description: "Si la case est cochée, le message sera affiché",
+        position: "sidebar",
+      },
+    },
+    {
+      name: "modal",
+      type: "checkbox",
+      defaultValue: true,
+      admin: {
+        description:
+          "Si la case est cochée, le message s'affichera sur la première page affichée du site dans une modale",
+        position: "sidebar",
+      },
     },
   ],
 }

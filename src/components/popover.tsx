@@ -13,6 +13,9 @@ const tooltipVariants = cva(
         light: "text-dark border-dark rounded-xl border-[3px] bg-white",
       },
     },
+    defaultVariants: {
+      variant: "dark",
+    },
   },
 )
 

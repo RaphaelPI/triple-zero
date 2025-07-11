@@ -13,7 +13,7 @@ const log =
       return
     }
     // eslint-disable-next-line no-console
-    console[level](LEVELS[level], "❄️", message, ...optionalParams)
+    console[level](LEVELS[level], " ❄️ ", message, ...optionalParams)
   }
 
 export const logger = {

@@ -143,6 +143,12 @@ importers:
       zod:
         specifier: ^4.0.5
         version: 4.0.5
+      zsa:
+        specifier: ^0.6.0
+        version: 0.6.0(zod@4.0.5)
+      zsa-react:
+        specifier: ^0.2.3
+        version: 0.2.3(react@19.1.0)(zod@4.0.5)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
@@ -6449,6 +6455,17 @@ packages:
 
   zod@4.0.5:
     resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
+
+  zsa-react@0.2.3:
+    resolution: {integrity: sha512-THCoIIhtEU3jXTrNBM/PBc0PyHCekizSGEc+fg0LGo1NM1J02LFQN7ICR948X25IjtkZdvxUZmT0+M73GG8eEw==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      zod: ^3.23.5
+
+  zsa@0.6.0:
+    resolution: {integrity: sha512-Pq3X4T0dna5s4dIevYOJiRdM3DUHRvEHS2q1AH/bvkPSh640u+9veVj5zmzmbL0A6cpXMYagwKsR4keGOc0jPQ==}
+    peerDependencies:
+      zod: ^3.23.5
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -13724,5 +13741,15 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zod@4.0.5: {}
+
+  zsa-react@0.2.3(react@19.1.0)(zod@4.0.5):
+    dependencies:
+      react: 19.1.0
+      zod: 4.0.5
+      zsa: 0.6.0(zod@4.0.5)
+
+  zsa@0.6.0(zod@4.0.5):
+    dependencies:
+      zod: 4.0.5
 
   zwitch@2.0.4: {}

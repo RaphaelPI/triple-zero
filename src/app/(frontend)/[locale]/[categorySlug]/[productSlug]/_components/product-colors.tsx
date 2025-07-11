@@ -22,7 +22,6 @@ export const ProductColors = ({ colors, name }: Props) => {
   }
 
   const handleHover = (image?: Media) => () => {
-    console.log(image)
     if (!image) {
       return
     }

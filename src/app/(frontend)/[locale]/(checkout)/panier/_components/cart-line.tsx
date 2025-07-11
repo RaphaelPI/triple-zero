@@ -1,7 +1,7 @@
 "use client"
 
+import { Amount } from "@/components/amount"
 import { Button } from "@/components/ui/button"
-import { formatAmount } from "@/lib/text"
 import { CartLine as CartLineType, useCheckout } from "@/providers/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -93,7 +93,7 @@ export const CartLine = ({ line, index }: CartLineProps) => {
           </div>
         </div>
         <div className="panel-table-cell text-xl select-none xl:w-1/4">
-          {formatAmount(line.price * line.quantity)}
+          <Amount amount={line.price * line.quantity} taxe />
         </div>
       </div>
     </div>

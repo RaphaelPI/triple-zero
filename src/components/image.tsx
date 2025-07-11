@@ -13,7 +13,6 @@ export const Image = ({ media, width, height, ...props }: Props) => {
   const h = height ?? media.height
 
   if (!media.url || !w || !h) {
-    console.log("no media", media)
     return null
   }
 

@@ -27,7 +27,10 @@ export const DeliveryFormFields = ({ form }: Props) => {
 
   return (
     <>
-      <div className="mt-10 text-xl leading-1" onClick={() => setOpen((prev) => !prev)}>
+      <div
+        className="mt-10 cursor-pointer text-xl leading-1"
+        onClick={() => setOpen((prev) => !prev)}
+      >
         Adresse de livraison
         <Triangle
           className={cn(`ml-2 inline w-3 transition-transform`, {

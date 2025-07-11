@@ -6,7 +6,6 @@ interface Props {
 
 export const internalDocToHref = ({ linkNode }: Props) => {
   const { value, relationTo } = linkNode.fields.doc!
-  console.log("linkNode.fields", linkNode.fields)
   const slug = (value as any).slug as string
 
   if (relationTo === "category") {

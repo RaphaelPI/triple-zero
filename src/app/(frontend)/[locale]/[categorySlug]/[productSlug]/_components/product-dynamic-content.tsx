@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const ProductDynamicContent = ({ product }: Props) => {
-  console.log(product.colors)
   return (
     <ProductProvider product={product}>
       <div className="px-section sticky top-0 order-3 lg:order-2 lg:row-span-3 lg:pl-0">

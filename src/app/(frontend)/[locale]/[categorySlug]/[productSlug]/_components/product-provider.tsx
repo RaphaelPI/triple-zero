@@ -47,8 +47,6 @@ export const ProductProvider = ({ children, product }: Props) => {
   // initialize query states from params
   const [params] = useQueryStates(names)
 
-  console.log("params", params)
-
   // All active options
   const activeOptions = options
     .map(({ option }) => [

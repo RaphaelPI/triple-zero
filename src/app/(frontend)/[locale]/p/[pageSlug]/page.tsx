@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async ({ params }: Props) => {
   const { pageSlug } = await params
   const page = await getData(pageSlug)
-  console.log(page.blocks)
+
   return (
     <main>
       <section className="section">
