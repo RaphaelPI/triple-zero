@@ -74,33 +74,6 @@ export default async (props: Props) => {
           <p>{product.description}</p>
         </section>
         <ProductDynamicContent product={product} />
-        {/* <div className="lg:mb-panel lg:w-5/12 xl:w-6/12">
-          <section className="px-section pt-section lg:pr-0">
-            <h2 className="mb-1">
-              <Link href={`/${category.slug}`} className="link flex items-center">
-                <Mountain className="mr-1 h-4 w-4" /> {translate(lang, product.category?.title)}
-              </Link>
-            </h2>
-            <h1 className="mb-4">{product.title}</h1>
-            <p>{translate(lang, product.desc)}</p>
-          </section>
-          <ProductImagesDynamic noImgText={dictionary.noImg} />
-        </div>
-        <section className="pt-section pl-section pr-section lg:w-7/12 lg:pl-0 xl:w-6/12">
-          <ProductOptionsDynamic
-            options={product.options}
-            advanced={product.advanced}
-            lang={lang}
-            dictionary={dictionary}
-            sizeGuide={product.sizeGuide}
-          >
-            <div className="option">
-              <label className="option-label">{dictionary.color}</label>
-              <ColorPickerDynamic colors={product.colors} name="color" />
-            </div>
-          </ProductOptionsDynamic>
-        </section>
-        <ProductTechnicalValuesDynamic dictionary={dictionary} /> */}
       </div>
     </main>
   )

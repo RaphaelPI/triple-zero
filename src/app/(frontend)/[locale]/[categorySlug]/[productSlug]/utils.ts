@@ -147,28 +147,30 @@ export const getProductDefaultImages = (
   product: Product,
   activeOptions: [ProductOption, ProductOptionValue][],
   colors: Product["colors"],
-): Record<string, Media> => {
+): Media[] => {
   // Get default Images
   // from product
-  const defaultProductImages = (product.images || []).map(({ image }, index) => [
-    `${index}`,
-    image as Media,
-  ])
+  const defaultProductImages = (product.images || []).map(({ image }) => image as Media)
 
   // from options
-  const activeOptionsImages = activeOptions
-    .filter(([_, optionValue]) => optionValue.image)
-    .map(([option, optionValue]) => [getOptionSlug(option), optionValue.image as Media])
+  // const activeOptionsImages = activeOptions
+  //   .filter(([_, optionValue]) => optionValue.image)
+  //   .map(([option, optionValue]) => [getOptionSlug(option), optionValue.image as Media])
 
-  console.log("activeOptions", activeOptions)
-  console.log("activeOptionsImages", activeOptionsImages)
+  const optionImages =
+    product.options
+      ?.map(({ option }) => option.values?.map(({ value }) => value.image as Media) ?? [])
+      .flat()
+      .filter((image) => image) ?? []
 
   // from colors
-  const colorOptionImage = colors?.find(({ color }) => params.color === color.color)?.color.image
-  const colorOptionImages = colorOptionImage ? [["color", colorOptionImage]] : []
+  // const colorOptionImage = colors?.find(({ color }) => params.color === color.color)?.color.image
+  // const colorOptionImages = colorOptionImage ? [["color", colorOptionImage]] : []
+  const colorOptionImages = colors?.map(({ color }) => color.image as Media) ?? []
 
   // merge all images
-  return Object.fromEntries([...defaultProductImages, ...colorOptionImages, ...activeOptionsImages])
+  // return Object.fromEntries([...defaultProductImages, ...colorOptionImages, ...activeOptionsImages])
+  return [...defaultProductImages, ...colorOptionImages, ...optionImages]
 }
 
 export const getOptionSlug = (option: ProductOption) => {

@@ -14,11 +14,10 @@ interface IProductContext {
   image?: string
   activeOptions: [ProductOption, ProductOptionValue][]
   activeColors: Product["colors"]
-  images: Record<string, Media>
-  currentImage: ImageSlider
+  images: Media[]
+  currentImage: Media
   product: Product
-  setImage: ({ image, key }: { image?: Media; key?: string }) => void
-  addImage: (image: Media, key: string) => void
+  setImage: (id: string) => void
   resetCurrentImage: () => void
 }
 
@@ -65,58 +64,25 @@ export const ProductProvider = ({ children, product }: Props) => {
 
   // IMAGES
   // Default images
-  const defaultImages = getProductDefaultImages(
-    params,
-    product,
-    activeOptions,
-    product.colors || [],
-  )
+  const images = getProductDefaultImages(params, product, activeOptions, product.colors || [])
 
-  console.log("defaultImages", defaultImages)
-
-  // Default index
-  const defaultIndex = 0
-  const [images, setImages] = useState<Record<string, Media>>(defaultImages)
-  const [currentImage, setCurrentImage] = useState<ImageSlider>({
-    image: defaultImages[defaultIndex],
-    key: String(defaultIndex),
-  })
-  const [lastIndex, setLastIndex] = useState(String(defaultIndex))
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [lastIndex, setLastIndex] = useState(0)
 
   ///////////////////////////////////////////////////////////////////////////////
   // Functions
   ///////////////////////////////////////////////////////////////////////////////
   const resetCurrentImage = () => {
-    setCurrentImage({ image: images[`${lastIndex}`], key: lastIndex })
+    setCurrentIndex(lastIndex)
   }
 
-  const addImage = (image: Media) => {
-    setImages((prev) => ({ ...prev, [image.id]: image }))
-  }
-
-  const setImage = ({ image, key }: { image?: Media; key?: string }) => {
-    if (!image && !key) {
-      return
+  const setImage = (id: string) => {
+    const newIndex = images.findIndex(({ id: imageId }) => imageId === id)
+    if (newIndex !== -1) {
+      setLastIndex(newIndex)
     }
 
-    if (key && Object.keys(images).includes(key)) {
-      setLastIndex(key)
-    }
-
-    let newKey = key
-    let newImage = image
-    if (!image && key) {
-      newImage = images[key]
-    }
-
-    if (!key && image) {
-      newKey = String(image.id)
-    }
-
-    setCurrentImage({
-      key: String(newKey),
-      image: newImage as Media,
-    })
+    setCurrentIndex(newIndex)
   }
 
   return (
@@ -126,11 +92,10 @@ export const ProductProvider = ({ children, product }: Props) => {
         activeOptions,
         activeColors,
         images,
-        currentImage,
+        currentImage: Object.values(images)[currentIndex],
         product,
         setImage,
         resetCurrentImage,
-        addImage,
       }}
     >
       {children}

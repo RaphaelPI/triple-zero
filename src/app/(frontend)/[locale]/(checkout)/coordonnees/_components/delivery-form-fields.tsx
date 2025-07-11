@@ -5,7 +5,7 @@ import { LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
 import { useState } from "react"
-import { Control } from "react-hook-form"
+import { UseFormReturn } from "react-hook-form"
 import Triangle from "src/assets/triangle.svg"
 import { InputField } from "./input-field"
 
@@ -17,10 +17,10 @@ const CountrySelectField = dynamic(
 )
 
 interface Props {
-  control: Control<any>
+  form: UseFormReturn<any>
 }
 
-export const DeliveryForm = ({ control }: Props) => {
+export const DeliveryFormFields = ({ form }: Props) => {
   const [address2, setAddress2] = useState(false)
   const [open, setOpen] = useState(false)
   const t = useTranslations("delivery")
@@ -41,14 +41,14 @@ export const DeliveryForm = ({ control }: Props) => {
       {open && (
         <>
           <InputField
-            control={control}
+            control={form.control}
             name="d_firstName"
             label={t("firstName")}
             placeholder={t("firstName")}
             required
           />
           <InputField
-            control={control}
+            control={form.control}
             name="d_lastName"
             label={t("lastName")}
             placeholder={t("lastName")}
@@ -56,7 +56,7 @@ export const DeliveryForm = ({ control }: Props) => {
           />
 
           <InputField
-            control={control}
+            control={form.control}
             name="d_address"
             label={t("address")}
             placeholder={t("address")}
@@ -64,7 +64,7 @@ export const DeliveryForm = ({ control }: Props) => {
           />
           {address2 ? (
             <InputField
-              control={control}
+              control={form.control}
               name="d_address2"
               label={t("address2")}
               placeholder={t("address2")}
@@ -77,21 +77,21 @@ export const DeliveryForm = ({ control }: Props) => {
           )}
 
           <InputField
-            control={control}
+            control={form.control}
             name="d_zip"
             label={t("zip")}
             placeholder={t("zip")}
             required
           />
           <InputField
-            control={control}
+            control={form.control}
             name="d_city"
             label={t("city")}
             placeholder={t("city")}
             required
           />
           <CountrySelectField
-            control={control}
+            control={form.control}
             name="d_country"
             label={t("country")}
             placeholder={t("country")}

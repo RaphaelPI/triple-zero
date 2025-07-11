@@ -4,8 +4,9 @@ import { getMetadata } from "../../metadata"
 import Cart from "./_components/cart"
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations()
   return getMetadata({
-    title: "Panier",
+    title: t("cart.title"),
     robots: {
       index: false,
       follow: false,

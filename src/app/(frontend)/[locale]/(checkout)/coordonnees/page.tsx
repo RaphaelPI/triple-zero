@@ -2,11 +2,12 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { getMetadata } from "../../metadata"
 import { CheckoutSummary } from "../_components/checkout-summary"
-import { BillingForm } from "./_components/billing-form"
+import { CheckoutForm } from "./_components/checkout-form"
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations()
   return getMetadata({
-    title: "Panier",
+    title: t("delivery.title"),
     robots: {
       index: false,
       follow: false,
@@ -25,7 +26,7 @@ export default async () => {
       </section>
       <section className="w-section px-section flex gap-8 max-lg:flex-col">
         <div className="panel px-panel py-panel flex-1 space-y-4">
-          <BillingForm />
+          <CheckoutForm />
         </div>
         <CheckoutSummary displayButton={false} />
       </section>

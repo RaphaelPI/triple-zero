@@ -3,12 +3,12 @@ import { CollectionConfig } from "payload"
 export const BlocInfo: CollectionConfig = {
   slug: "blocInfo",
   labels: {
-    singular: "Bloc d'information",
-    plural: "Blocs d'information",
+    singular: "Information technique",
+    plural: "Informations technique",
   },
   admin: {
     useAsTitle: "title",
-    group: "Contenu",
+    group: "Produits",
   },
   fields: [
     {

@@ -17,7 +17,7 @@ interface ProductOptionProps {
 }
 
 export const ProductOption = ({ option, required, guide }: ProductOptionProps) => {
-  const { setImage, resetCurrentImage, addImage } = useProduct()
+  const { setImage, resetCurrentImage } = useProduct()
   const [value, setValue] = useQueryState(getOptionSlug(option))
 
   if (!option) {
@@ -32,9 +32,6 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
     if (!optionValue?.image) {
       return
     }
-
-    // update image list
-    addImage(optionValue.image as Media, getOptionSlug(option))
   }
 
   const handleHover = (optionValue: ProductOptionValue) => () => {
@@ -42,7 +39,7 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
       return
     }
 
-    setImage({ image: optionValue.image as Media, key: getOptionSlug(option) })
+    setImage((optionValue.image as Media).id)
   }
 
   const handleOut = (optionValue: ProductOptionValue) => () => {
@@ -76,23 +73,6 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
           const active = Boolean(
             value ? optionValue.value.value === value : optionValue.value.defaultValue,
           )
-
-          // const optionRender = (
-
-          // )
-
-          // if (optionValue.image) {
-          //   const optionImage = (
-          //     <div className="rounded-xl bg-white p-2">
-          //       <Image image={optionValue.image} className="rounded-xl max-w-52 max-h-52" />
-          //     </div>
-          //   )
-          //   return (
-          //     <Popover key={optionValue?._key} content={optionImage}>
-          //       {optionRender}
-          //     </Tooltip>
-          //   )
-          // }
 
           return (
             <div
