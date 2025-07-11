@@ -23,14 +23,14 @@ export const CheckoutSummary = ({ displayButton = true }: Props) => {
       <div className="panel-table-cell space-y-4 text-lg">
         <div className="space-y-1">
           <div>
-            {t("cart.totalCart")} : <Amount amount={total} taxe />
+            {t("cart.totalCart")} : <Amount amount={total} taxIncluded />
           </div>
           <ShippingFees />
         </div>
         <div className="text-2xl">
           {t("cart.total")} :{" "}
           <strong className="tracking-wider">
-            <Amount amount={total + (deliveryFee ?? 0)} taxe />
+            <Amount amount={total + (deliveryFee ?? 0)} taxIncluded />
           </strong>
         </div>
         {displayButton && (

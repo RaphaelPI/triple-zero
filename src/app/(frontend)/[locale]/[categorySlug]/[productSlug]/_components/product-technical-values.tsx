@@ -29,7 +29,7 @@ export const ProductTechnicalValues = () => {
             <div>
               <div className="text-sm leading-3">{t("price")}</div>
               <div className="font-semibold md:text-lg">
-                <Amount amount={Number(technicalValues?.price)} taxe />
+                <Amount amount={Number(technicalValues?.price)} taxIncluded />
               </div>
             </div>
           </div>

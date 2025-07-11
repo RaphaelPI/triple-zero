@@ -93,7 +93,7 @@ export const CartLine = ({ line, index }: CartLineProps) => {
           </div>
         </div>
         <div className="panel-table-cell text-xl select-none xl:w-1/4">
-          <Amount amount={line.price * line.quantity} taxe />
+          <Amount amount={line.price * line.quantity} taxIncluded />
         </div>
       </div>
     </div>
