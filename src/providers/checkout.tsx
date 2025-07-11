@@ -40,6 +40,8 @@ interface ICheckoutContext {
   loading: boolean
   addItem: (args: AddCartItemArgs) => void
   updateLineQuantity: (index: number, quantity: number) => void
+  total: number
+  deliveryFee: number
 }
 
 const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
@@ -98,8 +100,13 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setCart(newCart)
   }
 
+  const total = cart.lines.reduce((total, line) => total + line.price * line.quantity, 0)
+  const deliveryFee = 50
+
   return (
-    <CheckoutContext.Provider value={{ cart, loading, addItem, updateLineQuantity }}>
+    <CheckoutContext.Provider
+      value={{ cart, loading, addItem, updateLineQuantity, total, deliveryFee }}
+    >
       {children}
     </CheckoutContext.Provider>
   )

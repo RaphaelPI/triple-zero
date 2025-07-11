@@ -25,7 +25,7 @@ export default async ({ children }: Props) => {
   ]
 
   return (
-    <div className="space-y-4 lg:space-y-8">
+    <div>
       <Stepper steps={STEPS} />
       {children}
       <section className="section">

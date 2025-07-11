@@ -3,10 +3,10 @@ import { getOgImage } from "@/lib/seo"
 import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
+import { Category } from "@/payload-types"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
-import { getCategoryData } from "../data"
 import { ProductDynamicContent } from "./_components/product-dynamic-content"
 import { getProductData } from "./data"
 
@@ -22,16 +22,24 @@ interface Props {
 
 const getData = cache(async ({ params }: Props) => {
   const { locale, categorySlug, productSlug } = await params
-  const [productData, categoryData] = await Promise.all([
+  const [productData] = await Promise.all([
     getProductData(productSlug, locale),
-    getCategoryData(categorySlug, locale),
+    // getCategoryData(categorySlug, locale),
   ])
 
-  if (!productData.docs[0] || !categoryData.docs[0]) {
+  if (!productData.docs[0]) {
     notFound()
   }
 
-  return { product: productData.docs[0], category: categoryData.docs[0] }
+  console.log(productData.docs[0].category)
+  // console.log(categoryData.docs[0])
+
+  const pCat = productData.docs[0].category as Category
+  if (pCat.slug !== categorySlug) {
+    notFound()
+  }
+
+  return { product: productData.docs[0], category: pCat }
 })
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {

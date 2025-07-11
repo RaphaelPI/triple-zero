@@ -51,7 +51,7 @@ export const CountrySelectField = ({
             {required && " *"}
           </FormLabel>
           <FormControl>
-            <Select {...field}>
+            <Select {...field} onValueChange={(value) => field.onChange(value)}>
               <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>

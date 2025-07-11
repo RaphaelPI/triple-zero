@@ -73,7 +73,7 @@
     "step3": "Paiement"
   },
   "notFound": {
-    "title": "404 - Page introuvable",
+    "title": "404 - Page not found",
     "description": "La page que vous cherchez n'existe pas."
   },
   "question": "Une question sur nos produits ou nos services ?",

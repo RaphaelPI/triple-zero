@@ -7,6 +7,7 @@ import Volume from "src/assets/volume.svg"
 import Weight from "src/assets/weight.svg"
 
 import { Popover } from "@/components/popover"
+import { Button } from "@/components/ui/button"
 import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
 import { useProduct } from "./product-provider"
@@ -81,10 +82,10 @@ export const ProductTechnicalValues = () => {
         <div className="lg:bg-dark/10 px-section mx-auto hidden py-1 text-center text-xs font-light text-gray-500 italic lg:block">
           {t("technicalValues.hint")}
         </div>
-        <div className="py-panel px-panel flex justify-center gap-2 bg-white text-center lg:hidden">
+        <div className="py-panel px-panel flex items-center justify-center gap-2 bg-white text-center lg:hidden">
           <div className="text-4xl font-bold">{technicalValues?.price}€</div>
-          <button
-            className="button px-8 py-2 sm:px-12"
+          <Button
+            className="px-8 py-2 sm:px-12"
             onClick={() =>
               addItem({
                 product,
@@ -95,7 +96,7 @@ export const ProductTechnicalValues = () => {
             }
           >
             {t("cart.add")}
-          </button>
+          </Button>
         </div>
       </div>
     </>

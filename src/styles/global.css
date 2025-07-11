@@ -21,6 +21,7 @@
   --color-ring: oklch(0.708 0 0);
   --color-accent: var(--color-grey-light);
   --color-input: var(--color-grey-light);
+  --color-ring: var(--color-blue);
 
   /* Custom brand colors */
   --color-dark: #151515;

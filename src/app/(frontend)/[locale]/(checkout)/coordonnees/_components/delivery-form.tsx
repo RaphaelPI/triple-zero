@@ -27,80 +27,76 @@ export const DeliveryForm = ({ control }: Props) => {
 
   return (
     <>
-      <div className="mt-10 text-xl" onClick={() => setOpen((prev) => !prev)}>
-        Adresse de livraison (ne remplir que si différente de l’adresse de facturation){" "}
+      <div className="mt-10 text-xl leading-1" onClick={() => setOpen((prev) => !prev)}>
+        Adresse de livraison
         <Triangle
           className={cn(`ml-2 inline w-3 transition-transform`, {
             "rotate-90": open,
           })}
         />
       </div>
+      <div className="text-xs leading-2 italic">
+        (ne remplir que si différente de l’adresse de facturation)
+      </div>
       {open && (
         <>
-          <div className="xs:grid-cols-2 s:gap-4 grid gap-2">
+          <InputField
+            control={control}
+            name="d_firstName"
+            label={t("firstName")}
+            placeholder={t("firstName")}
+            required
+          />
+          <InputField
+            control={control}
+            name="d_lastName"
+            label={t("lastName")}
+            placeholder={t("lastName")}
+            required
+          />
+
+          <InputField
+            control={control}
+            name="d_address"
+            label={t("address")}
+            placeholder={t("address")}
+            required
+          />
+          {address2 ? (
             <InputField
               control={control}
-              name="d_lastName"
-              label={t("lastName")}
-              placeholder={t("lastName")}
-              required
+              name="d_address2"
+              label={t("address2")}
+              placeholder={t("address2")}
             />
-            <InputField
-              control={control}
-              name="d_firstName"
-              label={t("firstName")}
-              placeholder={t("firstName")}
-              required
-            />
-          </div>
-          <div className="space-y-1">
-            <InputField
-              control={control}
-              name="d_address"
-              label={t("address")}
-              placeholder={t("address")}
-              required
-            />
-            {address2 ? (
-              <InputField
-                control={control}
-                name="d_address2"
-                label={t("address2")}
-                placeholder={t("address2")}
-              />
-            ) : (
-              <div
-                className="link flex items-center gap-1 text-xs"
-                onClick={() => setAddress2(true)}
-              >
-                <LucidePlus className="size-3" />
-                Ajouter un complément d’adresse
-              </div>
-            )}
-          </div>
-          <div className="xs:grid-cols-3 xs:gap-4 grid gap-2">
-            <InputField
-              control={control}
-              name="d_zip"
-              label={t("zip")}
-              placeholder={t("zip")}
-              required
-            />
-            <InputField
-              control={control}
-              name="d_city"
-              label={t("city")}
-              placeholder={t("city")}
-              required
-            />
-            <CountrySelectField
-              control={control}
-              name="d_country"
-              label={t("country")}
-              placeholder={t("country")}
-              required
-            />
-          </div>
+          ) : (
+            <div className="link flex items-center gap-1 text-xs" onClick={() => setAddress2(true)}>
+              <LucidePlus className="size-3" />
+              Ajouter un complément d’adresse
+            </div>
+          )}
+
+          <InputField
+            control={control}
+            name="d_zip"
+            label={t("zip")}
+            placeholder={t("zip")}
+            required
+          />
+          <InputField
+            control={control}
+            name="d_city"
+            label={t("city")}
+            placeholder={t("city")}
+            required
+          />
+          <CountrySelectField
+            control={control}
+            name="d_country"
+            label={t("country")}
+            placeholder={t("country")}
+            required
+          />
         </>
       )}
     </>

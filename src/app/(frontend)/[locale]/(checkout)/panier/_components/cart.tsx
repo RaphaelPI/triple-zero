@@ -1,16 +1,17 @@
 "use client"
 
-import Info from "@/assets/info.svg"
 import { formatAmount } from "@/lib/text"
 
 import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
+import { CheckoutSummary } from "../../_components/checkout-summary"
 import { CartLine } from "./cart-line"
 
 export const Cart = () => {
-  const { loading, cart } = useCheckout()
+  const { loading, cart, total, deliveryFee } = useCheckout()
   const t = useTranslations()
 
   if (loading) {
@@ -30,8 +31,6 @@ export const Cart = () => {
     )
   }
 
-  const totalCart = cart.lines.reduce((total, line) => total + line.price * line.quantity, 0)
-  const deliveryFee = 50
   return (
     <section className="w-section px-section flex gap-8 max-lg:flex-col">
       <div className="panel flex-1">
@@ -58,7 +57,8 @@ export const Cart = () => {
           ))}
         </ul>
       </div>
-      <div className="panel bg-blue-light sticky top-20 w-full self-start lg:w-xs">
+      <CheckoutSummary />
+      {/* <div className="panel bg-blue-light sticky top-20 w-full self-start lg:w-xs">
         <div className="panel-table-cell border-b-2 border-[#E5ECF7] text-lg font-semibold">
           {t("cart.resume")}
         </div>
@@ -74,15 +74,19 @@ export const Cart = () => {
             {t("cart.total")} :{" "}
             <strong className="tracking-wider">{formatAmount(totalCart + deliveryFee)}</strong>
           </div>
-          <Button className="mx-auto block">{t("cart.validate")}</Button>
+          <Link href="/coordonnees">
+            <Button className="mx-auto block">{t("cart.validate")}</Button>
+          </Link>
         </div>
-      </div>
+      </div> */}
       <div className="bg-blue-light border-blue-grey fixed right-0 bottom-0 left-0 flex items-center border-t border-solid p-4 shadow-xl lg:hidden">
         <div className="max-xs:hidden leading-5">
           <div>{t("cart.total")}</div>
-          <strong className="tracking-wider">{formatAmount(totalCart + deliveryFee)}</strong>
+          <strong className="tracking-wider">{formatAmount(total + deliveryFee)}</strong>
         </div>
-        <Button className="mx-auto block">{t("cart.validate")}</Button>
+        <Link href="/coordonnees" className="mx-auto block">
+          <Button>{t("cart.validate")}</Button>
+        </Link>
       </div>
     </section>
   )

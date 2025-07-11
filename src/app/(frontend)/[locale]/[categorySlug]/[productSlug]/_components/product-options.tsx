@@ -25,7 +25,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
   const { addItem } = useCheckout()
   const [open, setOpen] = useState(false)
   const { technicalValues, activeOptions, activeColors, product } = useProduct()
-  const t = useTranslations("product")
+  const t = useTranslations()
 
   if (!options) {
     return null
@@ -35,7 +35,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
   return (
     <>
       <div className="px-panel py-panel">
-        <div className="mb-2 text-lg font-bold">{t("options")}</div>
+        <div className="mb-2 text-lg font-bold">{t("product.options")}</div>
         {children}
         <div>
           {options?.map((option) => (
@@ -50,7 +50,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
           ))}
         </div>
         <div className="link mt-6 mb-2 cursor-pointer text-lg font-bold" onClick={handleAdvanced}>
-          {t("advancedOptions")}
+          {t("product.advancedOptions")}
           <Triangle
             className={cn(`ml-2 inline w-3 transition-transform`, {
               "rotate-90": open,
@@ -68,7 +68,6 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
       <div className="px-panel py-panel flex flex-wrap items-center gap-4">
         <div className="text-4xl font-bold">{technicalValues?.price}€</div>
         <Button
-          className="button"
           onClick={() =>
             addItem({
               product,
@@ -78,7 +77,7 @@ export const ProductOptions = ({ options, advanced, sizeGuide, children }: Produ
             })
           }
         >
-          Ajouter au panier
+          {t("cart.add")}
         </Button>
         <div className="hidden cursor-default items-center text-xs lg:flex">
           <Info className="mr-1 h-3 w-3" /> Guide des frais de port
