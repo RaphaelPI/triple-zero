@@ -69,12 +69,15 @@ body {
 }
 
 body {
-  @apply from-blue-grey to-blue-light min-h-screen bg-gradient-to-br;
-}
-
-main {
-  /* @apply pt-24 min-h-content; */
-  /* @apply min-h-content; */
+  @apply from-blue-grey to-blue-light relative min-h-screen bg-gradient-to-br;
+  &:before {
+    background: url("/noise.svg") repeat;
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.5;
+  }
 }
 
 h1 {
