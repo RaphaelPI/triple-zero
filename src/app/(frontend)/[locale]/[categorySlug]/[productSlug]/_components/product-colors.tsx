@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { Color, ColorWithImage, Media } from "@/payload-types"
 import { useQueryState } from "nuqs"
 import { useProduct } from "./product-provider"
@@ -60,9 +61,12 @@ export const ProductColors = ({ colors, name }: Props) => {
           >
             <div
               style={{ backgroundColor: hex }}
-              className={`h-8 w-8 cursor-pointer rounded-full border-2 border-white p-0 ${
-                active ? "ring-primary ring-[3px]" : ""
-              }`}
+              className={cn(
+                "h-8 w-8 cursor-pointer rounded-full border-2 border-white p-0 hover:opacity-80",
+                {
+                  "ring-primary ring-[3px]": active,
+                },
+              )}
               onClick={handleClick(color)}
             />
           </div>

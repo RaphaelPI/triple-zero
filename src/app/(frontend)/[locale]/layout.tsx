@@ -12,6 +12,7 @@ import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { Footer } from "./_components/footer"
 import Header from "./_components/header"
+import { Analytics } from "./_components/vendors/analytics"
 import { Providers } from "./providers"
 
 const StructuredJSON = () => {
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`${barlow.className}`}>
+        <Analytics />
         <Providers locale={locale} messages={messages}>
           <StructuredJSON />
           <Header />

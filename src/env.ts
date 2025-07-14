@@ -9,7 +9,8 @@ const booleanTransformer = (str: string | undefined) => {
 
 export const env = createEnv({
   client: {
-    NEXT_PUBLIC_URL: z.string().url(),
+    NEXT_PUBLIC_URL: z.url(),
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().optional(),
   },
   server: {
     SERVER_INDEXING_ENABLED: z.string().optional().transform(booleanTransformer),
@@ -26,6 +27,7 @@ export const env = createEnv({
   experimental__runtimeEnv: {
     // client
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     NODE_ENV: process.env.NODE_ENV,
   },
 })

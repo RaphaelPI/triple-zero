@@ -30,8 +30,6 @@ export const ProductOptionsInput = (props: Props) => {
   })
   const [product, setProduct] = useState<Product>()
 
-  console.log(reference)
-
   useEffect(() => {
     if (!reference || reference.relationTo !== "product") {
       return

@@ -18,7 +18,7 @@ export const Nav: GlobalConfig = {
             path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
             clientProps: {
               placeholder: "Item",
-              path: ["title"],
+              labelPath: ["title"],
             },
           },
         },

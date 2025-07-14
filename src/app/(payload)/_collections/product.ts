@@ -70,6 +70,14 @@ export const Product: CollectionConfig = {
               fields: [ColorWithImage],
               admin: {
                 initCollapsed: true,
+                components: {
+                  RowLabel: {
+                    path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+                    clientProps: {
+                      placeholder: "Couleur",
+                    },
+                  },
+                },
               },
             },
             {
@@ -96,7 +104,7 @@ export const Product: CollectionConfig = {
                     path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
                     clientProps: {
                       placeholder: "Option",
-                      path: ["option", "title"],
+                      labelPath: ["option", "title"],
                     },
                   },
                 },
@@ -118,7 +126,7 @@ export const Product: CollectionConfig = {
                     path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
                     clientProps: {
                       placeholder: "Option",
-                      path: ["option", "title"],
+                      labelPath: ["option", "title"],
                     },
                   },
                 },

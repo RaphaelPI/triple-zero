@@ -54,10 +54,12 @@ export const getProductDefaultImages = (
   // from colors
   // const colorOptionImage = colors?.find(({ color }) => params.color === color.color)?.color.image
   // const colorOptionImages = colorOptionImage ? [["color", colorOptionImage]] : []
-  const colorOptionImages = colors?.map(({ color }) => color.image as Media) ?? []
+  const colorOptionImages =
+    colors?.map(({ color }) => color.image as Media).filter((image) => image) ?? []
 
   // merge all images
   // return Object.fromEntries([...defaultProductImages, ...colorOptionImages, ...activeOptionsImages])
+  console.log(colorOptionImages, optionImages)
   return Object.values(
     [...defaultProductImages, ...colorOptionImages, ...optionImages].reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),

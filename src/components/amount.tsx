@@ -27,8 +27,6 @@ export const Amount = ({ amount, taxIncluded = false }: Props) => {
     }
   })
 
-  console.log(country)
-
   if (!isTaxFreeCountry(shippingFeesCountry)) {
     return <>{formatAmount(amount / 1.2)} HT</>
   }

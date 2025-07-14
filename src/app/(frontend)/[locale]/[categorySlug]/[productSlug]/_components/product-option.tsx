@@ -54,9 +54,9 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
   if (option.description) {
     title = (
       <Popover content={option.description} variant="dark">
-        <div className="flex cursor-default items-center text-sm leading-3">
+        <div className="flex cursor-default items-center gap-1 leading-4">
+          <Info className="size-3 flex-shrink-0" />
           {option.title}
-          <Info className="ml-1 h-3 w-3" />
         </div>
       </Popover>
     )

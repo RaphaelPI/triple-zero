@@ -25,7 +25,7 @@ export const ProductOptionValue: Field = {
             path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
             clientProps: {
               placeholder: "Impact",
-              path: ["delta", "type"],
+              labelPath: ["delta", "type"],
             },
           },
         },
