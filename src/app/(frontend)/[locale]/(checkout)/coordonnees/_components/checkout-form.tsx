@@ -91,7 +91,7 @@ export const CheckoutForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          onChange={form.handleSubmit(validate)}
+          onChange={() => validate(form.getValues())}
           className="space-y-2"
         >
           <BillingFormFields form={form} />

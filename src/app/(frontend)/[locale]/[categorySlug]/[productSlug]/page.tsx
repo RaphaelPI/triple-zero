@@ -56,7 +56,7 @@ export default async (props: Props) => {
   const { product, category } = await getData(props)
 
   return (
-    <main className="bg-flake bg-flake-bl pb-section bg-no-repeat">
+    <main className="bg-flake bg-flake-bl pb-section test bg-no-repeat">
       <div className="w-section px-section py-section">
         <Breadcrumbs
           items={[
