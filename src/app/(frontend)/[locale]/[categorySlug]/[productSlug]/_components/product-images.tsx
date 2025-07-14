@@ -14,7 +14,7 @@ export const ProductImages = () => {
   return (
     <div className="space-y-4">
       <div className="panel h-80 w-full overflow-hidden rounded-2xl border-4 border-solid border-white max-lg:hidden">
-        <Image media={currentImage} priority className="size-full object-cover" />
+        <Image media={currentImage} priority className="size-full object-contain" />
       </div>
       <ol className="max-lg:scrollable lg:flex lg:flex-wrap lg:gap-4">
         {images.map((image, index) => {
