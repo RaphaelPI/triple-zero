@@ -9,7 +9,7 @@ export const Color: CollectionConfig = {
   },
   admin: {
     useAsTitle: "name",
-    group: "Produits",
+    group: "Information produit",
   },
   fields: [
     {

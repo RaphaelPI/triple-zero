@@ -78,6 +78,8 @@ export interface Config {
     media: Media;
     pages: Page;
     product: Product;
+    'product-variant': ProductVariant;
+    promotion: Promotion;
     'shipping-fees': ShippingFee;
     sizeGuide: SizeGuide;
     taxes: Tax;
@@ -94,6 +96,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
+    'product-variant': ProductVariantSelect<false> | ProductVariantSelect<true>;
+    promotion: PromotionSelect<false> | PromotionSelect<true>;
     'shipping-fees': ShippingFeesSelect<false> | ShippingFeesSelect<true>;
     sizeGuide: SizeGuideSelect<false> | SizeGuideSelect<true>;
     taxes: TaxesSelect<false> | TaxesSelect<true>;
@@ -521,7 +525,7 @@ export interface ProductOptionValue {
    * Facultatif. Image permettant d'illustrer cette option.
    */
   image?: (string | null) | Media;
-  value?: string | null;
+  value: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -531,6 +535,69 @@ export interface ProductOptionDeltaValue {
   type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
   value: number;
   unit: '€' | '%';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variant".
+ */
+export interface ProductVariant {
+  id: string;
+  title: string;
+  slug?: string | null;
+  description: string;
+  /**
+   * Si la case est cochée, cette variante de produit sera visible
+   */
+  active?: boolean | null;
+  reference: {
+    relationTo: 'product';
+    value: string | Product;
+  };
+  options?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotion".
+ */
+export interface Promotion {
+  id: string;
+  title: string;
+  slug?: string | null;
+  value: number;
+  /**
+   * Si la case est cochée, la promotion sera visible
+   */
+  active?: boolean | null;
+  reference:
+    | {
+        relationTo: 'product';
+        value: string | Product;
+      }
+    | {
+        relationTo: 'category';
+        value: string | Category;
+      };
+  options?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -924,6 +991,14 @@ export interface PayloadLockedDocument {
         value: string | Product;
       } | null)
     | ({
+        relationTo: 'product-variant';
+        value: string | ProductVariant;
+      } | null)
+    | ({
+        relationTo: 'promotion';
+        value: string | Promotion;
+      } | null)
+    | ({
         relationTo: 'shipping-fees';
         value: string | ShippingFee;
       } | null)
@@ -1201,6 +1276,34 @@ export interface ProductOptionDeltaValueSelect<T extends boolean = true> {
   type?: T;
   value?: T;
   unit?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variant_select".
+ */
+export interface ProductVariantSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  active?: T;
+  reference?: T;
+  options?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotion_select".
+ */
+export interface PromotionSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  value?: T;
+  active?: T;
+  reference?: T;
+  options?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

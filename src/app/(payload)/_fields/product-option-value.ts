@@ -51,6 +51,7 @@ export const ProductOptionValue: Field = {
       name: "value",
       type: "text",
       defaultValue: () => uuid(),
+      required: true,
       admin: {
         readOnly: true,
       },

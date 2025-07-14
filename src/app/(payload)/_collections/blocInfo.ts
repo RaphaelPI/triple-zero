@@ -8,7 +8,7 @@ export const BlocInfo: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Produits",
+    group: "Information produit",
   },
   fields: [
     {
