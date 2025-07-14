@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { barlow } from "./fonts"
 
+import { MainMessageModal } from "@/components/main-message/modal"
 import { OrganizationJsonLd } from "@/components/structured-data/organization"
 import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP } from "@/constants"
 import { getUrl } from "@/lib/url"
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
           <Header />
           {children}
           <Footer />
+          <MainMessageModal />
         </Providers>
       </body>
     </html>

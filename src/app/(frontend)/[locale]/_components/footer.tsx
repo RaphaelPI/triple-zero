@@ -21,26 +21,23 @@ export const Footer = async () => {
           <LogoMin className="mx-auto block h-40 w-40" />
           <h2 className="text-blue-grey text-xl italic">{t("slogan")}</h2>
         </div>
-        <div className="flex justify-center gap-10 text-white">
+        <div className="max-xs:flex-col flex justify-center gap-10 border-t border-b border-solid border-[#333333] py-8 text-white md:gap-20">
           {nav.items.map((item) => (
-            <div key={item.id} className="text-left">
-              <div className="text-xl font-bold">{item.title}</div>
-              <ol>
-                {item.category.map((category) => {
-                  if (typeof category === "string") {
-                    return null
-                  }
+            <ol key={item.id} className="max-xs:text-center text-left">
+              {item.category.map((category) => {
+                if (typeof category === "string") {
+                  return null
+                }
 
-                  return (
-                    <li key={category.id}>
-                      <Link prefetch={false} href={`/${category.slug}`} className="link">
-                        {category.title}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ol>
-            </div>
+                return (
+                  <li key={category.id}>
+                    <Link prefetch={false} href={`/${category.slug}`} className="link">
+                      {category.title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ol>
           ))}
         </div>
         <div>

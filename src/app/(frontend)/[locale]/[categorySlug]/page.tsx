@@ -1,6 +1,7 @@
 import { Amount } from "@/components/amount"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Image } from "@/components/image"
+import { MainMessage } from "@/components/main-message"
 import { Button } from "@/components/ui/button"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
@@ -107,7 +108,7 @@ export default async (props: Props) => {
                     <Link
                       prefetch={false}
                       href={`/${category.slug}/${product.slug}`}
-                      className="panel flex flex-wrap gap-8 md:h-64"
+                      className="panel ring-primary flex flex-wrap gap-8 hover:ring-8 md:h-64"
                     >
                       <div className="w-full md:h-full md:w-5/12">
                         {product.images && (
@@ -138,6 +139,7 @@ export default async (props: Props) => {
           </div>
         </div>
       </div>
+      <MainMessage />
     </main>
   )
 }

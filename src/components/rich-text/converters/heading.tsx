@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation"
+import { cn } from "@/lib/utils"
 import { SerializedHeadingNode } from "@payloadcms/richtext-lexical"
 import { JSXConverters } from "@payloadcms/richtext-lexical/react"
 
@@ -12,24 +13,22 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "")
 
-    if (node.tag === "h1") {
-      return (
-        <Link prefetch={false} href={`#${id}`} className="text-h1 block">
-          {text}
+    return (
+      <div
+        className={cn("group flex items-center gap-2 text-xl", {
+          "text-3xl font-semibold": node.tag === "h1",
+          "text-2xl font-semibold": node.tag === "h2",
+        })}
+      >
+        {text}
+        <Link
+          prefetch={false}
+          href={`#${id}`}
+          className="text-blue inline-block opacity-0 group-hover:opacity-100"
+        >
+          #
         </Link>
-      )
-    } else if (node.tag === "h2") {
-      return (
-        <Link prefetch={false} href={`#${id}`} className="text-h2 block">
-          {text}
-        </Link>
-      )
-    } else {
-      return (
-        <Link prefetch={false} href={`#${id}`} className="block text-xl">
-          {text}
-        </Link>
-      )
-    }
+      </div>
+    )
   },
 }
