@@ -36,7 +36,7 @@ export default function NotFound() {
         <div className="text-lg">{t("notFound.description")}</div>
       </div>
       <Link prefetch={false} href="/">
-        <Button>{t("menu.home")}</Button>
+        <Button aria-label={t("menu.home")}>{t("menu.home")}</Button>
       </Link>
     </div>
   )

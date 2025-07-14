@@ -90,6 +90,7 @@ export const ProductTechnicalValues = () => {
             <Amount amount={Number(technicalValues?.price)} taxIncluded />
           </div>
           <Button
+            aria-label={t("cart.add")}
             size="lg"
             className="flex-1"
             onClick={() =>

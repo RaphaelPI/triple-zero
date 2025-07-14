@@ -35,7 +35,9 @@ export const CheckoutSummary = ({ displayButton = true }: Props) => {
         </div>
         {displayButton && (
           <Link prefetch={false} href="/coordonnees">
-            <Button className="mx-auto block">{t("cart.validate")}</Button>
+            <Button className="mx-auto block" aria-label={t("cart.validate")}>
+              {t("cart.validate")}
+            </Button>
           </Link>
         )}
       </div>

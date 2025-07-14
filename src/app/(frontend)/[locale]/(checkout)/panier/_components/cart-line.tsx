@@ -86,13 +86,23 @@ export const CartLine = ({ line, index }: CartLineProps) => {
         </div>
         <div className="panel-table-cell xl:w-1/4">
           <div className="flex items-center gap-1">
-            <Button onClick={handleMinusClick} variant="icon" size="icon">
+            <Button
+              onClick={handleMinusClick}
+              variant="icon"
+              size="icon"
+              aria-label={t("cart.line.remove")}
+            >
               <LucideMinus />
             </Button>
             <div className="bg-blue-light border-dark w-8 flex-shrink-0 cursor-default rounded-lg border py-1 text-center select-none">
               {line.quantity}
             </div>
-            <Button onClick={handlePlusClick} variant="icon" size="icon">
+            <Button
+              onClick={handlePlusClick}
+              variant="icon"
+              size="icon"
+              aria-label={t("cart.line.add")}
+            >
               <LucidePlus />
             </Button>
           </div>

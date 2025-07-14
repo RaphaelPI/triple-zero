@@ -5,12 +5,15 @@ import Basket from "src/assets/basket.svg"
 import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout"
+import { useTranslations } from "next-intl"
 
 export const CartButton = () => {
+  const t = useTranslations()
   const { cart } = useCheckout()
 
   return (
     <Link
+      aria-label={t("cart.title")}
       prefetch={false}
       href="/panier"
       className="bg-green border-dark relative flex size-10 items-center justify-center rounded-full border hover:hover:bg-[#b2e571]"

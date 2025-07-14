@@ -47,7 +47,11 @@
     "totalCart": "Total panier",
     "total": "Total à payer",
     "delivery": "Livraison",
-    "toDetermine": "A déterminer"
+    "toDetermine": "A déterminer",
+    "line": {
+      "remove": "Retirer un produit",
+      "add": "Ajouter un produit"
+    }
   },
   "delivery": {
     "title": "Vos coordonnées",

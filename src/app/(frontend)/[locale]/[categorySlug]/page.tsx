@@ -128,7 +128,7 @@ export default async (props: Props) => {
                             taxIncluded
                           />
                         </div>
-                        <Button>{t("product.see")}</Button>
+                        <Button aria-label={t("product.see")}>{t("product.see")}</Button>
                       </div>
                     </Link>
                   </li>

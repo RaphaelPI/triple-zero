@@ -100,7 +100,7 @@ export const CheckoutForm = () => {
             {form.formState.errors.root && (
               <div className="text-destructive">{form.formState.errors.root.message}</div>
             )}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" aria-label={t("delivery.validate")}>
               {t("delivery.validate")}
             </Button>
           </div>

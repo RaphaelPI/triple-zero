@@ -36,7 +36,7 @@
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
-    "shippingFeesDescription": "Les frais de port seront calculés en fonction du pays de livraison.\nSi aucun montant n'est indiqué, cela signifie que le montant sera déterminer sur devis.",
+    "shippingFeesDescription": "Les frais de port seront calculés en fonction du pays de livraison.\nSi aucun montant n'est indiqué, cela signifie que le montant sera déterminé sur devis.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
     "priceVTA": "Prix TTC",
@@ -47,7 +47,11 @@
     "totalCart": "Total panier",
     "total": "Total à payer",
     "delivery": "Livraison",
-    "toDetermine": "A déterminer"
+    "toDetermine": "A déterminer",
+    "line": {
+      "remove": "Retirer un produit",
+      "add": "Ajouter un produit"
+    }
   },
   "delivery": {
     "title": "Vos coordonnées",

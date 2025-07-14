@@ -85,7 +85,7 @@ export const Cart = () => {
           <strong className="tracking-wider">{formatAmount(total + deliveryFee)}</strong>
         </div>
         <Link prefetch={false} href="/coordonnees" className="mx-auto block">
-          <Button>{t("cart.validate")}</Button>
+          <Button aria-label={t("cart.validate")}>{t("cart.validate")}</Button>
         </Link>
       </div>
     </section>

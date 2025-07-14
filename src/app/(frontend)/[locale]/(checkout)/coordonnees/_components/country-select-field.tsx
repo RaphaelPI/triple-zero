@@ -60,6 +60,7 @@ export const CountrySelectField = ({
                 <button
                   className="absolute top-[42px] right-[11px] -translate-y-1/2"
                   onClick={() => field.onChange("")}
+                  aria-label="Effacer le pays"
                 >
                   <XCircleIcon className="" />
                 </button>
