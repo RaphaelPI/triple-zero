@@ -14,7 +14,7 @@ import { getNavData } from "../data"
 import { getMetadata } from "../metadata"
 import { getCategoryData, getProductsData } from "./data"
 
-export const revalidate = 60
+export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
