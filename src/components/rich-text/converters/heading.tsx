@@ -14,19 +14,19 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
 
     if (node.tag === "h1") {
       return (
-        <Link href={`#${id}`} className="text-h1 block">
+        <Link prefetch={false} href={`#${id}`} className="text-h1 block">
           {text}
         </Link>
       )
     } else if (node.tag === "h2") {
       return (
-        <Link href={`#${id}`} className="text-h2 block">
+        <Link prefetch={false} href={`#${id}`} className="text-h2 block">
           {text}
         </Link>
       )
     } else {
       return (
-        <Link href={`#${id}`} className="block text-xl">
+        <Link prefetch={false} href={`#${id}`} className="block text-xl">
           {text}
         </Link>
       )

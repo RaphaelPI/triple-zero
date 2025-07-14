@@ -1,5 +1,5 @@
-import { getTechnicalValues } from "@/app/(frontend)/[locale]/[categorySlug]/[productSlug]/utils"
 import { Locale } from "@/i18n/config"
+import { getTechnicalValues } from "@/lib/technical-values"
 import { getUrl } from "@/lib/url"
 import type {
   Category,
@@ -18,7 +18,7 @@ interface ProductGroupProps {
   sizeOption: ProductOption
   sizeOptionValue: ProductOptionValue
   weightOption: ProductOption
-  image: string
+  images: string[]
   url: string
   material: string
 }
@@ -28,21 +28,21 @@ const getProductGroupData = ({
   locale,
   sizeOptionValue,
   weightOption,
-  image,
+  images,
   url,
   sizeOption,
   material,
 }: ProductGroupProps) => {
   const getProductData = (weightOptionValue: ProductOptionValue): Product => {
     const weightImage = (sizeOptionValue.image as Media)?.url
-    const variantImage = weightImage || image
+    const variantImage = weightImage ? getUrl(String(weightImage)) : images
 
     return {
       "@type": "Product",
       name: `${product.title} ${weightOptionValue.title} ${sizeOptionValue.title}`,
       sku: `${product.id}-${weightOptionValue.value}-${sizeOptionValue.value}`,
       size: sizeOptionValue.title,
-      ...(variantImage && { image: getUrl(variantImage) }),
+      ...(variantImage && { image: variantImage }),
       weight: {
         "@type": "QuantitativeValue",
         value: String(weightOptionValue.title),
@@ -80,7 +80,7 @@ const getProductGroupData = ({
     name: product.title,
     description: product.description,
     url,
-    ...(image && { image: getUrl(image) }),
+    ...(images.length > 0 && { image: images }),
     brand: {
       "@type": "Brand",
       name: "Triple Zéro",
@@ -100,7 +100,11 @@ interface Props {
 }
 
 export const ProductJsonLd = ({ product, locale }: Props) => {
-  const image = (product.images[0].image as Media)?.url
+  const images = product.images
+    .map((image) => (image.image as Media)?.url)
+    .filter((img) => img)
+    .map((img) => getUrl(String(img)))
+
   const url = getUrl(`/${(product.category as Category).slug}/${product.slug}`, locale)
   const t = useTranslations()
   const material = t("product.material")
@@ -118,7 +122,7 @@ export const ProductJsonLd = ({ product, locale }: Props) => {
           sizeOption: sizeOption as ProductOption,
           sizeOptionValue: sizeOptionValue.value,
           weightOption,
-          image: image ?? "",
+          images,
           url,
           material,
         })}
@@ -131,7 +135,7 @@ export const ProductJsonLd = ({ product, locale }: Props) => {
     name: product.title,
     description: product.description,
     url,
-    ...(image && { image: getUrl(image) }),
+    ...(images.length > 0 && { image: images }),
     brand: {
       "@type": "Brand",
       name: "Triple Zéro",

@@ -33,6 +33,8 @@ export const getProductsData = cache(async (categorySlug: string, locale: Locale
       images: {
         image: true,
       },
+      options: true,
+      advanced: true,
     },
   })
 

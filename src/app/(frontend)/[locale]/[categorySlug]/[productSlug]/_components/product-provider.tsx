@@ -1,13 +1,8 @@
+import { getTechnicalValues, TechnicalValue } from "@/lib/technical-values"
 import { Color, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { useQueryStates, UseQueryStatesKeysMap } from "nuqs"
 import { createContext, useContext, useState } from "react"
-import {
-  getOptionSlug,
-  getOptionsQueryNames,
-  getProductDefaultImages,
-  getTechnicalValues,
-  TechnicalValue,
-} from "../utils"
+import { getOptionSlug, getOptionsQueryNames, getProductDefaultImages } from "../utils"
 
 interface IProductContext {
   technicalValues?: Record<TechnicalValue, number>

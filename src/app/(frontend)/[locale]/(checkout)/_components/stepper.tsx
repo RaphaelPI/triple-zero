@@ -14,7 +14,7 @@ export const Stepper = ({ steps }: Props) => {
   return (
     <div className="section flex items-center justify-center gap-6 pb-0">
       {steps.map(({ href, label }, index) => (
-        <Link href={href} key={href} className="flex items-center gap-1">
+        <Link prefetch={false} href={href} key={href} className="flex items-center gap-1">
           <div
             className={cn(
               "bg-primary border-primary xs:size-8 flex size-10 items-center justify-center rounded-full border border-solid text-white",

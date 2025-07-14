@@ -33,7 +33,7 @@ export const Footer = async () => {
 
                   return (
                     <li key={category.id}>
-                      <Link href={`/${category.slug}`} className="link">
+                      <Link prefetch={false} href={`/${category.slug}`} className="link">
                         {category.title}
                       </Link>
                     </li>
@@ -45,10 +45,14 @@ export const Footer = async () => {
         </div>
         <div>
           <div className="text-lg font-bold text-white">{t("contact")}</div>
-          <Link href={`tel:${PHONE.replaceAll(" ", "")}`} className="block p-2 text-white md:p-0">
+          <Link
+            prefetch={false}
+            href={`tel:${PHONE.replaceAll(" ", "")}`}
+            className="block p-2 text-white md:p-0"
+          >
             {PHONE}
           </Link>
-          <Link href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
+          <Link prefetch={false} href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
             {EMAIL}
           </Link>
           <div className="text-white">

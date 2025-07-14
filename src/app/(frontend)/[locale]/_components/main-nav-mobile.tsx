@@ -57,7 +57,11 @@ export const MainNavMobile = ({ nav }: Props) => {
                   return (
                     <li key={category.id}>
                       <DrawerClose>
-                        <Link className="link block text-nowrap" href={`/${category.slug}`}>
+                        <Link
+                          prefetch={false}
+                          className="link block text-nowrap"
+                          href={`/${category.slug}`}
+                        >
                           {category.title}
                         </Link>
                       </DrawerClose>
@@ -70,7 +74,7 @@ export const MainNavMobile = ({ nav }: Props) => {
           <div className="space-y-4 px-8 pb-3 text-2xl">
             <ol className="space-y-2">
               <li>
-                <Link className="link block text-nowrap" href={`/p/savoir-faire`}>
+                <Link prefetch={false} className="link block text-nowrap" href={`/p/savoir-faire`}>
                   {t("menu.knowledge")}
                 </Link>
               </li>

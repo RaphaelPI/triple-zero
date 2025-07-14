@@ -16,10 +16,10 @@ const Header = async () => {
     <>
       <div className="bg-dark overflow-hidden" id="top-nav">
         <div className="w-section px-section flex h-8 items-center justify-end gap-x-8 text-sm font-light text-white uppercase">
-          <Link href="/faq" className="link">
+          <Link prefetch={false} href="/faq" className="link">
             FAQ
           </Link>
-          <Link href="/contact" className="link">
+          <Link prefetch={false} href="/contact" className="link">
             Contact
           </Link>
           <div>
@@ -39,7 +39,7 @@ const Header = async () => {
       <div className="sticky top-0 z-[1] bg-white shadow-lg shadow-[#00000011]">
         <nav className="w-section px-section flex h-16 items-center justify-between transition-all duration-100 lg:h-16">
           <div className="flex items-center gap-x-2 lg:gap-x-6">
-            <Link href="/" aria-label={t("menu.home")} className="">
+            <Link prefetch={false} href="/" aria-label={t("menu.home")} className="">
               <Logo className="max-lg:hidden" height={48} />
               <LogoMin className="h-12 w-14 lg:hidden" />
             </Link>

@@ -35,11 +35,15 @@ export default async ({ children }: Props) => {
             <br />
             {t("contactUs")} <span className="text-green text-xs font-bold">↴</span>
           </p>
-          <Link href={`tel:${PHONE.replaceAll(" ", "")}`} className="text-dark p-2 md:p-0">
+          <Link
+            prefetch={false}
+            href={`tel:${PHONE.replaceAll(" ", "")}`}
+            className="text-dark p-2 md:p-0"
+          >
             {PHONE}
           </Link>{" "}
           |{" "}
-          <Link href={`mailto:${EMAIL}`} className="text-dark p-2 md:p-0">
+          <Link prefetch={false} href={`mailto:${EMAIL}`} className="text-dark p-2 md:p-0">
             {EMAIL}
           </Link>
         </div>

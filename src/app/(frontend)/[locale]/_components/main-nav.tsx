@@ -41,6 +41,7 @@ export const MainNav = async () => {
 
                       return (
                         <Link
+                          prefetch={false}
                           key={category.id}
                           className="link block text-nowrap"
                           href={`/${category.slug}`}
@@ -59,7 +60,7 @@ export const MainNav = async () => {
             </NavigationMenuItem>
           ))}
           <NavigationMenuItem>
-            <Link href="/savoir-faire" className="px-4">
+            <Link prefetch={false} href="/savoir-faire" className="px-4">
               {t("menu.knowledge")}
             </Link>
           </NavigationMenuItem>

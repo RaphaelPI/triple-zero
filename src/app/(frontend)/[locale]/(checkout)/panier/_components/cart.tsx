@@ -74,7 +74,7 @@ export const Cart = () => {
             {t("cart.total")} :{" "}
             <strong className="tracking-wider">{formatAmount(totalCart + deliveryFee)}</strong>
           </div>
-          <Link href="/coordonnees">
+          <Link prefetch={false}  href="/coordonnees">
             <Button className="mx-auto block">{t("cart.validate")}</Button>
           </Link>
         </div>
@@ -84,7 +84,7 @@ export const Cart = () => {
           <div>{t("cart.total")}</div>
           <strong className="tracking-wider">{formatAmount(total + deliveryFee)}</strong>
         </div>
-        <Link href="/coordonnees" className="mx-auto block">
+        <Link prefetch={false} href="/coordonnees" className="mx-auto block">
           <Button>{t("cart.validate")}</Button>
         </Link>
       </div>

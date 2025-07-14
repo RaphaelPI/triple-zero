@@ -46,7 +46,7 @@ export const CartLine = ({ line, index }: CartLineProps) => {
       <div className="panel-table-cell xs:w-40 w-full sm:w-60 xl:w-1/4">
         <div>
           {line.image && (
-            <Link href={line.url} aria-label={line.title}>
+            <Link prefetch={false} href={line.url} aria-label={line.title}>
               <NextImage
                 src={line.image}
                 width={320}
@@ -60,7 +60,12 @@ export const CartLine = ({ line, index }: CartLineProps) => {
       </div>
       <div className="w-full flex-1 xl:flex">
         <div className="panel-table-cell xl:w-1/2">
-          <Link href={line.url} aria-label={line.title} className="block font-bold">
+          <Link
+            prefetch={false}
+            href={line.url}
+            aria-label={line.title}
+            className="block font-bold"
+          >
             {line.title}
           </Link>
           <div className="flex items-center gap-2">

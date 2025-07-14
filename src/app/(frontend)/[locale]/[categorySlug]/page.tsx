@@ -4,6 +4,7 @@ import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
+import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
 import { Category, Media } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
@@ -70,6 +71,7 @@ export default async (props: Props) => {
                       return (
                         <li key={slug}>
                           <Link
+                            prefetch={false}
                             href={`/${slug}`}
                             className={cn("link inline-block rounded-lg px-3 py-1", {
                               "bg-green": categorySlug === slug,
@@ -103,6 +105,7 @@ export default async (props: Props) => {
                 {products.map((product) => (
                   <li key={product.id}>
                     <Link
+                      prefetch={false}
                       href={`/${category.slug}/${product.slug}`}
                       className="panel flex flex-wrap gap-8 md:h-64"
                     >
@@ -120,7 +123,10 @@ export default async (props: Props) => {
                         <p className="line-clamp-2">{product.description}</p>
                         <div className="text-lg font-semibold">
                           {t("priceFrom")}
-                          <Amount amount={750} />
+                          <Amount
+                            amount={getStartingPrice(product.options, product.advanced)}
+                            taxIncluded
+                          />
                         </div>
                         <Button>{t("product.see")}</Button>
                       </div>

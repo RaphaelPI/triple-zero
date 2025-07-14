@@ -34,7 +34,7 @@ export const CheckoutSummary = ({ displayButton = true }: Props) => {
           </strong>
         </div>
         {displayButton && (
-          <Link href="/coordonnees">
+          <Link prefetch={false} href="/coordonnees">
             <Button className="mx-auto block">{t("cart.validate")}</Button>
           </Link>
         )}

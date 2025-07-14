@@ -11,8 +11,9 @@ export const CartButton = () => {
 
   return (
     <Link
-      href={`/panier`}
-      className="bg-green border-dark relative flex size-10 items-center justify-center rounded-full border"
+      prefetch={false}
+      href="/panier"
+      className="bg-green border-dark relative flex size-10 items-center justify-center rounded-full border hover:hover:bg-[#b2e571]"
     >
       <Basket className="fill-dark h-1/2 w-auto" />
       <div

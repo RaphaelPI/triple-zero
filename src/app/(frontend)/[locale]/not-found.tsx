@@ -35,7 +35,7 @@ export default function NotFound() {
         <div className="text-h1 font-semibold">{t("notFound.title")}</div>
         <div className="text-lg">{t("notFound.description")}</div>
       </div>
-      <Link href="/">
+      <Link prefetch={false} href="/">
         <Button>{t("menu.home")}</Button>
       </Link>
     </div>
