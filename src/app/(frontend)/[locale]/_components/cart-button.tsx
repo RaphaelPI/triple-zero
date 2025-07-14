@@ -12,7 +12,7 @@ export const CartButton = () => {
   return (
     <Link
       href={`/panier`}
-      className="bg-green border-dark buttonClick relative flex size-10 items-center justify-center rounded-full border"
+      className="bg-green border-dark relative flex size-10 items-center justify-center rounded-full border"
     >
       <Basket className="fill-dark h-1/2 w-auto" />
       <div

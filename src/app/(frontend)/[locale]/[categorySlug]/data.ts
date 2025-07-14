@@ -16,3 +16,25 @@ export const getCategoryData = cache(async (slug: string, locale: Locale) => {
   })
   return category
 })
+
+export const getProductsData = cache(async (categorySlug: string, locale: Locale) => {
+  const payload = await getClient()
+  const products = await payload.find({
+    collection: "product",
+    where: {
+      "category.slug": { equals: categorySlug },
+    },
+    locale,
+    depth: 1,
+    select: {
+      title: true,
+      slug: true,
+      description: true,
+      images: {
+        image: true,
+      },
+    },
+  })
+
+  return products
+})

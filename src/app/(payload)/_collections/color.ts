@@ -17,6 +17,7 @@ export const Color: CollectionConfig = {
       label: "Nom",
       type: "text",
       required: true,
+      localized: true,
     },
     color({
       name: "color",

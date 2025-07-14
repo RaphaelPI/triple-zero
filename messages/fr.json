@@ -68,7 +68,9 @@
   },
   "product": {
     "options": "Options",
-    "advancedOptions": "Options avancées"
+    "advancedOptions": "Options avancées",
+    "see": "Voir le produit",
+    "material": "Duvet d'oie"
   },
   "checkout": {
     "step1": "Panier",

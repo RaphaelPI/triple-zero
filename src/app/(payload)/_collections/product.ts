@@ -44,6 +44,7 @@ export const Product: CollectionConfig = {
               name: "images",
               label: "Images par défaut",
               type: "array",
+              required: true,
               fields: [
                 {
                   name: "image",

@@ -1,14 +1,38 @@
 import { routing } from "@/i18n/routing"
-import { hasLocale } from "next-intl"
+import { hasLocale, useLocale, useTranslations } from "next-intl"
 import { getMessages, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { barlow } from "./fonts"
 
+import { OrganizationJsonLd } from "@/components/structured-data/organization"
+import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP } from "@/constants"
+import { getUrl } from "@/lib/url"
 import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { Footer } from "./_components/footer"
 import Header from "./_components/header"
 import { Providers } from "./providers"
+
+const StructuredJSON = () => {
+  const t = useTranslations()
+  const locale = useLocale()
+
+  return (
+    <OrganizationJsonLd
+      type="Organization"
+      name="Triple Zéro"
+      description={t("description")}
+      url={getUrl("/", locale)}
+      logo={getUrl("/logo.webp")}
+      address={{
+        streetAddress: ADDRESS,
+        addressLocality: ADDRESS_TOWN,
+        postalCode: ADDRESS_ZIP,
+        addressCountry: ADDRESS_COUNTRY,
+      }}
+    />
+  )
+}
 
 export default async function LocaleLayout({
   children,
@@ -36,6 +60,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${barlow.className}`}>
         <Providers locale={locale} messages={messages}>
+          <StructuredJSON />
           <Header />
           {children}
           <Footer />

@@ -1,7 +1,7 @@
 "use client"
 
-import { env } from "@/env"
 import { usePathname } from "@/i18n/navigation"
+import { getUrl } from "@/lib/url"
 import { cn } from "@/lib/utils"
 import { useLocale } from "next-intl"
 import { Fragment } from "react"
@@ -38,11 +38,11 @@ export const Breadcrumbs = ({ items, className }: Props) => {
   ]
 
   return (
-    <Breadcrumb className={cn(className, "md:pt-4")}>
+    <Breadcrumb className={cn(className)}>
       <BreadcrumbJsonLd
         items={breadcrumbItems.map((item) => ({
           name: item.label,
-          url: new URL(`/${locale}/${item.href ?? path}`, env.NEXT_PUBLIC_URL).toString(),
+          url: getUrl(item.href ?? path, locale).toString(),
         }))}
       />
       <BreadcrumbList>

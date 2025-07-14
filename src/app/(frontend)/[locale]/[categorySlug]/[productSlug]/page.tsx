@@ -3,6 +3,7 @@ import { getOgImage } from "@/lib/seo"
 import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
+import { ProductJsonLd } from "@/components/structured-data/product"
 import { Category } from "@/payload-types"
 import { notFound } from "next/navigation"
 import { cache } from "react"
@@ -53,10 +54,12 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 }
 
 export default async (props: Props) => {
+  const { locale } = await props.params
   const { product, category } = await getData(props)
 
   return (
     <main className="bg-flake bg-flake-bl pb-section test bg-no-repeat">
+      <ProductJsonLd product={product} locale={locale} />
       <div className="w-section px-section py-section">
         <Breadcrumbs
           items={[

@@ -1,4 +1,4 @@
-import { ADDRESS, EMAIL, PHONE } from "@/constants"
+import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP, EMAIL, PHONE } from "@/constants"
 import { Locale } from "@/i18n/config"
 import { getLocale, getTranslations } from "next-intl/server"
 import Link from "next/link"
@@ -51,7 +51,9 @@ export const Footer = async () => {
           <Link href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
             {EMAIL}
           </Link>
-          <div className="text-white">{ADDRESS}</div>
+          <div className="text-white">
+            {ADDRESS} {ADDRESS_ZIP} {ADDRESS_TOWN} {ADDRESS_COUNTRY}
+          </div>
         </div>
       </div>
     </footer>

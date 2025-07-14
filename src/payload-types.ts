@@ -395,12 +395,10 @@ export interface Product {
   title: string;
   slug?: string | null;
   description: string;
-  images?:
-    | {
-        image?: (string | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
+  images: {
+    image?: (string | null) | Media;
+    id?: string | null;
+  }[];
   sizeGuide?: (string | null) | SizeGuide;
   colors?:
     | {
