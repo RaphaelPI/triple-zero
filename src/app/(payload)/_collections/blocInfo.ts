@@ -20,6 +20,7 @@ export const BlocInfo: CollectionConfig = {
     },
     {
       name: "content",
+      label: "Contenu",
       type: "richText",
       localized: true,
     },

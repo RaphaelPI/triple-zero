@@ -1,6 +1,5 @@
 "use client"
 
-import { getOptionSlug } from "@/app/(frontend)/[locale]/[categorySlug]/[productSlug]/utils"
 import {
   Select,
   SelectContent,
@@ -8,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Product, ProductOption } from "@/payload-types"
+import { Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { useField } from "@payloadcms/ui"
 import { ValueWithRelation } from "payload"
 import { useEffect, useState } from "react"
@@ -23,7 +22,7 @@ export const ProductOptionsInput = (props: Props) => {
   const { label } = props.field
   const { path } = props
 
-  const { value, setValue } = useField<Record<string, string>>({ path })
+  const { value, setValue } = useField<[ProductOption, ProductOptionValue][]>({ path })
   const { value: discount } = useField<number>({ path: "value" })
   const { value: reference } = useField<ValueWithRelation>({
     path: "reference",
@@ -52,15 +51,17 @@ export const ProductOptionsInput = (props: Props) => {
 
   const handleChange = (option: ProductOption, selectedValue: string) => {
     if (selectedValue === "no-selection") {
-      delete value?.[getOptionSlug(option)]
-      setValue(value)
+      const newValue = value?.filter(([option]) => option.title !== option.title)
+      setValue(newValue)
       return
     }
 
-    setValue({
-      ...(value ?? {}),
-      [getOptionSlug(option)]: selectedValue,
-    })
+    const selectedOptionValue = option.values?.find(({ value }) => value.value === selectedValue)
+    if (!selectedOptionValue) {
+      return
+    }
+
+    setValue([...(value ?? []), [option, selectedOptionValue.value]])
   }
 
   const options = [
@@ -71,29 +72,31 @@ export const ProductOptionsInput = (props: Props) => {
   return (
     <div className="space-y-2">
       <div>{label}</div>
-      {options.map((option) => (
-        <div key={option.title} className="space-y-1">
-          <div>{option.title}</div>
-          <Select
-            onValueChange={(value) => handleChange(option, value)}
-            value={value?.[getOptionSlug(option)]}
-          >
-            <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
-              <SelectValue placeholder="Sélectionner une valeur" />
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              <SelectItem value="no-selection">Aucune selection</SelectItem>
-              {option.values?.map(({ value }) => {
-                return (
-                  <SelectItem key={value.value} value={value.value}>
-                    {value.title}
-                  </SelectItem>
-                )
-              })}
-            </SelectContent>
-          </Select>
-        </div>
-      ))}
+      {options.map((option) => {
+        const selectedOptionValue = value?.find(([opt]) => opt.title === option.title)
+        const selectedValue = selectedOptionValue?.[1].value
+
+        return (
+          <div key={option.title} className="space-y-1">
+            <div>{option.title}</div>
+            <Select onValueChange={(value) => handleChange(option, value)} value={selectedValue}>
+              <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
+                <SelectValue placeholder="Sélectionner une valeur" />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="no-selection">Aucune selection</SelectItem>
+                {option.values?.map(({ value }) => {
+                  return (
+                    <SelectItem key={value.value} value={value.value}>
+                      {value.title}
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -1,8 +1,12 @@
 import cookies from "js-cookie"
 import { useEffect, useState } from "react"
 
-export const useCookieState = <T>(key: string, initialValue: T): [T, (value: T) => void] => {
+export const useCookieState = <T>(
+  key: string,
+  initialValue: T,
+): [T, (value: T) => void, boolean] => {
   const [value, setValue] = useState<T>(initialValue)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const cookieValue = cookies.get(key)
@@ -13,6 +17,8 @@ export const useCookieState = <T>(key: string, initialValue: T): [T, (value: T) 
         cookies.remove(key)
       }
     }
+
+    setLoading(false)
   }, [])
 
   const setNextValue = (value: T) => {
@@ -20,5 +26,5 @@ export const useCookieState = <T>(key: string, initialValue: T): [T, (value: T) 
     setValue(value)
   }
 
-  return [value, setNextValue]
+  return [value, setNextValue, loading]
 }

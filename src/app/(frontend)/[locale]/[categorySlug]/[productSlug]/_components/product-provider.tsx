@@ -16,7 +16,7 @@ interface IProductContext {
   resetCurrentImage: () => void
 }
 
-type ImageSlider = { image: Media; key: string }
+// type ImageSlider = { image: Media; key: string }
 
 const ProductContext = createContext<IProductContext>({} as IProductContext)
 

@@ -549,6 +549,9 @@ export interface ProductVariant {
    * Si la case est cochée, cette variante de produit sera visible
    */
   active?: boolean | null;
+  /**
+   * Choisissez un produit afin de choisir les options correspondantes
+   */
   reference: {
     relationTo: 'product';
     value: string | Product;
@@ -572,12 +575,17 @@ export interface ProductVariant {
 export interface Promotion {
   id: string;
   title: string;
+  description?: string | null;
   slug?: string | null;
   value: number;
   /**
    * Si la case est cochée, la promotion sera visible
    */
   active?: boolean | null;
+  /**
+   * Choisissez un produit ou une catégorie.
+   * Produit: validez les options du produit enquestion. Catégorie: la promotion s'applique sur tous les produits de cette catégorie
+   */
   reference:
     | {
         relationTo: 'product';
@@ -1297,6 +1305,7 @@ export interface ProductVariantSelect<T extends boolean = true> {
  */
 export interface PromotionSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   slug?: T;
   value?: T;
   active?: T;

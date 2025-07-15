@@ -1,7 +1,6 @@
-import { Image } from "@/components/image"
-import { Button } from "@/components/ui/button"
-import { getClient } from "@/lib/payload"
+import { MainMessage } from "@/components/main-message"
 import { HomeCategories } from "./_components/home/home-categories"
+import { HomeProductVariants } from "./_components/home/home-product-variants"
 import { HomePromotions } from "./_components/home/home-promotions"
 import { getMetadata } from "./metadata"
 
@@ -21,25 +20,13 @@ export const generateMetadata = async ({ params }: Props) => {
   })
 }
 
-export default async () => {
-  const payload = await getClient()
-  const medias = await payload.find({
-    collection: "media",
-    limit: 1,
-  })
-
+export default () => {
   return (
-    <div className="space-y-10">
+    <main className="bg-flake bg-flake-tr space-y-8 bg-no-repeat">
       <HomePromotions />
-      <Button variant="destructive">Click me</Button>
-      <Button variant="default">Click me</Button>
-      <Button variant="ghost">Click me</Button>
-      <Button variant="link">Click me</Button>
-      <Button variant="outline">Click me</Button>
-      <Button variant="secondary">Click me</Button>
-
-      {medias.docs[0]?.url && <Image media={medias.docs[0]} className="h-auto" />}
+      <MainMessage />
+      <HomeProductVariants />
       <HomeCategories />
-    </div>
+    </main>
   )
 }

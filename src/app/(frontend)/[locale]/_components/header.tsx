@@ -36,7 +36,7 @@ const Header = async () => {
           </div>
         </div>
       </div>
-      <div className="sticky top-0 z-[1] bg-white shadow-lg shadow-[#00000011]">
+      <div className="sticky top-0 z-20 bg-white shadow-lg shadow-[#00000011]">
         <nav className="w-section px-section flex h-16 items-center justify-between transition-all duration-100 lg:h-16">
           <div className="flex items-center gap-x-2 lg:gap-x-6">
             <Link prefetch={false} href="/" aria-label={t("menu.home")} className="">

@@ -1,4 +1,4 @@
-import { Product, ProductOption, ProductOptionValue } from "@/payload-types"
+import { ProductOption, ProductOptionValue } from "@/payload-types"
 
 export type TechnicalValue = "temperature" | "volume" | "weight" | "price"
 
@@ -112,16 +112,11 @@ export const getTechnicalValues = (
   return technicalValues
 }
 
-export const getStartingPrice = (options: Product["options"], advanced: Product["advanced"]) => {
-  const allOptions = [
-    ...(options?.map(({ option }) => option) ?? []),
-    ...(advanced?.map(({ option }) => option) ?? []),
-  ]
-
+export const getStartingPrice = (options: ProductOption[]) => {
   // Get size and weight option
-  const sizeOption = allOptions.find((option) => option.size)
+  const sizeOption = options.find((option) => option.size)
   const sizeOptionValue = sizeOption?.values?.[0]
-  const weightOption = allOptions.find((option) => option.weight)
+  const weightOption = options.find((option) => option.weight)
   const weightOptionValue = weightOption?.values?.[0]
 
   const usedOptions: [ProductOption, ProductOptionValue][] = []

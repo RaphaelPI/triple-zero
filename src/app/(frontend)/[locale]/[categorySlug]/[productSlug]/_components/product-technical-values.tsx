@@ -20,7 +20,7 @@ export const ProductTechnicalValues = () => {
 
   return (
     <>
-      <div className="bg-grey-light fixed right-0 bottom-0 left-0 border-t border-t-gray-200">
+      <div className="bg-grey-light fixed right-0 bottom-0 left-0 z-10 border-t border-t-gray-200">
         <div className="w-section flex items-center justify-center gap-[2vw] p-2 sm:justify-around sm:gap-0">
           <div className="hidden items-center justify-start gap-1 lg:flex lg:gap-2">
             <IconContainer>

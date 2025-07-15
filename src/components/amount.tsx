@@ -1,10 +1,10 @@
 "use client"
 
 import { isTaxFreeCountry } from "@/app/(frontend)/[locale]/(checkout)/coordonnees/utils"
-import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { formatAmount } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout"
+import { useCountry } from "@/providers/country"
 
 interface Props {
   amount: number
@@ -13,19 +13,7 @@ interface Props {
 
 export const Amount = ({ amount, taxIncluded = false }: Props) => {
   const { shippingFeesCountry } = useCheckout()
-  const [country] = useSessionStorageState("country", "FR", async () => {
-    try {
-      const response = await fetch("https://ipapi.co/json", {
-        method: "GET",
-      })
-      const data = await response.json()
-
-      return data.country_code
-    } catch (error) {
-      console.error(error)
-      return "FR"
-    }
-  })
+  const { country } = useCountry()
 
   if (!isTaxFreeCountry(shippingFeesCountry)) {
     return <>{formatAmount(amount / 1.2)} HT</>

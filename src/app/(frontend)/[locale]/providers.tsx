@@ -5,6 +5,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { Locale } from "@/i18n/config"
 import { CheckoutProvider } from "@/providers/checkout"
+import { CountryProvider } from "@/providers/country"
 
 interface Props {
   children: React.ReactNode
@@ -15,7 +16,9 @@ interface Props {
 export const Providers = ({ children, messages, locale }: Props) => (
   <NuqsAdapter>
     <NextIntlClientProvider messages={messages} locale={locale} timeZone="UTC">
-      <CheckoutProvider>{children}</CheckoutProvider>
+      <CheckoutProvider>
+        <CountryProvider>{children}</CountryProvider>
+      </CheckoutProvider>
     </NextIntlClientProvider>
   </NuqsAdapter>
 )

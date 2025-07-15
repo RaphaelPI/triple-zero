@@ -9,8 +9,6 @@ import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { Category } from "@/payload-types"
 import { getLocale, getTranslations } from "next-intl/server"
-import Bed from "src/assets/bed.svg"
-import Mountain from "src/assets/mountain.svg"
 import { getNavData } from "../data"
 import { MainNavMobile } from "./main-nav-mobile"
 
@@ -32,7 +30,20 @@ export const MainNav = async () => {
             <NavigationMenuItem key={item.id}>
               <NavigationMenuTrigger className="cursor-pointer">{item.title}</NavigationMenuTrigger>
               <NavigationMenuContent className="bg-white px-12 py-10 shadow-lg shadow-[#00000011]">
-                <div className="grid w-96 grid-cols-2 gap-10">
+                <ul className="grid w-[400px] gap-8 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  {item.category.map((category: Category | string) => {
+                    if (typeof category === "string") {
+                      return null
+                    }
+
+                    return (
+                      <ListItem key={category.id} title={category.title} href={`/${category.slug}`}>
+                        {category.description}
+                      </ListItem>
+                    )
+                  })}
+                </ul>
+                {/* <div>
                   <div className="space-y-4">
                     {item.category.map((category: Category | string) => {
                       if (typeof category === "string") {
@@ -47,15 +58,12 @@ export const MainNav = async () => {
                           href={`/${category.slug}`}
                         >
                           {category.title}
+                          <div className="text-sm opacity-80">{category.description}</div>
                         </Link>
                       )
                     })}
                   </div>
-                  <div className="">
-                    {index === 0 && <Mountain className="fill-blue-grey block h-full w-40" />}
-                    {index === 1 && <Bed className="fill-blue-grey block h-full w-40" />}
-                  </div>
-                </div>
+                </div> */}
               </NavigationMenuContent>
             </NavigationMenuItem>
           ))}
@@ -71,5 +79,21 @@ export const MainNav = async () => {
         <MainNavMobile nav={nav} />
       </div>
     </>
+  )
+}
+
+const ListItem = ({
+  title,
+  children,
+  href,
+  ...props
+}: React.ComponentPropsWithoutRef<"li"> & { href: string }) => {
+  return (
+    <li {...props}>
+      <Link href={href} prefetch={false} className="group/item">
+        <div className="leading-none font-semibold group-hover/item:underline">{title}</div>
+        <p className="line-clamp-2 text-sm leading-snug text-gray-500">{children}</p>
+      </Link>
+    </li>
   )
 }

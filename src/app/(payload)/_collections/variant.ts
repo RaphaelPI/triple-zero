@@ -41,11 +41,14 @@ export const ProductVariant: CollectionConfig = {
       type: "relationship",
       relationTo: ["product"],
       required: true,
+      admin: {
+        description: "Choisissez un produit afin de choisir les options correspondantes",
+      },
     },
     {
       name: "options",
       type: "json",
-      defaultValue: {},
+      defaultValue: [],
       admin: {
         components: {
           Field: {

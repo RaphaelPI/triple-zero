@@ -38,14 +38,14 @@
   --text-base: 1.1rem;
   --text-lg: 1.3rem;
   --text-xl: 1.5rem;
-  --text-h1: clamp(2.5rem, 4vmax, 4.5rem);
-  --spacing-h1: clamp(3rem, 4vmax, 4.5rem);
-  --text-h2: clamp(2rem, 3vmax, 3.5rem);
-  --spacing-h2: clamp(2.5rem, 3vmax, 3.5rem);
+  --text-h1: clamp(2.5rem, 4vmax, 4rem);
+  --spacing-h1: clamp(3rem, 4vmax, 4rem);
+  --text-h2: clamp(2rem, 3vmax, 3rem);
+  --spacing-h2: clamp(2.5rem, 3vmax, 3rem);
 
   /* Shadows */
   --shadow-panel:
-    0px 30px 60px -30px rgba(63, 63, 63, 0.1), 0px 50px 100px -20px rgba(50, 50, 93, 0.1),
+    0px 10px 20px -10px rgba(63, 63, 63, 0.1), 0px 20px 40px -10px rgba(50, 50, 93, 0.1),
     0px 1px 1px 0px rgba(255, 255, 255, 0.1) inset;
 
   --background-image-flake: url("/flake.webp");

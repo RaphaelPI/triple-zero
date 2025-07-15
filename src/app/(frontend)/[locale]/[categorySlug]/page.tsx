@@ -6,7 +6,6 @@ import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
 import { Category, Media } from "@/payload-types"
-import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getNavData } from "../data"
@@ -51,10 +50,10 @@ export const generateMetadata = async (props: Props) => {
 export default async (props: Props) => {
   const { categorySlug } = await props.params
   const { category, products, nav } = await getData(props)
-  const t = await getTranslations()
+  // const t = await getTranslations()
 
   return (
-    <main className={`bg-flake bg-flake-tr bg-no-repeat`}>
+    <main className="bg-flake bg-flake-tr bg-no-repeat">
       <div className="section flex xl:gap-x-20">
         <div className="relative hidden xl:block">
           <div className="sticky top-32 w-56">
@@ -108,7 +107,10 @@ export default async (props: Props) => {
                       image={product.images[0].image as Media}
                       title={product.title}
                       description={product.description}
-                      price={getStartingPrice(product.options, product.advanced)}
+                      price={getStartingPrice([
+                        ...(product.options?.map((option) => option.option) ?? []),
+                        ...(product.advanced?.map((advanced) => advanced.option) ?? []),
+                      ])}
                     />
                   </li>
                 ))}

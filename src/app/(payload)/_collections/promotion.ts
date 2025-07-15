@@ -17,6 +17,13 @@ export const Promotion: CollectionConfig = {
       label: "Titre",
       type: "text",
       required: true,
+      localized: true,
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "textarea",
+      localized: true,
     },
     Slug,
     {
@@ -39,6 +46,10 @@ export const Promotion: CollectionConfig = {
       type: "relationship",
       relationTo: ["product", "category"],
       required: true,
+      admin: {
+        description:
+          "Choisissez un produit ou une catégorie. \nProduit: validez les options du produit enquestion. Catégorie: la promotion s'applique sur tous les produits de cette catégorie",
+      },
     },
     {
       name: "options",

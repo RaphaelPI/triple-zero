@@ -3,6 +3,7 @@ import { Locale } from "@/i18n/config"
 import { getLocale, getTranslations } from "next-intl/server"
 import Link from "next/link"
 import LogoMin from "src/assets/logo-min.svg"
+import Mountain from "src/assets/moutain.svg"
 import { getNavData } from "../data"
 
 export const Footer = async () => {
@@ -11,8 +12,9 @@ export const Footer = async () => {
   const nav = await getNavData(locale as Locale)
 
   return (
-    <footer className="bg-dark">
-      <div className="section space-y-8 pb-32 text-center">
+    <footer className="bg-dark relative overflow-hidden">
+      <Mountain className="absolute -right-[500px] -bottom-[300px] z-0 w-[1600px]" />
+      <div className="section relative space-y-4 pb-32 text-center">
         <div>
           <div className="text-h1 font-bold text-white">Triple Zéro</div>
           <div className="text-white">{t("description")}</div>
@@ -21,7 +23,8 @@ export const Footer = async () => {
           <LogoMin className="mx-auto block h-40 w-40" />
           <h2 className="text-blue-grey text-xl italic">{t("slogan")}</h2>
         </div>
-        <div className="max-xs:flex-col flex justify-center gap-10 border-t border-b border-solid border-[#333333] py-8 text-white md:gap-20">
+        <Separator />
+        <div className="max-xs:flex-col flex justify-center gap-10 text-white md:gap-20">
           {nav.items.map((item) => (
             <ol key={item.id} className="max-xs:text-center text-left">
               {item.category.map((category) => {
@@ -40,6 +43,7 @@ export const Footer = async () => {
             </ol>
           ))}
         </div>
+        <Separator />
         <div>
           <div className="text-lg font-bold text-white">{t("contact")}</div>
           <Link
@@ -56,7 +60,15 @@ export const Footer = async () => {
             {ADDRESS} {ADDRESS_ZIP} {ADDRESS_TOWN} {ADDRESS_COUNTRY}
           </div>
         </div>
+        <Separator />
+        <div>
+          <Link href="/conditions-generales-de-vente" className="link text-white">
+            {t("cgu")}
+          </Link>
+        </div>
       </div>
     </footer>
   )
 }
+
+const Separator = () => <div className="mx-auto h-[1px] w-full bg-[#232323] md:w-1/2" />

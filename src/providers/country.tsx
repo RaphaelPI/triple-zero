@@ -1,0 +1,55 @@
+import { useCookieState } from "@/hooks/use-cookie-state"
+import { createContext, useContext, useEffect, useState } from "react"
+
+interface ICountryContext {
+  country: string
+}
+
+const CountryContext = createContext<ICountryContext>({} as ICountryContext)
+export const CountryProvider = ({ children }: { children: React.ReactNode }) => {
+  const [country, setCountry, loading] = useCookieState<string>("country", "")
+  const [fetching, setFetching] = useState(false)
+
+  useEffect(() => {
+    if (country || loading || fetching) {
+      return
+    }
+
+    console.log("gonna fetch")
+    getCountry()
+  }, [loading, country])
+
+  const getCountry = async () => {
+    setFetching(true)
+    try {
+      const response = await fetch("https://ipapi.co/json", {
+        method: "GET",
+      })
+      const data = await response.json()
+
+      setCountry(data.country_code)
+    } catch (error) {
+      setCountry("FR")
+    } finally {
+      setFetching(false)
+    }
+  }
+
+  return (
+    <CountryContext.Provider
+      value={{
+        country,
+      }}
+    >
+      {children}
+    </CountryContext.Provider>
+  )
+}
+
+export const useCountry = () => {
+  const context = useContext(CountryContext)
+  if (!context) {
+    throw new Error("useCountry must be used within a CountryProvider")
+  }
+  return context
+}

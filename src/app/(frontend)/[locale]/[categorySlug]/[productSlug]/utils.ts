@@ -59,7 +59,6 @@ export const getProductDefaultImages = (
 
   // merge all images
   // return Object.fromEntries([...defaultProductImages, ...colorOptionImages, ...activeOptionsImages])
-  console.log(colorOptionImages, optionImages)
   return Object.values(
     [...defaultProductImages, ...colorOptionImages, ...optionImages].reduce(
       (prev, current) => ({ ...prev, [current.id]: current }),
