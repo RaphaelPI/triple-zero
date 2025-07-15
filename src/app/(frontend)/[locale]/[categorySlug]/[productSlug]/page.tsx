@@ -58,7 +58,7 @@ export default async (props: Props) => {
   const t = await getTranslations()
 
   return (
-    <main className="bg-flake bg-flake-bl pb-section test space-y-8 bg-no-repeat">
+    <main className="bg-flake bg-flake-bl pb-section space-y-8 bg-no-repeat">
       <ProductJsonLd product={product} locale={locale} />
       <div className="w-section px-section pt-section">
         <Breadcrumbs

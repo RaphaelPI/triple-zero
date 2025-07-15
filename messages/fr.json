@@ -100,5 +100,9 @@
   "mainMessage": "Le mot de Louis Fernand",
   "promotions": "Promos du moment",
   "variants": "Les incontournables",
-  "cgu": "Conditions générales de vente"
+  "cgu": "Conditions générales de vente",
+  "faq": {
+    "title": "Vos questions fréquentes",
+    "description": "Trouvez toutes les réponses à vos questions sur nos équipements de haute montagne : expéditions, livraisons, tailles, entretien des doudounes, sacs de couchage, et plus encore."
+  }
 }

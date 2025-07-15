@@ -16,7 +16,7 @@ const Header = async () => {
     <>
       <div className="bg-dark overflow-hidden" id="top-nav">
         <div className="w-section px-section flex h-8 items-center justify-end gap-x-8 text-sm font-light text-white uppercase">
-          <Link prefetch={false} href="/faq" className="link">
+          <Link prefetch={false} href="/questions-frequentes" className="link">
             FAQ
           </Link>
           <Link prefetch={false} href="/contact" className="link">
