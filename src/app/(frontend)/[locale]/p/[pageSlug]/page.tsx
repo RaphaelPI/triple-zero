@@ -4,8 +4,6 @@ import { getMetadata } from "../../metadata"
 import { BlocText } from "./_components/BlocText"
 import { getPageData } from "./data"
 
-// Revalidate pages every 60 seconds
-export const revalidate = 60
 export const dynamic = "force-static"
 
 interface Props {

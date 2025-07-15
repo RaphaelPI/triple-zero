@@ -1,6 +1,7 @@
 "use client"
 
-import { useSessionStorageState } from "@/hooks/useStorageState"
+import { useCookieState } from "@/hooks/use-cookie-state"
+import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Locale } from "@/i18n/config"
 import { Media, Message } from "@/payload-types"
 import { format, setDefaultOptions } from "date-fns"
@@ -25,7 +26,7 @@ export const MainMessageModal = () => {
   }, [locale])
 
   const [message] = useSessionStorageState<Message | null>("main-message", null, fetchMessage)
-  const [shown, setShown] = useSessionStorageState<boolean>("main-message-shown", false)
+  const [shown, setShown] = useCookieState<boolean>("main-message-shown", false)
 
   if (!message || !message.active || !message.modal) {
     return null

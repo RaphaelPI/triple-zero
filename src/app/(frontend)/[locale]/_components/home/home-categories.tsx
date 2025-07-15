@@ -2,9 +2,9 @@ import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getLocale } from "next-intl/server"
 import Marquee from "react-fast-marquee"
-import { getCategoriesData } from "../data"
+import { getCategoriesData } from "../../data"
 
-export const CategoriesMarquee = async () => {
+export const HomeCategories = async () => {
   const locale = await getLocale()
   const categories = await getCategoriesData(locale as Locale)
   return (

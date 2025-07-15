@@ -1,6 +1,6 @@
 "use client"
 
-import { useSessionStorageState } from "@/hooks/useStorageState"
+import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Locale } from "@/i18n/config"
 import { Media, Message } from "@/payload-types"
 import { format } from "date-fns"

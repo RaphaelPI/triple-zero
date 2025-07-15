@@ -1,7 +1,7 @@
 "use client"
 
 import { isTaxFreeCountry } from "@/app/(frontend)/[locale]/(checkout)/coordonnees/utils"
-import { useSessionStorageState } from "@/hooks/useStorageState"
+import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { formatAmount } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout"

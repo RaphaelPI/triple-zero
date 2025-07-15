@@ -1,8 +1,8 @@
 "use client"
 
 import { getShippingFees } from "@/app/(frontend)/[locale]/(checkout)/actions"
-import { useServerActionQuery } from "@/hooks/useServerActionQuery"
-import { useSessionStorageState } from "@/hooks/useStorageState"
+import { useCookieState } from "@/hooks/use-cookie-state"
+import { useServerActionQuery } from "@/hooks/use-server-action-query"
 import { useRouter } from "@/i18n/navigation"
 import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { createContext, useContext, useEffect, useState } from "react"
@@ -102,8 +102,8 @@ const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
 export const CheckoutProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
   const [shippingFeesCountry, setShippingFeesCountry] = useState("")
-  const [cart, setCart] = useSessionStorageState<Cart>("cart", DEFAULT_CART)
-  const [deliveryData, setDeliveryData] = useSessionStorageState<z.infer<typeof formSchema>>(
+  const [cart, setCart] = useCookieState<Cart>("cart", DEFAULT_CART)
+  const [deliveryData, setDeliveryData] = useCookieState<z.infer<typeof formSchema>>(
     "deliveryData",
     DEFAULT_DELIVERY_DATA,
   )

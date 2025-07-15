@@ -59,11 +59,11 @@ export const MainNav = async () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
           ))}
-          <NavigationMenuItem>
+          {/* <NavigationMenuItem>
             <Link prefetch={false} href="/savoir-faire" className="px-4">
               {t("menu.knowledge")}
             </Link>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
 

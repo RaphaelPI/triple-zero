@@ -4,6 +4,8 @@ import { getMetadata } from "../../metadata"
 import { CheckoutSummary } from "../_components/checkout-summary"
 import { CheckoutForm } from "./_components/checkout-form"
 
+export const dynamic = "force-static"
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations()
   return getMetadata({

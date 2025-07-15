@@ -20,3 +20,11 @@ export const getNavData = cache(async (locale: Locale) => {
   const nav = await payload.findGlobal({ slug: "nav", locale })
   return nav
 })
+
+export const getPromotionsData = cache(async () => {
+  const payload = await getClient()
+  const promotions = await payload.find({
+    collection: "promotion",
+  })
+  return promotions
+})

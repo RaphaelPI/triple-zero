@@ -1,8 +1,11 @@
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { getClient } from "@/lib/payload"
-import { CategoriesMarquee } from "./_components/categories-marquee"
+import { HomeCategories } from "./_components/home/home-categories"
+import { HomePromotions } from "./_components/home/home-promotions"
 import { getMetadata } from "./metadata"
+
+export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
@@ -27,6 +30,7 @@ export default async () => {
 
   return (
     <div className="space-y-10">
+      <HomePromotions />
       <Button variant="destructive">Click me</Button>
       <Button variant="default">Click me</Button>
       <Button variant="ghost">Click me</Button>
@@ -35,7 +39,7 @@ export default async () => {
       <Button variant="secondary">Click me</Button>
 
       {medias.docs[0]?.url && <Image media={medias.docs[0]} className="h-auto" />}
-      <CategoriesMarquee />
+      <HomeCategories />
     </div>
   )
 }
