@@ -15,11 +15,12 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
 
     return (
       <div
-        className={cn("group flex items-center gap-2 text-xl", {
+        className={cn("group relative flex items-center gap-2 text-xl", {
           "text-3xl font-semibold": node.tag === "h1",
           "text-2xl font-semibold": node.tag === "h2",
         })}
       >
+        <div id={id} className="invisible absolute -top-16" />
         {text}
         <Link
           prefetch={false}

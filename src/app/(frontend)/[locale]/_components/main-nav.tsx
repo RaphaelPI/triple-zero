@@ -29,15 +29,20 @@ export const MainNav = async () => {
           {nav.items.map((item, index) => (
             <NavigationMenuItem key={item.id}>
               <NavigationMenuTrigger className="cursor-pointer">{item.title}</NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-white px-12 py-10 shadow-lg shadow-[#00000011]">
-                <ul className="grid w-[400px] gap-8 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              <NavigationMenuContent className="bg-white p-6 shadow-lg shadow-[#00000011]">
+                <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   {item.category.map((category: Category | string) => {
                     if (typeof category === "string") {
                       return null
                     }
 
                     return (
-                      <ListItem key={category.id} title={category.title} href={`/${category.slug}`}>
+                      <ListItem
+                        key={category.id}
+                        title={category.title}
+                        href={`/${category.slug}`}
+                        className="hover:bg-grey-light rounded-lg p-4"
+                      >
                         {category.description}
                       </ListItem>
                     )
@@ -90,9 +95,9 @@ const ListItem = ({
 }: React.ComponentPropsWithoutRef<"li"> & { href: string }) => {
   return (
     <li {...props}>
-      <Link href={href} prefetch={false} className="group/item">
+      <Link href={href} prefetch={false} className="group/item space-y-2">
         <div className="leading-none font-semibold group-hover/item:underline">{title}</div>
-        <p className="line-clamp-2 text-sm leading-snug text-gray-500">{children}</p>
+        <p className="line-clamp-2 text-sm leading-4 text-gray-500">{children}</p>
       </Link>
     </li>
   )

@@ -36,6 +36,7 @@ export const HomePromotions = async () => {
                 </div>
               </div>
               <Image
+                priority
                 media={product.images?.[0]?.image as Media}
                 alt={product.title}
                 width={350}

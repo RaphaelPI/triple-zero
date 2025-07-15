@@ -44,9 +44,12 @@ export const HomeProductVariants = async () => {
           options.forEach(([option, optionValue]) => {
             searchParams.set(getOptionSlug(option), optionValue.value)
           })
+          const url = `/${category.slug}/${product.slug}?${searchParams.toString()}`
 
           return (
-            <div
+            <Link
+              href={url}
+              prefetch={false}
               className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8"
               key={variant.id}
             >
@@ -61,12 +64,7 @@ export const HomeProductVariants = async () => {
               </div>
               <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                 <div>
-                  <Link
-                    className="bg-green link inline-block rounded-lg px-3 py-1"
-                    href={`/${category.slug}`}
-                  >
-                    {category.title}
-                  </Link>
+                  <div className="bg-green inline-block rounded-lg px-3 py-1">{category.title}</div>
                   <h2 className="text-xl font-bold">{variant.title}</h2>
                   <div className="text-lg">{product.title}</div>
                 </div>
@@ -84,11 +82,10 @@ export const HomeProductVariants = async () => {
                   {t("priceFrom")}
                   <Amount amount={getTechnicalValues(priceOptions).price} taxIncluded />
                 </div>
-                <Link href={`/${category.slug}/${product.slug}?${searchParams.toString()}`}>
-                  <Button aria-label={t("product.see")}>{t("product.see")}</Button>
-                </Link>
+
+                <Button aria-label={t("product.see")}>{t("product.see")}</Button>
               </div>
-            </div>
+            </Link>
           )
 
           // return (

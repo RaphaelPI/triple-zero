@@ -1,11 +1,14 @@
+import { Amount } from "@/components/amount"
 import { Breadcrumbs } from "@/components/breadcrumbs"
+import { Image } from "@/components/image"
 import { MainMessage } from "@/components/main-message"
-import { ProductCard } from "@/components/product-card"
+import { Button } from "@/components/ui/button"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
 import { Category, Media } from "@/payload-types"
+import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getNavData } from "../data"
@@ -50,7 +53,7 @@ export const generateMetadata = async (props: Props) => {
 export default async (props: Props) => {
   const { categorySlug } = await props.params
   const { category, products, nav } = await getData(props)
-  // const t = await getTranslations()
+  const t = await getTranslations()
 
   return (
     <main className="bg-flake bg-flake-tr bg-no-repeat">
@@ -100,20 +103,55 @@ export default async (props: Props) => {
             <div className="space-y-8">
               <p>{category.description}</p>
               <ul className="space-y-8">
-                {products.map((product) => (
-                  <li key={product.id}>
-                    <ProductCard
-                      href={`/${category.slug}/${product.slug}`}
-                      image={product.images[0].image as Media}
-                      title={product.title}
-                      description={product.description}
-                      price={getStartingPrice([
-                        ...(product.options?.map((option) => option.option) ?? []),
-                        ...(product.advanced?.map((advanced) => advanced.option) ?? []),
-                      ])}
-                    />
-                  </li>
-                ))}
+                {products.map((product, index) => {
+                  const image = product.images[0].image as Media
+                  const price = getStartingPrice([
+                    ...(product.options?.map((option) => option.option) ?? []),
+                    ...(product.advanced?.map((advanced) => advanced.option) ?? []),
+                  ])
+
+                  return (
+                    <li key={product.id}>
+                      <Link
+                        prefetch={false}
+                        href={`/${category.slug}/${product.slug}`}
+                        className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
+                      >
+                        <div className="w-full md:h-full md:w-5/12">
+                          {image && (
+                            <Image
+                              priority={index < 3}
+                              media={image}
+                              alt={product.title}
+                              className="mx-auto h-60 w-auto rounded-2xl object-cover object-right md:h-full md:rounded-r-none"
+                            />
+                          )}
+                        </div>
+                        <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
+                          <h2 className="text-xl font-bold">{product.title}</h2>
+                          <div className="line-clamp-2">{product.description}</div>
+                          {price && (
+                            <div className="text-lg font-semibold">
+                              {t("priceFrom")}
+                              <Amount amount={price} taxIncluded />
+                            </div>
+                          )}
+                          <Button aria-label={t("product.see")}>{t("product.see")}</Button>
+                        </div>
+                      </Link>
+                      {/* <ProductCard
+                          href={`/${category.slug}/${product.slug}`}
+                          image={product.images[0].image as Media}
+                          title={product.title}
+                          description={product.description}
+                          price={getStartingPrice([
+                            ...(product.options?.map((option) => option.option) ?? []),
+                            ...(product.advanced?.map((advanced) => advanced.option) ?? []),
+                          ])}
+                        /> */}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>

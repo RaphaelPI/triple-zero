@@ -5,10 +5,12 @@ import { Metadata } from "next"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
 import { Category } from "@/payload-types"
+import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
 import { ProductDynamicContent } from "./_components/product-dynamic-content"
+import { ProductInformations } from "./_components/product-informations"
 import { getProductData } from "./data"
 
 export const dynamic = "force-static"
@@ -23,10 +25,7 @@ interface Props {
 
 const getData = cache(async ({ params }: Props) => {
   const { locale, categorySlug, productSlug } = await params
-  const [productData] = await Promise.all([
-    getProductData(productSlug, locale),
-    // getCategoryData(categorySlug, locale),
-  ])
+  const productData = await getProductData(productSlug, locale)
 
   if (!productData.docs[0]) {
     notFound()
@@ -56,11 +55,12 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 export default async (props: Props) => {
   const { locale } = await props.params
   const { product, category } = await getData(props)
+  const t = await getTranslations()
 
   return (
-    <main className="bg-flake bg-flake-bl pb-section test bg-no-repeat">
+    <main className="bg-flake bg-flake-bl pb-section test space-y-8 bg-no-repeat">
       <ProductJsonLd product={product} locale={locale} />
-      <div className="w-section px-section py-section">
+      <div className="w-section px-section pt-section">
         <Breadcrumbs
           items={[
             { label: category.title, href: `/${category.slug}` },
@@ -75,6 +75,11 @@ export default async (props: Props) => {
         </section>
         <ProductDynamicContent product={product} />
       </div>
+      <section className="section space-y-8">
+        <ProductInformations title={t("product.technicalInfos")} data={product.technicalInfos} />
+        <ProductInformations title={t("product.materials")} data={product.materials} />
+        <ProductInformations title={t("product.care")} data={product.care} />
+      </section>
     </main>
   )
 }

@@ -434,7 +434,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (string | BlocInfo)[] | null;
+        info?: (string | null) | BlocInfo;
         id?: string | null;
       }[]
     | null;
@@ -444,7 +444,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (string | BlocInfo)[] | null;
+        info?: (string | null) | BlocInfo;
         id?: string | null;
       }[]
     | null;
@@ -454,7 +454,7 @@ export interface Product {
          * Remplace le titre par défaut du bloc d'information pour ce produit.
          */
         title?: string | null;
-        info?: (string | BlocInfo)[] | null;
+        info?: (string | null) | BlocInfo;
         id?: string | null;
       }[]
     | null;

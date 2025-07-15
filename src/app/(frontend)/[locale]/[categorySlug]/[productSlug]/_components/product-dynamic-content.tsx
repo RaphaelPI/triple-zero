@@ -32,7 +32,7 @@ export const ProductDynamicContent = ({ product }: Props) => {
           </ProductOptions>
         </div>
       </div>
-      <div className="lg:pl-section order-2 lg:order-3">
+      <div className="lg:pl-section order-2 lg:sticky lg:top-24 lg:order-3">
         <ProductImages />
       </div>
       <ProductTechnicalValues />
