@@ -55,7 +55,7 @@
   },
   "delivery": {
     "title": "Vos coordonnées",
-    "description": "Veuillez saisir les informations nécessaires pour votre commande.\nNe remplissez l'adresse de livraison que si elle est différente de la vôtre",
+    "description": "Merci de renseigner votre adresse de facturation. \nPar défaut, votre commande sera expédiée à l’adresse de facturation. Si vous souhaitez une livraison à une autre adresse, vous pourrez l’indiquer en décochant l’option ci-dessous.",
     "gender": "Civilité",
     "lastName": "Nom",
     "firstName": "Prénom",
@@ -68,7 +68,10 @@
     "email": "Email",
     "phone": "Téléphone",
     "validate": "Passer au paiement",
-    "addAddress2": "Ajouter un complément d’adresse"
+    "addAddress2": "Ajouter un complément d’adresse",
+    "useDeliveryAddress": "Utiliser l’adresse de facturation comme adresse d’expédition",
+    "deliveryAddress": "Adresse de livraison",
+    "billingAddress": "Adresse de facturation"
   },
   "product": {
     "options": "Options",

@@ -58,7 +58,7 @@ export default async (props: Props) => {
                 {items.map((item) => {
                   return (
                     <AccordionItem key={item.id} value={String(item.id)}>
-                      <AccordionTrigger>{item.question}</AccordionTrigger>
+                      <AccordionTrigger className="font-semibold">{item.question}</AccordionTrigger>
                       <AccordionContent>
                         <RichText data={item.answer} />
                       </AccordionContent>

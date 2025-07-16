@@ -96,7 +96,7 @@ export const CheckoutForm = () => {
         >
           <BillingFormFields form={form} />
           <DeliveryFormFields form={form} />
-          <div className="space-y-4 pt-10">
+          <div className="space-y-4 pt-4">
             {form.formState.errors.root && (
               <div className="text-destructive">{form.formState.errors.root.message}</div>
             )}

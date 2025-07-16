@@ -25,28 +25,29 @@ export const BillingFormFields = ({ form }: Props) => {
 
   return (
     <>
-      <div className="text-xl">Adresse de facturation</div>
-      <InputField
-        control={form.control}
-        name="firstName"
-        label={t("delivery.firstName")}
-        placeholder={t("delivery.firstName")}
-        required
-      />
-      <InputField
-        control={form.control}
-        name="lastName"
-        label={t("delivery.lastName")}
-        placeholder={t("delivery.lastName")}
-        required
-      />
+      <div className="text-xl">{t("delivery.billingAddress")}</div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <InputField
+          control={form.control}
+          name="firstName"
+          label={t("delivery.firstName")}
+          placeholder={t("delivery.firstName")}
+          required
+        />
+        <InputField
+          control={form.control}
+          name="lastName"
+          label={t("delivery.lastName")}
+          placeholder={t("delivery.lastName")}
+          required
+        />
+      </div>
       <InputField
         control={form.control}
         name="company"
         label={t("delivery.company")}
         placeholder={t("delivery.company")}
       />
-
       <InputField
         control={form.control}
         name="email"
@@ -82,21 +83,22 @@ export const BillingFormFields = ({ form }: Props) => {
           {t("delivery.addAddress2")}
         </div>
       )}
-
-      <InputField
-        control={form.control}
-        name="zip"
-        label={t("delivery.zip")}
-        placeholder={t("delivery.zip")}
-        required
-      />
-      <InputField
-        control={form.control}
-        name="city"
-        label={t("delivery.city")}
-        placeholder={t("delivery.city")}
-        required
-      />
+      <div className="grid gap-4 md:grid-cols-2">
+        <InputField
+          control={form.control}
+          name="zip"
+          label={t("delivery.zip")}
+          placeholder={t("delivery.zip")}
+          required
+        />
+        <InputField
+          control={form.control}
+          name="city"
+          label={t("delivery.city")}
+          placeholder={t("delivery.city")}
+          required
+        />
+      </div>
       <CountrySelectField
         control={form.control}
         name="country"

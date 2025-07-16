@@ -40,17 +40,17 @@ export const HomePromotions = async () => {
                 media={product.images?.[0]?.image as Media}
                 alt={product.title}
                 width={350}
-                className="h-auto w-full rounded-t-2xl object-contain max-md:h-52"
+                height={300}
+                className="h-52 w-full rounded-t-2xl object-contain"
+                sizes="350px"
               />
               <div className="px-panel py-panel space-y-2">
                 <div className="text-lg font-semibold">{promotion.title}</div>
-                {promotion.description && (
-                  <div className="line-clamp-3">{promotion.description}</div>
-                )}
+                <div className="line-clamp-3 min-h-12 text-sm">{promotion.description}</div>
                 <div>
                   <ul className="flex flex-wrap gap-1">
                     {options.map(([option, optionValue]) => (
-                      <li key={option.title} className="bg-blue-grey rounded p-1 text-xs">
+                      <li key={option.title} className="bg-blue-grey rounded px-2 py-1 text-xs">
                         {option.title} : {optionValue.title}
                       </li>
                     ))}

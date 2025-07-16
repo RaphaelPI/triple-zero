@@ -42,7 +42,7 @@ export const InputField = ({
             <Input
               type={type}
               placeholder={placeholder}
-              className="bg-grey-light border-dark w-full rounded-lg border px-2 py-1"
+              className="bg-grey-light border-blue-grey w-full rounded-lg border px-2 py-1"
               {...field}
             />
           </FormControl>

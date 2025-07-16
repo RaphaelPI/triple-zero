@@ -12,6 +12,17 @@ export const Faq: GlobalConfig = {
       label: "Categories",
       type: "array",
       required: true,
+      admin: {
+        components: {
+          RowLabel: {
+            path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+            clientProps: {
+              placeholder: "Titre",
+              labelPath: ["title"],
+            },
+          },
+        },
+      },
       fields: [
         {
           name: "title",
