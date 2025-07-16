@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 
 interface ICountryContext {
   country: string
+  loading: boolean
 }
 
 const CountryContext = createContext<ICountryContext>({} as ICountryContext)
@@ -39,6 +40,7 @@ export const CountryProvider = ({ children }: { children: React.ReactNode }) => 
     <CountryContext.Provider
       value={{
         country,
+        loading,
       }}
     >
       {children}

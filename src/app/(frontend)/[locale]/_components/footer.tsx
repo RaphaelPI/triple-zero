@@ -62,7 +62,7 @@ export const Footer = async () => {
         </div>
         <Separator />
         <div>
-          <Link href="/conditions-generales-de-vente" className="link text-white">
+          <Link href="/p/conditions-generales-de-vente" className="link text-white">
             {t("cgu")}
           </Link>
         </div>

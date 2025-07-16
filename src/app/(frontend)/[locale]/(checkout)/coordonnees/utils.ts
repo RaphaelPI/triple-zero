@@ -1,5 +1,5 @@
-export const isTaxFreeCountry = (country: string) => {
-  return ![
+export const isTTCCountry = (country: string) => {
+  return [
     "FR",
     "DE",
     "IT",
@@ -36,5 +36,5 @@ export const isTaxFreeCountry = (country: string) => {
     "CH",
     "NO",
     "IS",
-  ].includes(country)
+  ].includes(country.toUpperCase())
 }

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic"
 import { useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 
+import { useCheckout } from "@/providers/checkout"
 import { InputField } from "./input-field"
 
 const CountrySelectField = dynamic(
@@ -22,6 +23,13 @@ interface Props {
 export const BillingFormFields = ({ form }: Props) => {
   const [address2, setAddress2] = useState(false)
   const t = useTranslations()
+  const { setShippingFeesCountry } = useCheckout()
+
+  const handleCountryChange = (value: string) => {
+    // country
+    console.log("gonna set shipping fees country", value)
+    setShippingFeesCountry(value)
+  }
 
   return (
     <>
@@ -105,6 +113,7 @@ export const BillingFormFields = ({ form }: Props) => {
         label={t("delivery.country")}
         placeholder={t("delivery.country")}
         required
+        onChange={handleCountryChange}
       />
     </>
   )

@@ -2,47 +2,46 @@ import { Locale } from "@/i18n/config"
 import { getOgImage } from "@/lib/seo"
 import { Metadata } from "next"
 
+import PromoIcon from "@/assets/promo.svg"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
-import { Category, SizeGuide } from "@/payload-types"
+import { Category, Product, SizeGuide } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
-import { ProductAddToCart } from "./_components/product-add-to-cart"
-import { ProductColors } from "./_components/product-colors"
-import { ProductImages } from "./_components/product-images"
-import { ProductInformations } from "./_components/product-informations"
-import { ProductOptions } from "./_components/product-options"
-import { ProductPrice } from "./_components/product-price"
-import { ProductProvider } from "./_components/product-provider"
-import { ProductTechnicalValues } from "./_components/product-technical-values"
-import { getProductData } from "./data"
+
+import { ProductAddToCart } from "../../[categorySlug]/[productSlug]/_components/product-add-to-cart"
+import { ProductColors } from "../../[categorySlug]/[productSlug]/_components/product-colors"
+import { ProductImages } from "../../[categorySlug]/[productSlug]/_components/product-images"
+import { ProductInformations } from "../../[categorySlug]/[productSlug]/_components/product-informations"
+import { ProductOptions } from "../../[categorySlug]/[productSlug]/_components/product-options"
+import { ProductPrice } from "../../[categorySlug]/[productSlug]/_components/product-price"
+import { ProductProvider } from "../../[categorySlug]/[productSlug]/_components/product-provider"
+import { ProductTechnicalValues } from "../../[categorySlug]/[productSlug]/_components/product-technical-values"
+import { getPromotionData } from "./data"
 
 export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
     locale: Locale
-    categorySlug: string
-    productSlug: string
+    promotionSlug: string
   }>
 }
 
 const getData = cache(async ({ params }: Props) => {
-  const { locale, categorySlug, productSlug } = await params
-  const productData = await getProductData(productSlug, locale)
+  const { locale, promotionSlug } = await params
+  const promotionData = await getPromotionData(promotionSlug, locale)
 
-  if (!productData.docs[0]) {
+  if (!promotionData.docs[0]) {
     notFound()
   }
 
-  const pCat = productData.docs[0].category as Category
-  if (pCat.slug !== categorySlug) {
-    notFound()
-  }
+  const product = promotionData.docs[0].reference.value as Product
+  const pCat = product.category as Category
 
-  return { product: productData.docs[0], category: pCat }
+  return { product: product, category: pCat, promotion: promotionData.docs[0] }
 })
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
@@ -60,7 +59,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
 export default async (props: Props) => {
   const { locale } = await props.params
-  const { product, category } = await getData(props)
+  const { product, category, promotion } = await getData(props)
   const t = await getTranslations()
 
   return (
@@ -73,17 +72,21 @@ export default async (props: Props) => {
             { label: product.title, href: `/${category.slug}/${product.slug}` },
           ]}
         />
-        <h1 className="mb-4">{product.title}</h1>
+        <h1 className="mb-4">{promotion.title}</h1>
       </div>
       <div className="w-section grid gap-8 lg:grid-cols-2">
-        <section className="px-section order-1 lg:pr-0">{product.description}</section>
-        <ProductProvider product={product}>
+        <section className="px-section order-1 lg:pr-0">
+          {promotion.description && <div>{promotion.description}</div>}
+          <div>{product.description}</div>
+        </section>
+        <ProductProvider product={product} promotion={promotion}>
           <div className="px-section sticky top-0 order-3 lg:order-2 lg:row-span-3 lg:pl-0">
             <div className="panel">
               <ProductOptions
                 options={product.options?.map(({ option }) => option)}
                 advanced={product.advanced?.map(({ option }) => option)}
                 sizeGuide={product.sizeGuide as SizeGuide}
+                readOnly
               >
                 {product.colors && (
                   <div className="w-full items-center gap-1 space-y-2 py-3 md:gap-2 xl:flex">
@@ -92,6 +95,7 @@ export default async (props: Props) => {
                       <ProductColors
                         colors={product.colors.map(({ color }) => color)}
                         name="color"
+                        readOnly
                       />
                     </div>
                   </div>
@@ -104,6 +108,13 @@ export default async (props: Props) => {
             </div>
           </div>
           <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3">
+            <div className="absolute top-2 right-2 flex flex-col items-center justify-center">
+              <PromoIcon className="animation-duration-[30000ms] size-20 animate-spin" />
+              <div className="absolute inset-0 flex rotate-6 items-center justify-center text-xl font-bold">
+                {promotion.value}%
+              </div>
+            </div>
+
             <ProductImages />
           </div>
           <ProductTechnicalValues />

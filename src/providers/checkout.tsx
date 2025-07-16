@@ -4,7 +4,7 @@ import { getShippingFees } from "@/app/(frontend)/[locale]/(checkout)/actions"
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useServerActionQuery } from "@/hooks/use-server-action-query"
 import { useRouter } from "@/i18n/navigation"
-import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
+import { Color, ColorWithImage, ProductOption, ProductOptionValue } from "@/payload-types"
 import { createContext, useContext, useEffect, useState } from "react"
 import z from "zod"
 
@@ -15,6 +15,7 @@ export interface Cart {
 
 export interface CartLine {
   product: string
+  promotion?: string
   title: string
   image: string
   colors: string[]
@@ -24,6 +25,7 @@ export interface CartLine {
   url: string
   categorySlug: string
   category: string
+  discount?: number
 }
 
 const RequiredStringSchema = z.string().trim().min(1, { message: "Champ obligatoire" })
@@ -78,10 +80,16 @@ const DEFAULT_DELIVERY_DATA: z.infer<typeof formSchema> = {
 }
 
 interface AddCartItemArgs {
-  product: Product
-  colors: Product["colors"]
+  product: string
+  title: string
+  image: string
+  color?: ColorWithImage
   options: [ProductOption, ProductOptionValue][]
   price: number
+  promotion?: string
+  discount?: number
+  categorySlug?: string
+  categoryTitle?: string
 }
 
 interface ICheckoutContext {
@@ -117,15 +125,26 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setLoading(false)
   }, [])
 
-  const addItem = ({ product, colors, options, price }: AddCartItemArgs) => {
+  const addItem = ({
+    product,
+    title,
+    image,
+    color,
+    options,
+    price,
+    promotion,
+    discount,
+    categorySlug,
+    categoryTitle,
+  }: AddCartItemArgs) => {
     const newCart = { ...cart }
     const lineOptions = options.map(([option, value]) => [option.title, value.title])
-    const lineColors = colors?.map((color) => String(color.color)) ?? []
+    const lineColors = color ? [(color.color as Color).color] : []
 
     // Do we already have the same product ?
     const existingLine = cart?.lines.findIndex(
       (line) =>
-        line.product === product.id &&
+        (line.promotion === promotion || line.product === product) &&
         JSON.stringify([line.colors, line.options]) === JSON.stringify([lineColors, lineOptions]),
     )
 
@@ -133,16 +152,18 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
       newCart.lines[existingLine].quantity++
     } else {
       newCart.lines.push({
-        product: product.id,
-        image: (product.images?.[0]?.image as Media)?.url ?? "",
-        title: product.title,
+        product,
+        promotion,
+        image,
+        title,
         options: lineOptions,
         colors: lineColors,
         quantity: 1,
         url: window.location.href,
         price,
-        categorySlug: (product.category as Category).slug ?? "",
-        category: (product.category as Category).title ?? "",
+        discount,
+        categorySlug: categorySlug ?? "",
+        category: categoryTitle ?? "",
       })
     }
 

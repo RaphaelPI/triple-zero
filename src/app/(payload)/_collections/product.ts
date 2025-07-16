@@ -141,6 +141,9 @@ export const Product: CollectionConfig = {
               name: "technicalInfos",
               label: "Informations techniques",
               type: "array",
+              admin: {
+                initCollapsed: true,
+              },
               fields: [
                 {
                   name: "title",
@@ -162,6 +165,9 @@ export const Product: CollectionConfig = {
               name: "materials",
               label: "Matériaux",
               type: "array",
+              admin: {
+                initCollapsed: true,
+              },
               fields: [
                 {
                   name: "title",
@@ -183,6 +189,9 @@ export const Product: CollectionConfig = {
               name: "care",
               label: "Entretien",
               type: "array",
+              admin: {
+                initCollapsed: true,
+              },
               fields: [
                 {
                   name: "title",

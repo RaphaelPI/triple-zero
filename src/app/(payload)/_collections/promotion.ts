@@ -27,6 +27,16 @@ export const Promotion: CollectionConfig = {
     },
     Slug,
     {
+      label: "Image",
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        description:
+          "L'image n'est pas obligatoire, si il n'y en a pas on affichera la premiere image du produit lié à la promo",
+      },
+    },
+    {
       name: "value",
       label: "Remise",
       type: "number",
@@ -49,6 +59,18 @@ export const Promotion: CollectionConfig = {
       admin: {
         description:
           "Choisissez un produit ou une catégorie. \nProduit: validez les options du produit enquestion. Catégorie: la promotion s'applique sur tous les produits de cette catégorie",
+      },
+    },
+    {
+      name: "color",
+      type: "json",
+      defaultValue: [],
+      admin: {
+        components: {
+          Field: {
+            path: "/app/(payload)/_ui/product-color-input#ProductColorInput",
+          },
+        },
       },
     },
     {

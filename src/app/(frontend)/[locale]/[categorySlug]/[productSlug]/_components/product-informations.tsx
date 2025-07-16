@@ -8,9 +8,11 @@ interface ProductInfosProps {
 }
 
 export const ProductInformations = ({ title, data }: ProductInfosProps) => {
-  if (!data) {
+  if (!data || data.length === 0) {
     return null
   }
+
+  console.log(data)
 
   return (
     <div>
@@ -30,7 +32,7 @@ export const ProductInformations = ({ title, data }: ProductInfosProps) => {
             >
               <div id={id ?? ""} className="invisible absolute -top-16" />
               <div className="group flex items-center gap-2 text-lg font-bold">
-                {blocTitle ?? info.title}
+                {blocTitle || info.title}
                 <Link
                   prefetch={false}
                   href={`#${id}`}

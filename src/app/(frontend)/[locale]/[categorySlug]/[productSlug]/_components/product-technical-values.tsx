@@ -8,14 +8,12 @@ import Weight from "src/assets/weight.svg"
 
 import { Amount } from "@/components/amount"
 import { Popover } from "@/components/popover"
-import { Button } from "@/components/ui/button"
-import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
+import { ProductAddToCart } from "./product-add-to-cart"
 import { useProduct } from "./product-provider"
 
 export const ProductTechnicalValues = () => {
-  const { addItem } = useCheckout()
-  const { technicalValues, activeOptions, product, activeColors } = useProduct()
+  const { technicalValues } = useProduct()
   const t = useTranslations()
 
   return (
@@ -89,7 +87,14 @@ export const ProductTechnicalValues = () => {
           <div className="max-xs:hidden text-4xl font-bold">
             <Amount amount={Number(technicalValues?.price)} taxIncluded />
           </div>
-          <Button
+          <ProductAddToCart>
+            {t("cart.add")}
+            <span className="xs:hidden flex items-center gap-2">
+              -
+              <Amount amount={Number(technicalValues?.price)} taxIncluded />
+            </span>
+          </ProductAddToCart>
+          {/* <Button
             aria-label={t("cart.add")}
             size="lg"
             className="flex-1"
@@ -97,17 +102,13 @@ export const ProductTechnicalValues = () => {
               addItem({
                 product,
                 options: activeOptions,
-                colors: activeColors,
+                color: activeColor,
                 price: Number(technicalValues?.price),
               })
             }
           >
-            {t("cart.add")}
-            <span className="xs:hidden flex items-center gap-2">
-              -
-              <Amount amount={Number(technicalValues?.price)} taxIncluded />
-            </span>
-          </Button>
+            
+          </Button> */}
         </div>
       </div>
     </>

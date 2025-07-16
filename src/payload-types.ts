@@ -292,7 +292,7 @@ export interface Category {
 export interface Color {
   id: string;
   name: string;
-  color?: string | null;
+  color: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -579,6 +579,10 @@ export interface Promotion {
   title: string;
   description?: string | null;
   slug?: string | null;
+  /**
+   * L'image n'est pas obligatoire, si il n'y en a pas on affichera la premiere image du produit lié à la promo
+   */
+  image?: (string | null) | Media;
   value: number;
   /**
    * Si la case est cochée, la promotion sera visible
@@ -597,6 +601,15 @@ export interface Promotion {
         relationTo: 'category';
         value: string | Category;
       };
+  color?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   options?:
     | {
         [k: string]: unknown;
@@ -1309,9 +1322,11 @@ export interface PromotionSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   slug?: T;
+  image?: T;
   value?: T;
   active?: T;
   reference?: T;
+  color?: T;
   options?: T;
   updatedAt?: T;
   createdAt?: T;

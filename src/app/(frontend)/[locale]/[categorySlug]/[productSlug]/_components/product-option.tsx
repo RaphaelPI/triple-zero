@@ -14,17 +14,28 @@ interface ProductOptionProps {
   option: ProductOptionType
   required?: boolean
   guide?: ReactNode
+  readOnly?: boolean
 }
 
-export const ProductOption = ({ option, required, guide }: ProductOptionProps) => {
-  const { setImage, resetCurrentImage } = useProduct()
-  const [value, setValue] = useQueryState(getOptionSlug(option))
+export const ProductOption = ({
+  option,
+  required,
+  guide,
+  readOnly = false,
+}: ProductOptionProps) => {
+  const { setImage, resetCurrentImage, activeOptions } = useProduct()
+  const [_, setValue] = useQueryState(getOptionSlug(option))
+  const value = activeOptions.find(([o]) => getOptionSlug(o) === getOptionSlug(option))?.[1]?.value
 
   if (!option) {
     return null
   }
 
   const handleClick = (optionValue: ProductOptionValue) => () => {
+    if (readOnly) {
+      return
+    }
+
     // set current value
     const val = String(optionValue?.value)
     setValue((prev) => (prev === val && !required ? null : val))
@@ -34,7 +45,11 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
     }
   }
 
-  const handleHover = (optionValue: ProductOptionValue) => () => {
+  const handleHover = (optionValue: ProductOptionValue, active: boolean) => () => {
+    if (readOnly && !active) {
+      return
+    }
+
     if (!optionValue.image) {
       return
     }
@@ -42,7 +57,11 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
     setImage((optionValue.image as Media).id)
   }
 
-  const handleOut = (optionValue: ProductOptionValue) => () => {
+  const handleOut = (optionValue: ProductOptionValue, active: boolean) => () => {
+    if (readOnly && !active) {
+      return
+    }
+
     if (!optionValue.image) {
       return
     }
@@ -78,14 +97,16 @@ export const ProductOption = ({ option, required, guide }: ProductOptionProps) =
             <div
               key={optionValue.value.value}
               onClick={handleClick(optionValue.value)}
-              onMouseEnter={handleHover(optionValue.value)}
-              onMouseLeave={handleOut(optionValue.value)}
+              onMouseEnter={handleHover(optionValue.value, active)}
+              onMouseLeave={handleOut(optionValue.value, active)}
             >
               <div
                 className={cn(
-                  "bg-blue-light hover:bg-blue-grey min-w-10 cursor-pointer rounded-md border-2 border-white px-2 py-1 text-center select-none md:px-4",
+                  "bg-blue-light min-w-10 rounded-md border-2 border-white px-2 py-1 text-center select-none md:px-4",
                   {
                     "ring-primary ring-[3px]": active,
+                    "cursor-pointer": !readOnly,
+                    "hover:bg-blue-grey": !readOnly || (Boolean(optionValue.value.image) && active),
                   },
                 )}
               >

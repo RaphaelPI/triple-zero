@@ -5,7 +5,6 @@ export const Slug: Field = {
   name: "slug",
   type: "text",
   index: true,
-
   hooks: {
     beforeValidate: [
       ({ data, value }) => {

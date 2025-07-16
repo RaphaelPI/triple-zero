@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/utils"
 import { Color, ColorWithImage, Media } from "@/payload-types"
 import { useQueryState } from "nuqs"
@@ -6,14 +8,16 @@ import { useProduct } from "./product-provider"
 interface Props {
   colors: ColorWithImage[]
   name: string
+  readOnly?: boolean
 }
 
-export const ProductColors = ({ colors, name }: Props) => {
-  const { setImage, resetCurrentImage } = useProduct()
-  const [value, setValue] = useQueryState(name)
+export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
+  const { setImage, resetCurrentImage, activeColor } = useProduct()
+  const [_, setValue] = useQueryState(name)
+  const value = (activeColor?.color as Color)?.color
 
   const handleClick = (color?: ColorWithImage) => () => {
-    if (!color) {
+    if (!color || readOnly) {
       return
     }
 
@@ -22,16 +26,16 @@ export const ProductColors = ({ colors, name }: Props) => {
     setValue(String(c.color))
   }
 
-  const handleHover = (image?: Media) => () => {
-    if (!image) {
+  const handleHover = (image: Media, active: boolean) => () => {
+    if (!image || (readOnly && !active)) {
       return
     }
 
     setImage((image as Media).id)
   }
 
-  const handleOut = (image?: Media) => () => {
-    if (!image) {
+  const handleOut = (image: Media, active: boolean) => () => {
+    if (!image || (readOnly && !active)) {
       return
     }
 
@@ -55,18 +59,17 @@ export const ProductColors = ({ colors, name }: Props) => {
         const optionRender = (
           <div
             className="option-value-container"
-            onMouseEnter={handleHover(color.image as Media)}
-            onMouseLeave={handleOut(color.image as Media)}
+            onMouseEnter={handleHover(color.image as Media, active)}
+            onMouseLeave={handleOut(color.image as Media, active)}
             key={c.id}
           >
             <div
               style={{ backgroundColor: hex }}
-              className={cn(
-                "h-8 w-8 cursor-pointer rounded-full border-2 border-white p-0 hover:opacity-80",
-                {
-                  "ring-primary ring-[3px]": active,
-                },
-              )}
+              className={cn("h-8 w-8 rounded-full border-2 border-white p-0", {
+                "ring-primary ring-[3px]": active,
+                "cursor-pointer": !readOnly,
+                "hover:opacity-80": !readOnly || (Boolean(color.image) && active),
+              })}
               onClick={handleClick(color)}
             />
           </div>

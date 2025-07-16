@@ -23,6 +23,7 @@ export const Color: CollectionConfig = {
       name: "color",
       label: "Couleur",
       defaultValue: "#FFFFFF",
+      required: true,
     }),
   ],
 }

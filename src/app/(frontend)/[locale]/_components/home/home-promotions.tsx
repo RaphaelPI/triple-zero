@@ -22,6 +22,7 @@ export const HomePromotions = async () => {
         {promotions.docs.map((promotion) => {
           const product = promotion.reference.value as Product
           const options = promotion.options as [ProductOption, ProductOptionValue][]
+          const image = (promotion.image ?? product.images?.[0]?.image) as Media
 
           return (
             <Link
@@ -37,7 +38,7 @@ export const HomePromotions = async () => {
               </div>
               <Image
                 priority
-                media={product.images?.[0]?.image as Media}
+                media={image}
                 alt={product.title}
                 width={350}
                 height={300}

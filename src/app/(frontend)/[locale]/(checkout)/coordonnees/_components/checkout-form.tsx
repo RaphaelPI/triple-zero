@@ -10,12 +10,12 @@ import * as z from "zod"
 
 import { formSchema, useCheckout } from "@/providers/checkout"
 import { en, fr } from "zod/v4/locales"
-import { isTaxFreeCountry } from "../utils"
+import { isTTCCountry } from "../utils"
 import { BillingFormFields } from "./billing-form-fields"
 import { DeliveryFormFields } from "./delivery-form-fields"
 
 export const CheckoutForm = () => {
-  const { deliveryData, setDeliveryData, setShippingFeesCountry } = useCheckout()
+  const { deliveryData, setDeliveryData } = useCheckout()
   const t = useTranslations()
 
   // Default locale
@@ -28,9 +28,6 @@ export const CheckoutForm = () => {
   })
 
   const validate = (values: z.infer<typeof formSchema>) => {
-    // country
-    setShippingFeesCountry(values.d_country || values.country)
-
     // delivery fields
     const deliveryFields: (keyof z.infer<typeof formSchema>)[] = [
       "d_lastName",
@@ -63,7 +60,7 @@ export const CheckoutForm = () => {
     if (
       values.country &&
       values.d_country &&
-      isTaxFreeCountry(values.country) !== isTaxFreeCountry(values.d_country)
+      isTTCCountry(values.country) !== isTTCCountry(values.d_country)
     ) {
       form.setError("root", {
         message: t("error.deliveryCountryTaxFree"),

@@ -31,6 +31,7 @@ interface Props {
   description?: string
   placeholder?: string
   required?: boolean
+  onChange?: (value: string) => void
 }
 
 export const CountrySelectField = ({
@@ -40,6 +41,7 @@ export const CountrySelectField = ({
   description,
   placeholder,
   required,
+  onChange,
 }: Props) => {
   const locale = useLocale()
   const countries = locale === "fr" ? countriesFR : countriesEN
@@ -55,11 +57,20 @@ export const CountrySelectField = ({
             {required && " *"}
           </FormLabel>
           <FormControl>
-            <Select {...field} onValueChange={(value) => field.onChange(value)}>
+            <Select
+              {...field}
+              onValueChange={(value) => {
+                field.onChange(value)
+                onChange?.(value)
+              }}
+            >
               {field.value && (
                 <button
                   className="absolute top-[42px] right-[11px] -translate-y-1/2"
-                  onClick={() => field.onChange("")}
+                  onClick={() => {
+                    field.onChange("")
+                    onChange?.("")
+                  }}
                   aria-label="Effacer le pays"
                 >
                   <XCircleIcon className="" />
