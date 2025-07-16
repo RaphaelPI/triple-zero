@@ -27,7 +27,6 @@ export const BillingFormFields = ({ form }: Props) => {
 
   const handleCountryChange = (value: string) => {
     // country
-    console.log("gonna set shipping fees country", value)
     setShippingFeesCountry(value)
   }
 

@@ -11,3 +11,12 @@ export const getProduct = async (id: string | number) => {
 
   return product
 }
+
+export const getColors = async () => {
+  const client = await getClient()
+  const colors = await client.find({
+    collection: "color",
+  })
+
+  return colors.docs
+}

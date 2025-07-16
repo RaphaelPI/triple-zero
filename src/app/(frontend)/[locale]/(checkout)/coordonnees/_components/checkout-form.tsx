@@ -10,6 +10,7 @@ import * as z from "zod"
 
 import { formSchema, useCheckout } from "@/providers/checkout"
 import { en, fr } from "zod/v4/locales"
+import { CheckoutSummary } from "../../_components/checkout-summary"
 import { isTTCCountry } from "../utils"
 import { BillingFormFields } from "./billing-form-fields"
 import { DeliveryFormFields } from "./delivery-form-fields"
@@ -84,25 +85,29 @@ export const CheckoutForm = () => {
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          onChange={() => validate(form.getValues())}
-          className="space-y-2"
-        >
-          <BillingFormFields form={form} />
-          <DeliveryFormFields form={form} />
-          <div className="space-y-4 pt-4">
-            {form.formState.errors.root && (
-              <div className="text-destructive">{form.formState.errors.root.message}</div>
-            )}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        onChange={() => validate(form.getValues())}
+        className="space-y-2"
+      >
+        <section className="w-section px-section flex gap-8 max-lg:flex-col">
+          <div className="panel px-panel py-panel flex-1 space-y-4">
+            <BillingFormFields form={form} />
+            <DeliveryFormFields form={form} />
+            <div className="space-y-4 pt-4">
+              {form.formState.errors.root && (
+                <div className="text-destructive">{form.formState.errors.root.message}</div>
+              )}
+            </div>
+          </div>
+          <CheckoutSummary>
             <Button type="submit" className="w-full" aria-label={t("delivery.validate")}>
               {t("delivery.validate")}
             </Button>
-          </div>
-        </form>
-      </Form>
-    </>
+          </CheckoutSummary>
+        </section>
+      </form>
+    </Form>
   )
 }

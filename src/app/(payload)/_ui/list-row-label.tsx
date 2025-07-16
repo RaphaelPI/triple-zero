@@ -9,7 +9,7 @@ interface Props {
 
 export const ListRowLabel = ({ placeholder, labelPath }: Props) => {
   const { data, rowNumber } = useRowLabel<Record<string, string | undefined>>()
-  console.log(data)
+
   const customLabel =
     labelPath?.reduce((acc: any, key) => acc[key], data) ??
     `${placeholder} ${String((rowNumber ?? 0) + 1).padStart(2, "0")} `

@@ -1,17 +1,15 @@
 "use client"
 
 import { Amount } from "@/components/amount"
-import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/navigation"
 import { useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
 import { ShippingFees } from "./shipping-fees"
 
 interface Props {
-  displayButton?: boolean
+  children: React.ReactNode
 }
 
-export const CheckoutSummary = ({ displayButton = true }: Props) => {
+export const CheckoutSummary = ({ children }: Props) => {
   const { total, deliveryFee } = useCheckout()
   const t = useTranslations()
 
@@ -33,13 +31,7 @@ export const CheckoutSummary = ({ displayButton = true }: Props) => {
             <Amount amount={total + (deliveryFee ?? 0)} taxIncluded />
           </strong>
         </div>
-        {displayButton && (
-          <Link prefetch={false} href="/coordonnees">
-            <Button className="mx-auto block" aria-label={t("cart.validate")}>
-              {t("cart.validate")}
-            </Button>
-          </Link>
-        )}
+        {children}
       </div>
     </div>
   )

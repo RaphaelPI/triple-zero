@@ -65,14 +65,15 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
       .filter(([, value]) => value)) as [ProductOption, ProductOptionValue][]
 
   // Get active colors
-  const activeColor = (promotion?.color ??
-    product.colors?.find(({ color }) => (color.color as Color).color === params["color"])
-      ?.color) as ColorWithImage | undefined
-
-  // ? [lockedColor]
-  // : (product.colors || []).find(
-  //     (colorWithImage) => (colorWithImage.color as Color).color === params["color"],
-  //   ).color
+  const activeColor = (
+    promotion?.color
+      ? {
+          color: promotion.color as Color,
+          default: false,
+          image: null,
+        }
+      : product.colors?.find(({ color }) => (color.color as Color).color === params["color"])?.color
+  ) as ColorWithImage | undefined
 
   // IMAGES
   // Default images

@@ -139,16 +139,6 @@ export default async (props: Props) => {
                           <Button aria-label={t("product.see")}>{t("product.see")}</Button>
                         </div>
                       </Link>
-                      {/* <ProductCard
-                          href={`/${category.slug}/${product.slug}`}
-                          image={product.images[0].image as Media}
-                          title={product.title}
-                          description={product.description}
-                          price={getStartingPrice([
-                            ...(product.options?.map((option) => option.option) ?? []),
-                            ...(product.advanced?.map((advanced) => advanced.option) ?? []),
-                          ])}
-                        /> */}
                     </li>
                   )
                 })}

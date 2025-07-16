@@ -3,9 +3,11 @@
 import { getShippingFees } from "@/app/(frontend)/[locale]/(checkout)/actions"
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useServerActionQuery } from "@/hooks/use-server-action-query"
-import { useRouter } from "@/i18n/navigation"
+import { Link } from "@/i18n/navigation"
 import { Color, ColorWithImage, ProductOption, ProductOptionValue } from "@/payload-types"
+import { useTranslations } from "next-intl"
 import { createContext, useContext, useEffect, useState } from "react"
+import { toast } from "sonner"
 import z from "zod"
 
 export interface Cart {
@@ -104,6 +106,7 @@ interface ICheckoutContext {
   setDeliveryData: (data: z.infer<typeof formSchema>) => void
   setShippingFeesCountry: (country: string) => void
   shippingFeesCountry: string
+  deliveryDone: boolean
 }
 
 const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
@@ -115,7 +118,8 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     "deliveryData",
     DEFAULT_DELIVERY_DATA,
   )
-  const router = useRouter()
+  const [deliveryDone, setDeliveryDone] = useState(false)
+  const t = useTranslations()
 
   const { data, isPending } = useServerActionQuery(getShippingFees, {
     country: shippingFeesCountry,
@@ -148,6 +152,12 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         JSON.stringify([line.colors, line.options]) === JSON.stringify([lineColors, lineOptions]),
     )
 
+    // We can't add the same promotion twice
+    if (existingLine !== -1 && promotion) {
+      toast.error(t("cart.samePromotion"))
+      return
+    }
+
     if (existingLine !== -1) {
       newCart.lines[existingLine].quantity++
     } else {
@@ -168,7 +178,16 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     }
 
     setCart(newCart)
-    router.push("/panier")
+    toast.success(
+      <div>
+        <div>{t("cart.added", { product: title })}</div>
+        <Link href={"/panier"}>
+          {t.rich("cart.see", {
+            strong: (chunks) => <span className="link font-bold">{chunks}</span>,
+          })}
+        </Link>
+      </div>,
+    )
   }
 
   const updateLineQuantity = (index: number, quantity: number) => {
@@ -184,7 +203,14 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setCart(newCart)
   }
 
-  const total = cart.lines.reduce((total, line) => total + line.price * line.quantity, 0)
+  const total = cart.lines.reduce((total, line) => {
+    return (
+      total +
+      (line.discount
+        ? line.price * line.quantity * (1 - line.discount / 100)
+        : line.price * line.quantity)
+    )
+  }, 0)
   const deliveryFee = data ?? undefined
 
   return (
@@ -197,10 +223,14 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         total,
         deliveryFee,
         deliveryData,
-        setDeliveryData,
+        setDeliveryData: (data: z.infer<typeof formSchema>) => {
+          setDeliveryDone(true)
+          setDeliveryData(data)
+        },
         setShippingFeesCountry,
         shippingFeesCountry,
         loadingShippingFees: isPending,
+        deliveryDone,
       }}
     >
       {children}

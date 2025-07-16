@@ -57,32 +57,17 @@ export const Cart = () => {
           ))}
         </ul>
       </div>
-      <CheckoutSummary />
-      {/* <div className="panel bg-blue-light sticky top-20 w-full self-start lg:w-xs">
-        <div className="panel-table-cell border-b-2 border-[#E5ECF7] text-lg font-semibold">
-          {t("cart.resume")}
-        </div>
-        <div className="panel-table-cell space-y-4 text-lg">
-          {t("cart.totalCart")} : {formatAmount(totalCart)}
-          <br />
-          {t("cart.delivery")} : {formatAmount(deliveryFee)}
-          <div className="mt-1 flex cursor-default items-center gap-1 text-xs">
-            <Info className="size-3" /> {t("cart.shippingFees")}
-          </div>
-          <br />
-          <div className="text-2xl">
-            {t("cart.total")} :{" "}
-            <strong className="tracking-wider">{formatAmount(totalCart + deliveryFee)}</strong>
-          </div>
-          <Link prefetch={false}  href="/coordonnees">
-            <Button className="mx-auto block">{t("cart.validate")}</Button>
-          </Link>
-        </div>
-      </div> */}
-      <div className="bg-blue-light border-blue-grey fixed right-0 bottom-0 left-0 flex items-center border-t border-solid p-4 shadow-xl lg:hidden">
+      <CheckoutSummary>
+        <Link prefetch={false} href="/coordonnees">
+          <Button className="mx-auto block lg:w-full" aria-label={t("cart.validate")}>
+            {t("cart.validate")}
+          </Button>
+        </Link>
+      </CheckoutSummary>
+      <div className="bg-blue-light border-blue-grey fixed right-0 bottom-0 left-0 z-10 flex items-center border-t border-solid p-4 shadow-xl lg:hidden">
         <div className="max-xs:hidden leading-5">
           <div>{t("cart.total")}</div>
-          <strong className="tracking-wider">{formatAmount(total + deliveryFee)}</strong>
+          <strong className="tracking-wider">{formatAmount(total + (deliveryFee ?? 0))}</strong>
         </div>
         <Link prefetch={false} href="/coordonnees" className="mx-auto block">
           <Button aria-label={t("cart.validate")}>{t("cart.validate")}</Button>

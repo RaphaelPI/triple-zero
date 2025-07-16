@@ -36,7 +36,7 @@
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
-    "shippingFeesDescription": "Les frais de port seront calculés en fonction du pays de livraison.\nSi aucun montant n'est indiqué, cela signifie que le montant sera déterminé sur devis.",
+    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
     "priceVTA": "Prix TTC",
@@ -48,6 +48,8 @@
     "total": "Total à payer",
     "delivery": "Livraison",
     "toDetermine": "A déterminer",
+    "added": "{product} a été ajouté au panier.",
+    "see": "<strong>Cliquez ici</strong> pour voir votre panier",
     "line": {
       "remove": "Retirer un produit",
       "add": "Ajouter un produit"
@@ -95,7 +97,8 @@
     "required": "Champ obligatoire",
     "deliveryRequired": "Champ obligatoire (Si vous choisissez de remplir l'adresse de livraison)",
     "deliveryRequiredAll": "Si vous choisissez de remplir l'adresse de livraison, vous devez saisir tous les champs obligatoires.",
-    "deliveryCountryTaxFree": "Vous ne pouvez pas choisir un pays de facturation en Europe (TTC) et un pays de livraison hors Europe (HT), ni l'inverse."
+    "deliveryCountryTaxFree": "Vous ne pouvez pas choisir un pays de facturation en Europe (TTC) et un pays de livraison hors Europe (HT), ni l'inverse.",
+    "samePromotion": "Cette promotion est déjà présente dans votre panier"
   },
   "question": "Une question sur nos produits ou nos services ?",
   "contactUs": "Contactez-nous",

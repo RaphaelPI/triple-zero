@@ -2,15 +2,15 @@ import { Locale } from "@/i18n/config"
 import { getOgImage } from "@/lib/seo"
 import { Metadata } from "next"
 
-import PromoIcon from "@/assets/promo.svg"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
-import { Category, Product, SizeGuide } from "@/payload-types"
+import { Category, Color, Product, SizeGuide } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
 
+import { PromotionDiscount } from "@/components/discount"
 import { ProductAddToCart } from "../../[categorySlug]/[productSlug]/_components/product-add-to-cart"
 import { ProductColors } from "../../[categorySlug]/[productSlug]/_components/product-colors"
 import { ProductImages } from "../../[categorySlug]/[productSlug]/_components/product-images"
@@ -93,7 +93,11 @@ export default async (props: Props) => {
                     <label className="block self-baseline leading-4 lg:w-32">Couleur</label>
                     <div className="flex flex-1 flex-wrap gap-2">
                       <ProductColors
-                        colors={product.colors.map(({ color }) => color)}
+                        colors={[
+                          {
+                            color: promotion.color as Color,
+                          },
+                        ]}
                         name="color"
                         readOnly
                       />
@@ -108,13 +112,7 @@ export default async (props: Props) => {
             </div>
           </div>
           <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3">
-            <div className="absolute top-2 right-2 flex flex-col items-center justify-center">
-              <PromoIcon className="animation-duration-[30000ms] size-20 animate-spin" />
-              <div className="absolute inset-0 flex rotate-6 items-center justify-center text-xl font-bold">
-                {promotion.value}%
-              </div>
-            </div>
-
+            <PromotionDiscount>{promotion.value}%</PromotionDiscount>
             <ProductImages />
           </div>
           <ProductTechnicalValues />

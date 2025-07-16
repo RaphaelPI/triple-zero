@@ -6,6 +6,7 @@ import { barlow } from "./fonts"
 
 import { MainMessageModal } from "@/components/main-message/modal"
 import { OrganizationJsonLd } from "@/components/structured-data/organization"
+import { Toaster } from "@/components/ui/sonner"
 import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP } from "@/constants"
 import { getUrl } from "@/lib/url"
 import { setDefaultOptions } from "date-fns"
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
           {children}
           <Footer />
           <MainMessageModal />
+          <Toaster position="top-center" richColors />
         </Providers>
       </body>
     </html>

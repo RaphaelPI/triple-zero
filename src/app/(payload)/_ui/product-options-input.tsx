@@ -70,21 +70,31 @@ export const ProductOptionsInput = (props: Props) => {
   ]
 
   return (
-    <div className="space-y-2">
+    <div className="mb-4 space-y-2">
       <div>{label}</div>
       {options.map((option) => {
         const selectedOptionValue = value?.find(([opt]) => opt.title === option.title)
         const selectedValue = selectedOptionValue?.[1].value
 
+        const defaultOptionValue = option.values?.find(({ value }) => value.defaultValue)
+
         return (
           <div key={option.title} className="space-y-1">
-            <div>{option.title}</div>
-            <Select onValueChange={(value) => handleChange(option, value)} value={selectedValue}>
+            <div>
+              {option.title} {defaultOptionValue && "*"}
+            </div>
+            <Select
+              onValueChange={(value) => handleChange(option, value)}
+              value={selectedValue}
+              defaultValue={defaultOptionValue?.value.value}
+            >
               <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
                 <SelectValue placeholder="Sélectionner une valeur" />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                <SelectItem value="no-selection">Aucune selection</SelectItem>
+                {!defaultOptionValue && (
+                  <SelectItem value="no-selection">Aucune selection</SelectItem>
+                )}
                 {option.values?.map(({ value }) => {
                   return (
                     <SelectItem key={value.value} value={value.value}>

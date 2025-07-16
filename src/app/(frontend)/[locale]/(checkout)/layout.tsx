@@ -21,6 +21,7 @@ export default async ({ children }: Props) => {
     {
       label: t("checkout.step3"),
       href: "/paiement",
+      disabled: true,
     },
   ]
 
@@ -29,11 +30,11 @@ export default async ({ children }: Props) => {
       <Stepper steps={STEPS} />
       {children}
       <section className="section">
-        <div className="bg-blue-light px-section py-section text-dark rounded-2xl text-center">
+        <div className="px-section py-section text-dark rounded-2xl bg-white text-center">
           <p className="mb-2 text-lg">
             {t("question")}
             <br />
-            {t("contactUs")} <span className="text-green text-xs font-bold">↴</span>
+            {t("contactUs")} <span className="text-blue text-xs font-bold">↴</span>
           </p>
           <Link
             prefetch={false}

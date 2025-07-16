@@ -601,15 +601,7 @@ export interface Promotion {
         relationTo: 'category';
         value: string | Category;
       };
-  color?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  color?: (string | null) | Color;
   options?:
     | {
         [k: string]: unknown;

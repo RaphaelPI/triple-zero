@@ -13,8 +13,12 @@ import { ProductAddToCart } from "./product-add-to-cart"
 import { useProduct } from "./product-provider"
 
 export const ProductTechnicalValues = () => {
-  const { technicalValues } = useProduct()
+  const { technicalValues, promotion } = useProduct()
   const t = useTranslations()
+
+  const price = promotion?.value
+    ? Number(technicalValues?.price) * (1 - promotion.value / 100)
+    : Number(technicalValues?.price)
 
   return (
     <>
@@ -27,7 +31,7 @@ export const ProductTechnicalValues = () => {
             <div>
               <div className="text-sm leading-3">{t("price")}</div>
               <div className="font-semibold md:text-lg">
-                <Amount amount={Number(technicalValues?.price)} taxIncluded />
+                <Amount amount={price} taxIncluded />
               </div>
             </div>
           </div>

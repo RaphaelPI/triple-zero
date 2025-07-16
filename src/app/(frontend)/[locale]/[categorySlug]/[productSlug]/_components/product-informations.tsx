@@ -12,8 +12,6 @@ export const ProductInformations = ({ title, data }: ProductInfosProps) => {
     return null
   }
 
-  console.log(data)
-
   return (
     <div>
       <div className="rounded-t-2xl border-8 border-b-0 border-white bg-white lg:w-1/3">

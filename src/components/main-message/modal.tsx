@@ -46,10 +46,12 @@ export const MainMessageModal = () => {
               className="max-h-72 w-full rounded-2xl object-cover max-sm:hidden"
             />
           )}
-          {message.updatedAt && (
-            <div className="text-blue">{format(new Date(message.updatedAt), "PPp")}</div>
-          )}
-          <RichText data={message?.message} />
+          <div>
+            {message.updatedAt && (
+              <div className="text-blue text-sm">{format(new Date(message.updatedAt), "PPp")}</div>
+            )}
+            <RichText data={message?.message} />
+          </div>
         </div>
       </DialogContent>
     </Dialog>

@@ -7,11 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Color, ColorWithImage, Product } from "@/payload-types"
+import { Color } from "@/payload-types"
 import { useField } from "@payloadcms/ui"
 import { ValueWithRelation } from "payload"
 import { useEffect, useState } from "react"
-import { getProduct } from "./action"
+import { getColors } from "./action"
 
 interface Props {
   field: { label: string; required?: boolean }
@@ -19,22 +19,17 @@ interface Props {
 }
 
 export const ProductColorInput = (props: Props) => {
-  const { label } = props.field
   const { path } = props
 
-  const { value, setValue } = useField<ColorWithImage>({ path })
+  const { value, setValue } = useField<Color>({ path })
   const { value: reference } = useField<ValueWithRelation>({
     path: "reference",
   })
-  const [product, setProduct] = useState<Product>()
+  const [colors, setColors] = useState<Color[]>([])
 
   useEffect(() => {
-    if (!reference || reference.relationTo !== "product") {
-      return
-    }
-
-    getProduct(reference.value).then(setProduct)
-  }, [reference])
+    getColors().then(setColors)
+  }, [])
 
   if (!reference) {
     return <div>Veuillez choisir une référence....</div>
@@ -44,43 +39,28 @@ export const ProductColorInput = (props: Props) => {
     return null
   }
 
-  if (!product) {
-    return <div>Veuillez choisir une référence valide s’il vous plait....</div>
-  }
-
   const handleChange = (selectedValue: string) => {
-    console.log(selectedValue)
-    if (selectedValue === "no-selection") {
-      setValue(null)
-      return
-    }
-
-    const selectedColorValue = product.colors?.find(
-      ({ color }) => (color.color as Color).color === selectedValue,
-    )
+    const selectedColorValue = colors.find(({ color }) => color === selectedValue)
     if (!selectedColorValue) {
       return
     }
 
-    setValue(selectedColorValue.color)
+    setValue(selectedColorValue)
   }
 
-  const selectedValue = String((value.color as Color)?.color)
-  console.log(selectedValue)
+  const selectedValue = value?.color
   return (
-    <div className="space-y-2">
+    <div className="mb-4 space-y-2">
       <div>Couleur</div>
       <Select onValueChange={handleChange} value={selectedValue}>
         <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
           <SelectValue placeholder="Sélectionner une valeur" />
         </SelectTrigger>
         <SelectContent className="bg-white">
-          <SelectItem value="no-selection">Aucune selection</SelectItem>
-          {product.colors?.map(({ color }) => {
-            const obj = color.color as Color
+          {colors.map(({ color, name }) => {
             return (
-              <SelectItem key={obj.color} value={obj.color}>
-                {obj.name}
+              <SelectItem key={color} value={color}>
+                {name}
               </SelectItem>
             )
           })}

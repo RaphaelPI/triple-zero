@@ -63,15 +63,8 @@ export const Promotion: CollectionConfig = {
     },
     {
       name: "color",
-      type: "json",
-      defaultValue: [],
-      admin: {
-        components: {
-          Field: {
-            path: "/app/(payload)/_ui/product-color-input#ProductColorInput",
-          },
-        },
-      },
+      type: "relationship",
+      relationTo: "color",
     },
     {
       name: "options",

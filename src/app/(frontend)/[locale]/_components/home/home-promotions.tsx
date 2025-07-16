@@ -1,4 +1,4 @@
-import PromoIcon from "@/assets/promo.svg"
+import { PromotionDiscount } from "@/components/discount"
 import { Image } from "@/components/image"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
@@ -30,12 +30,7 @@ export const HomePromotions = async () => {
               href={`/promotions/${promotion.slug}`}
               className="hover:ring-blue panel relative block snap-start hover:ring-8 max-md:min-w-xs md:h-full"
             >
-              <div className="absolute top-2 right-2 flex flex-col items-center justify-center">
-                <PromoIcon className="animation-duration-[30000ms] size-20 animate-spin" />
-                <div className="absolute inset-0 flex rotate-6 items-center justify-center text-xl font-bold">
-                  {promotion.value}%
-                </div>
-              </div>
+              <PromotionDiscount>{promotion.value}%</PromotionDiscount>
               <Image
                 priority
                 media={image}

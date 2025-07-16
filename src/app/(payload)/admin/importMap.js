@@ -25,7 +25,6 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { ColorPickerInput as ColorPickerInput_c52c8e3910a5a4d3a065d22fb35658f8 } from '@/app/(payload)/_ui/color-picker-input'
 import { ListRowLabel as ListRowLabel_5802bbf3b0640519a2a1058e65044b54 } from '../../../app/(payload)/_ui/list-row-label'
 import { ProductOptionsInput as ProductOptionsInput_5c5b1c5bc4e3785128db69afb997e564 } from '../../../app/(payload)/_ui/product-options-input'
-import { ProductColorInput as ProductColorInput_563fde3b9756295c36d061b02ab39730 } from '../../../app/(payload)/_ui/product-color-input'
 import { TableInput as TableInput_25bc32041e38218841919f050144471d } from '../../../app/(payload)/_ui/table-input'
 import { Icon as Icon_4bdc41d560a037dcc24ded3bf2808643 } from '../../../app/(payload)/_ui/admin/icon'
 import { Logo as Logo_1db285e76e3b0971e44f5ee3a13f49c9 } from '../../../app/(payload)/_ui/admin/logo'
@@ -59,7 +58,6 @@ export const importMap = {
   "@/app/(payload)/_ui/color-picker-input#ColorPickerInput": ColorPickerInput_c52c8e3910a5a4d3a065d22fb35658f8,
   "/app/(payload)/_ui/list-row-label#ListRowLabel": ListRowLabel_5802bbf3b0640519a2a1058e65044b54,
   "/app/(payload)/_ui/product-options-input#ProductOptionsInput": ProductOptionsInput_5c5b1c5bc4e3785128db69afb997e564,
-  "/app/(payload)/_ui/product-color-input#ProductColorInput": ProductColorInput_563fde3b9756295c36d061b02ab39730,
   "/app/(payload)/_ui/table-input#TableInput": TableInput_25bc32041e38218841919f050144471d,
   "/app/(payload)/_ui/admin/icon#Icon": Icon_4bdc41d560a037dcc24ded3bf2808643,
   "/app/(payload)/_ui/admin/logo#Logo": Logo_1db285e76e3b0971e44f5ee3a13f49c9,

@@ -1,6 +1,7 @@
 "use client"
 
 import { Amount } from "@/components/amount"
+import { PromotionDiscount } from "@/components/discount"
 import { Button } from "@/components/ui/button"
 import { CartLine as CartLineType, useCheckout } from "@/providers/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
@@ -16,17 +17,7 @@ interface CartLineProps {
 
 export const CartLine = ({ line, index }: CartLineProps) => {
   const { updateLineQuantity } = useCheckout()
-  // const [product, setProduct] = useState<Product>()
   const t = useTranslations()
-
-  // useEffect(() => {
-  //   checkData(line)
-  // }, [line])
-
-  // const checkData = async (line: CartLineType) => {
-  //   const product = await getCartData(line)
-  //   setProduct(product)
-  // }
 
   const handleMinusClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -44,19 +35,23 @@ export const CartLine = ({ line, index }: CartLineProps) => {
   return (
     <div className="max-xs:flex-col flex items-start max-xl:flex-wrap">
       <div className="panel-table-cell xs:w-40 w-full sm:w-60 xl:w-1/4">
-        <div>
-          {line.image && (
-            <Link prefetch={false} href={line.url} aria-label={line.title}>
-              <NextImage
-                src={line.image}
-                width={320}
-                height={320}
-                className="h-auto w-full"
-                alt={line.title}
-              />
-            </Link>
-          )}
-        </div>
+        {line.image && (
+          <Link
+            prefetch={false}
+            href={line.url}
+            aria-label={line.title}
+            className="relative flex-shrink-0"
+          >
+            <NextImage
+              src={line.image}
+              width={320}
+              height={320}
+              className="h-auto w-full rounded-xl"
+              alt={line.title}
+            />
+            {line.discount && <PromotionDiscount size="sm">{line.discount}%</PromotionDiscount>}
+          </Link>
+        )}
       </div>
       <div className="w-full flex-1 xl:flex">
         <div className="panel-table-cell xl:w-1/2">
@@ -91,13 +86,15 @@ export const CartLine = ({ line, index }: CartLineProps) => {
               variant="icon"
               size="icon"
               aria-label={t("cart.line.remove")}
+              disabled={Boolean(line.promotion)}
             >
               <LucideMinus />
             </Button>
-            <div className="bg-blue-light border-blue-grey w-8 flex-shrink-0 cursor-default rounded-lg border py-1 text-center select-none">
+            <div className="bg-blue-light border-blue-grey w-10 flex-shrink-0 cursor-default rounded-lg border py-1 text-center select-none">
               {line.quantity}
             </div>
             <Button
+              disabled={Boolean(line.promotion)}
               onClick={handlePlusClick}
               variant="icon"
               size="icon"
@@ -107,8 +104,19 @@ export const CartLine = ({ line, index }: CartLineProps) => {
             </Button>
           </div>
         </div>
-        <div className="panel-table-cell text-xl select-none xl:w-1/4">
-          <Amount amount={line.price * line.quantity} taxIncluded />
+        <div className="panel-table-cell space-x-2 text-xl select-none xl:w-1/4">
+          {line.discount ? (
+            <>
+              <Amount
+                amount={line.price * line.quantity}
+                taxIncluded
+                className="text-sm font-normal line-through"
+              />
+              <Amount amount={line.price * line.quantity * (1 - line.discount / 100)} taxIncluded />
+            </>
+          ) : (
+            <Amount amount={line.price * line.quantity} taxIncluded />
+          )}
         </div>
       </div>
     </div>

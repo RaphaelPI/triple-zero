@@ -13,10 +13,12 @@ const COMPRESSION_BAGS = [
   [13.5, 50],
 ]
 
-// Pourcentages per size to apply to down weight on roducts
+// Pourcentages per size to apply to down weight on products
 const DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
   s: -10,
+  m: 0,
   l: 10,
+  xl: 20,
 }
 
 export const getTechnicalValues = (
@@ -64,8 +66,8 @@ export const getTechnicalValues = (
           let deltaValue = Number(delta.value)
 
           // If we're dealing with the down weight option, we need to apply a modificator
-          if (option.weight && delta?.type == "weight" && sizeOption) {
-            const sizeValue = String(sizeOption[1]?.value)
+          if (option.weight && delta?.type === "weight" && sizeOption) {
+            const sizeValue = String(sizeOption[1]?.title.toLowerCase())
             const modificator = DOWN_WEIGHT_MODIFICATORS[sizeValue]
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
@@ -113,19 +115,27 @@ export const getTechnicalValues = (
 }
 
 export const getStartingPrice = (options: ProductOption[]) => {
-  // Get size and weight option
-  const sizeOption = options.find((option) => option.size)
-  const sizeOptionValue = sizeOption?.values?.[0]
-  const weightOption = options.find((option) => option.weight)
-  const weightOptionValue = weightOption?.values?.[0]
+  const usedOptions: [ProductOption, ProductOptionValue][] = options
+    .filter(({ values }) => values?.some(({ value }) => value.defaultValue))
+    .map((option) => {
+      const defaultValue = option.values?.find(({ value }) => value.defaultValue)
+        ?.value as ProductOptionValue
 
-  const usedOptions: [ProductOption, ProductOptionValue][] = []
-  if (sizeOption && sizeOptionValue) {
-    usedOptions.push([sizeOption, sizeOptionValue.value])
-  }
-  if (weightOption && weightOptionValue) {
-    usedOptions.push([weightOption, weightOptionValue.value])
-  }
+      // get option value with cheapest price
+      const cheapestValue = option.values?.reduce((min, { value }) => {
+        const prevPrice = min?.delta?.find(({ delta }) => delta?.type === "price")?.delta.value ?? 0
+        const currentPrice =
+          value.delta?.find(({ delta }) => delta?.type === "price")?.delta.value ?? 0
+
+        if (prevPrice > currentPrice) {
+          return value
+        }
+
+        return min
+        // return min.price < value.value.delta ? min : value
+      }, defaultValue)
+      return [option, cheapestValue as ProductOptionValue]
+    })
 
   if (usedOptions.length > 0) {
     return getTechnicalValues(usedOptions).price

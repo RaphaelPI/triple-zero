@@ -16,7 +16,6 @@ export const CountryProvider = ({ children }: { children: React.ReactNode }) => 
       return
     }
 
-    console.log("gonna fetch")
     getCountry()
   }, [loading, country])
 
