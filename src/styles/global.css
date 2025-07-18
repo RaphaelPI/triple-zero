@@ -3,6 +3,7 @@
 @import "./layout";
 @import "./utility";
 @import "./panel";
+@import "./rich-text";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,10 +39,10 @@
   --text-base: 1.1rem;
   --text-lg: 1.3rem;
   --text-xl: 1.5rem;
-  --text-h1: clamp(2.5rem, 4vmax, 4rem);
-  --spacing-h1: clamp(3rem, 4vmax, 4rem);
-  --text-h2: clamp(2rem, 3vmax, 3rem);
-  --spacing-h2: clamp(2.5rem, 3vmax, 3rem);
+  --text-h1: clamp(2rem, 4vmax, 4rem);
+  --spacing-h1: clamp(2.5rem, 4vmax, 4rem);
+  --text-h2: clamp(1.8rem, 3vmax, 3rem);
+  --spacing-h2: clamp(2rem, 3vmax, 3rem);
 
   /* Shadows */
   --shadow-panel:

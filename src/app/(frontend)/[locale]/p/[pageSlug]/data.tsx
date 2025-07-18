@@ -6,7 +6,7 @@ export const getPageData = cache(async (slug: string) => {
 
   const page = await payload.find({
     collection: "pages",
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: slug }, isPublished: { equals: true } },
   })
 
   return page.docs[0]

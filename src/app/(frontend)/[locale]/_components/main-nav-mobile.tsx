@@ -74,6 +74,11 @@ export const MainNavMobile = ({ nav }: Props) => {
           <div className="space-y-4 px-8 pb-3 text-2xl">
             <ol className="space-y-2">
               <li>
+                <Link prefetch={false} href="/promotions" className="link block text-nowrap">
+                  {t("promotions.nav")}
+                </Link>
+              </li>
+              <li>
                 <Link prefetch={false} className="link block text-nowrap" href={`/p/savoir-faire`}>
                   {t("menu.knowledge")}
                 </Link>

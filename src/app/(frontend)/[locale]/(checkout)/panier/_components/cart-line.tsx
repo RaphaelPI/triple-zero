@@ -86,7 +86,6 @@ export const CartLine = ({ line, index }: CartLineProps) => {
               variant="icon"
               size="icon"
               aria-label={t("cart.line.remove")}
-              disabled={Boolean(line.promotion)}
             >
               <LucideMinus />
             </Button>

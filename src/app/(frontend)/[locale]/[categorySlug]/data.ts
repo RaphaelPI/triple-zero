@@ -1,9 +1,10 @@
-import { Locale } from "@/i18n/config"
 import { getClient } from "@/lib/payload"
+import { getLocale } from "next-intl/server"
+import { Where } from "payload"
 import { cache } from "react"
 
-export const getCategoryData = cache(async (slug: string, locale: Locale) => {
-  const payload = await getClient()
+export const getCategoryData = cache(async (slug: string) => {
+  const [locale, payload] = await Promise.all([getLocale(), getClient()])
   const category = await payload.find({
     collection: "category",
     where: { slug: { equals: slug } },
@@ -17,13 +18,20 @@ export const getCategoryData = cache(async (slug: string, locale: Locale) => {
   return category
 })
 
-export const getProductsData = cache(async (categorySlug: string, locale: Locale) => {
-  const payload = await getClient()
+export const getProductsData = cache(async (categorySlug: string, exludeSlug?: string) => {
+  const [locale, payload] = await Promise.all([getLocale(), getClient()])
+
+  const where: Where = {
+    "category.slug": { equals: categorySlug },
+  }
+
+  if (exludeSlug) {
+    where.slug = { not_equals: exludeSlug }
+  }
+
   const products = await payload.find({
     collection: "product",
-    where: {
-      "category.slug": { equals: categorySlug },
-    },
+    where,
     locale,
     depth: 1,
     select: {

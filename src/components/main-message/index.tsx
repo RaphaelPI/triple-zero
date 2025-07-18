@@ -1,7 +1,6 @@
 "use client"
 
 import { useSessionStorageState } from "@/hooks/use-storage-state"
-import { Locale } from "@/i18n/config"
 import { Media, Message } from "@/payload-types"
 import { format } from "date-fns"
 import { useLocale, useTranslations } from "next-intl"
@@ -16,7 +15,7 @@ export const MainMessage = () => {
   const t = useTranslations()
 
   const fetchMessage = useCallback(async () => {
-    const m = await getMainMessage(locale as Locale)
+    const m = await getMainMessage()
     return m
   }, [locale])
 

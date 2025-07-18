@@ -14,11 +14,18 @@ const COMPRESSION_BAGS = [
 ]
 
 // Pourcentages per size to apply to down weight on products
-const DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
+const SLEEPING_BAG_DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
   s: -10,
   m: 0,
   l: 10,
-  xl: 20,
+}
+
+// doudounes + combis + pantalons
+const DOWN_JACKET_DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
+  s: -5,
+  m: 0,
+  l: 5,
+  xl: 10,
 }
 
 export const getTechnicalValues = (
@@ -68,7 +75,7 @@ export const getTechnicalValues = (
           // If we're dealing with the down weight option, we need to apply a modificator
           if (option.weight && delta?.type === "weight" && sizeOption) {
             const sizeValue = String(sizeOption[1]?.title.toLowerCase())
-            const modificator = DOWN_WEIGHT_MODIFICATORS[sizeValue]
+            const modificator = SLEEPING_BAG_DOWN_WEIGHT_MODIFICATORS[sizeValue]
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
             }

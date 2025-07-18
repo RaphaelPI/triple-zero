@@ -7,5 +7,9 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export const RichText = ({ className, ...rest }: Props) => {
-  return <RichTexterConverter {...rest} className={className} converters={jsxConverter} />
+  return (
+    <div className="rich-text-content">
+      <RichTexterConverter {...rest} className={className} converters={jsxConverter} />
+    </div>
+  )
 }

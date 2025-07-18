@@ -154,7 +154,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
 
     // We can't add the same promotion twice
     if (existingLine !== -1 && promotion) {
-      toast.error(t("cart.samePromotion"))
+      toast.error(t("error.samePromotion"))
       return
     }
 

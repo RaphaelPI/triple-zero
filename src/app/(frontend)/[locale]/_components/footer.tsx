@@ -1,15 +1,13 @@
 import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP, EMAIL, PHONE } from "@/constants"
-import { Locale } from "@/i18n/config"
-import { getLocale, getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 import Link from "next/link"
 import LogoMin from "src/assets/logo-min.svg"
 import Mountain from "src/assets/moutain.svg"
 import { getNavData } from "../data"
 
 export const Footer = async () => {
-  const locale = await getLocale()
   const t = await getTranslations()
-  const nav = await getNavData(locale as Locale)
+  const nav = await getNavData()
 
   return (
     <footer className="bg-dark relative overflow-hidden">
@@ -61,9 +59,13 @@ export const Footer = async () => {
           </div>
         </div>
         <Separator />
-        <div>
-          <Link href="/p/conditions-generales-de-vente" className="link text-white">
+        <div className="space-x-2 text-center text-white">
+          <Link href="/p/conditions-generales-de-vente" className="link">
             {t("cgu")}
+          </Link>
+          <span>-</span>
+          <Link href="/p/mentions-legales" className="link">
+            {t("legals")}
           </Link>
         </div>
       </div>

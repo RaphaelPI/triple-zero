@@ -69,6 +69,7 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
                 "ring-primary ring-[3px]": active,
                 "cursor-pointer": !readOnly,
                 "hover:opacity-80": !readOnly || (Boolean(color.image) && active),
+                "border-blue-grey": hex.toLowerCase() === "#ffffff" && !active,
               })}
               onClick={handleClick(color)}
             />

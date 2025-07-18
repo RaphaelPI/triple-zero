@@ -1,0 +1,5 @@
+@utility rich-text-content {
+  ul {
+    @apply list-disc pl-4;
+  }
+}

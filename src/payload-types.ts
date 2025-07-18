@@ -279,7 +279,10 @@ export interface BlocInfo {
 export interface Category {
   id: string;
   title: string;
-  slug?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
   description: string;
   active?: boolean | null;
   updatedAt: string;
@@ -380,7 +383,10 @@ export interface Page {
         blockType: 'title-block';
       }
   )[];
-  slug?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
   isPublished?: boolean | null;
   meta?: {
     /**
@@ -399,7 +405,10 @@ export interface Product {
   id: string;
   category: string | Category;
   title: string;
-  slug?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
   description: string;
   images: {
     image?: (string | null) | Media;
@@ -430,36 +439,21 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  technicalInfos?:
-    | {
-        /**
-         * Remplace le titre par défaut du bloc d'information pour ce produit.
-         */
-        title?: string | null;
-        info?: (string | null) | BlocInfo;
-        id?: string | null;
-      }[]
-    | null;
-  materials?:
-    | {
-        /**
-         * Remplace le titre par défaut du bloc d'information pour ce produit.
-         */
-        title?: string | null;
-        info?: (string | null) | BlocInfo;
-        id?: string | null;
-      }[]
-    | null;
-  care?:
-    | {
-        /**
-         * Remplace le titre par défaut du bloc d'information pour ce produit.
-         */
-        title?: string | null;
-        info?: (string | null) | BlocInfo;
-        id?: string | null;
-      }[]
-    | null;
+  blocInfos: {
+    /**
+     * Remplace le titre par défaut du bloc d'information pour ce produit.
+     */
+    title: string;
+    infos: {
+      /**
+       * Remplace le titre par défaut du bloc d'information pour ce produit.
+       */
+      title?: string | null;
+      info: string | BlocInfo;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -545,7 +539,10 @@ export interface ProductOptionDeltaValue {
 export interface ProductVariant {
   id: string;
   title: string;
-  slug?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
   description: string;
   /**
    * Si la case est cochée, cette variante de produit sera visible
@@ -578,7 +575,10 @@ export interface Promotion {
   id: string;
   title: string;
   description?: string | null;
-  slug?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
   /**
    * L'image n'est pas obligatoire, si il n'y en a pas on affichera la premiere image du produit lié à la promo
    */
@@ -1218,25 +1218,17 @@ export interface ProductSelect<T extends boolean = true> {
         option?: T | ProductOptionSelect<T>;
         id?: T;
       };
-  technicalInfos?:
+  blocInfos?:
     | T
     | {
         title?: T;
-        info?: T;
-        id?: T;
-      };
-  materials?:
-    | T
-    | {
-        title?: T;
-        info?: T;
-        id?: T;
-      };
-  care?:
-    | T
-    | {
-        title?: T;
-        info?: T;
+        infos?:
+          | T
+          | {
+              title?: T;
+              info?: T;
+              id?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

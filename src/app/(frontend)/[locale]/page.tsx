@@ -1,4 +1,6 @@
 import { MainMessage } from "@/components/main-message"
+import { Locale } from "@/i18n/config"
+import { setRequestLocale } from "next-intl/server"
 import { HomeCategories } from "./_components/home/home-categories"
 import { HomeProductVariants } from "./_components/home/home-product-variants"
 import { HomePromotions } from "./_components/home/home-promotions"
@@ -8,7 +10,7 @@ export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
-    locale: string
+    locale: Locale
   }>
 }
 
@@ -20,9 +22,13 @@ export const generateMetadata = async ({ params }: Props) => {
   })
 }
 
-export default () => {
+export default async ({ params }: Props) => {
+  // Enable static rendering
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
-    <main className="bg-flake bg-flake-tr space-y-8 bg-no-repeat">
+    <main className="bg-flake bg-flake-bl md:bg-flake-tr space-y-8 bg-no-repeat">
       <HomePromotions />
       <MainMessage />
       <HomeProductVariants />

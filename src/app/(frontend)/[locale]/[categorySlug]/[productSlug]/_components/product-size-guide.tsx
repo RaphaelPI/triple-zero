@@ -13,7 +13,7 @@ interface Props {
   sizeGuide: SizeGuide
 }
 export const ProductSizeGuide = ({ sizeGuide }: Props) => {
-  const t = useTranslations("")
+  const t = useTranslations()
 
   return (
     <Dialog>

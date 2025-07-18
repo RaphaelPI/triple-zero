@@ -98,21 +98,6 @@ export const ProductTechnicalValues = () => {
               <Amount amount={Number(technicalValues?.price)} taxIncluded />
             </span>
           </ProductAddToCart>
-          {/* <Button
-            aria-label={t("cart.add")}
-            size="lg"
-            className="flex-1"
-            onClick={() =>
-              addItem({
-                product,
-                options: activeOptions,
-                color: activeColor,
-                price: Number(technicalValues?.price),
-              })
-            }
-          >
-            
-          </Button> */}
         </div>
       </div>
     </>
@@ -121,7 +106,7 @@ export const ProductTechnicalValues = () => {
 
 const IconContainer = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="bg-green border-dark mx-auto flex h-8 w-auto items-center justify-center gap-1 rounded-lg border px-2 font-semibold md:h-12 md:w-12 md:px-0">
+    <div className="bg-green border-dark mx-auto flex h-8 w-auto flex-shrink-0 items-center justify-center gap-1 rounded-lg border px-2 font-semibold md:size-12 md:px-0">
       {children}
     </div>
   )

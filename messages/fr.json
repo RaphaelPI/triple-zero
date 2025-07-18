@@ -82,7 +82,8 @@
     "material": "Duvet d'oie",
     "technicalInfos": "Informations techniques",
     "materials": "Matériaux",
-    "care": "Entretien"
+    "care": "Entretien",
+    "related": "Produits similaires"
   },
   "checkout": {
     "step1": "Panier",
@@ -104,9 +105,15 @@
   "contactUs": "Contactez-nous",
   "priceFrom": "À partir de ",
   "mainMessage": "Le mot de Louis Fernand",
-  "promotions": "Promos du moment",
+  "promotions": {
+    "meta_description": "Profitez de nos offres spéciales sur une sélection de matériel de haute montagne, sacs de couchage, doudounes, couettes, oreillers et literie pour toute la famille. Stock limité !",
+    "nav": "Promotions",
+    "title": "Promos du moment",
+    "seeAll": "Voir toutes les promotions"
+  },
   "variants": "Les incontournables",
   "cgu": "Conditions générales de vente",
+  "legals": "Mentions légales",
   "faq": {
     "title": "Vos questions fréquentes",
     "description": "Trouvez toutes les réponses à vos questions sur nos équipements de haute montagne : expéditions, livraisons, tailles, entretien des doudounes, sacs de couchage, et plus encore."

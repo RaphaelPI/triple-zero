@@ -36,7 +36,7 @@
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
-    "shippingFeesDescription": "Les frais de port seront calculés en fonction du pays de livraison.\nSi aucun montant n'est indiqué, cela signifie que le montant sera déterminé sur devis.",
+    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
     "priceVTA": "Prix TTC",
@@ -48,6 +48,8 @@
     "total": "Total à payer",
     "delivery": "Livraison",
     "toDetermine": "A déterminer",
+    "added": "{product} a été ajouté au panier.",
+    "see": "<strong>Cliquez ici</strong> pour voir votre panier",
     "line": {
       "remove": "Retirer un produit",
       "add": "Ajouter un produit"
@@ -55,7 +57,7 @@
   },
   "delivery": {
     "title": "Vos coordonnées",
-    "description": "Veuillez saisir les informations nécessaires pour votre commande.\nNe remplissez l'adresse de livraison que si elle est différente de la vôtre",
+    "description": "Merci de renseigner votre adresse de facturation. \nPar défaut, votre commande sera expédiée à l’adresse de facturation. Si vous souhaitez une livraison à une autre adresse, vous pourrez l’indiquer en décochant l’option ci-dessous.",
     "gender": "Civilité",
     "lastName": "Nom",
     "firstName": "Prénom",
@@ -68,13 +70,20 @@
     "email": "Email",
     "phone": "Téléphone",
     "validate": "Passer au paiement",
-    "addAddress2": "Ajouter un complément d’adresse"
+    "addAddress2": "Ajouter un complément d’adresse",
+    "useDeliveryAddress": "Utiliser l’adresse de facturation comme adresse d’expédition",
+    "deliveryAddress": "Adresse de livraison",
+    "billingAddress": "Adresse de facturation"
   },
   "product": {
     "options": "Options",
     "advancedOptions": "Options avancées",
     "see": "Voir le produit",
-    "material": "Duvet d'oie"
+    "material": "Duvet d'oie",
+    "technicalInfos": "Informations techniques",
+    "materials": "Matériaux",
+    "care": "Entretien",
+    "related": "Produits similaires"
   },
   "checkout": {
     "step1": "Panier",
@@ -89,10 +98,24 @@
     "required": "Champ obligatoire",
     "deliveryRequired": "Champ obligatoire (Si vous choisissez de remplir l'adresse de livraison)",
     "deliveryRequiredAll": "Si vous choisissez de remplir l'adresse de livraison, vous devez saisir tous les champs obligatoires.",
-    "deliveryCountryTaxFree": "Vous ne pouvez pas choisir un pays de facturation en Europe (TTC) et un pays de livraison hors Europe (HT), ni l'inverse."
+    "deliveryCountryTaxFree": "Vous ne pouvez pas choisir un pays de facturation en Europe (TTC) et un pays de livraison hors Europe (HT), ni l'inverse.",
+    "samePromotion": "Cette promotion est déjà présente dans votre panier"
   },
   "question": "Une question sur nos produits ou nos services ?",
   "contactUs": "Contactez-nous",
   "priceFrom": "À partir de ",
-  "mainMessage": "Le mot de Louis Fernand"
+  "mainMessage": "Le mot de Louis Fernand",
+  "promotions": {
+    "meta_description": "Profitez de nos offres spéciales sur une sélection de matériel de haute montagne, sacs de couchage, doudounes, couettes, oreillers et literie pour toute la famille. Stock limité !",
+    "nav": "Promotions",
+    "title": "Promos du moment",
+    "seeAll": "Voir toutes les promotions"
+  },
+  "variants": "Les incontournables",
+  "cgu": "Conditions générales de vente",
+  "legals": "Mentions légales",
+  "faq": {
+    "title": "Vos questions fréquentes",
+    "description": "Trouvez toutes les réponses à vos questions sur nos équipements de haute montagne : expéditions, livraisons, tailles, entretien des doudounes, sacs de couchage, et plus encore."
+  }
 }

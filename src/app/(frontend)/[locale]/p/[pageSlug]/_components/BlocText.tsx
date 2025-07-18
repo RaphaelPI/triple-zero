@@ -7,7 +7,7 @@ interface Props {
 
 export const BlocText = ({ block }: Props) => {
   return (
-    <section className="section">
+    <section className="w-section px-section">
       {/* <div className="panel px-panel py-panel"> */}
       <h3 className="pb-2 text-xl font-semibold">{block.title}</h3>
       <RichText data={block.content} />

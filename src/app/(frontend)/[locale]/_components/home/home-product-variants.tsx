@@ -1,17 +1,15 @@
 import { Amount } from "@/components/amount"
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
-import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getTechnicalValues } from "@/lib/technical-values"
 import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
-import { getLocale, getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 import { getOptionSlug } from "../../[categorySlug]/[productSlug]/utils"
-import { getProductVariantsData } from "../../data"
+import { getHomeProductVariantsData } from "../../data"
 
 export const HomeProductVariants = async () => {
-  const locale = await getLocale()
-  const variants = await getProductVariantsData(locale as Locale)
+  const variants = await getHomeProductVariantsData()
   const t = await getTranslations()
 
   if (variants.docs.length === 0) {
@@ -19,7 +17,7 @@ export const HomeProductVariants = async () => {
   }
 
   return (
-    <section className="section space-y-8">
+    <section className="section space-y-4 lg:space-y-8">
       <h1>{t("variants")}</h1>
       <div className="space-y-4">
         {variants.docs.map((variant) => {
@@ -53,11 +51,14 @@ export const HomeProductVariants = async () => {
               className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8"
               key={variant.id}
             >
-              <div className="w-full md:h-full md:w-5/12">
+              <div className="w-full lg:h-full lg:w-5/12">
                 {image && (
                   <Image
                     media={image}
                     alt={product.title}
+                    width={500}
+                    height={250}
+                    sizes="500px"
                     className="mx-auto h-60 w-auto rounded-2xl object-cover object-right md:h-full md:rounded-r-none"
                   />
                 )}
@@ -87,24 +88,6 @@ export const HomeProductVariants = async () => {
               </div>
             </Link>
           )
-
-          // return (
-          //   <div key={variant.id} className="relative">
-          //     <Link
-          //       className="bg-green link absolute top-3 left-3 z-1 rounded-lg px-3 py-1"
-          //       href={`/${(product.category as Category).slug}`}
-          //     >
-          //       {(product.category as Category).title}
-          //     </Link>
-
-          //     <ProductCard
-          //       href={`/incontournables/${variant.slug}`}
-          //       title={variant.title}
-          //       description={variant.description}
-          //       image={product.images?.[0]?.image as Media}
-          //     />
-          //   </div>
-          // )
         })}
       </div>
     </section>

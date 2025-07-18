@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { RichText } from "@payloadcms/richtext-lexical/react"
-import { getTranslations } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { getMetadata } from "../metadata"
 import { getFaqData } from "./data"
 
@@ -37,7 +37,11 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
 export default async (props: Props) => {
   const { locale } = await props.params
-  const faq = await getFaqData(locale)
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
+  const faq = await getFaqData()
   const t = await getTranslations()
 
   return (

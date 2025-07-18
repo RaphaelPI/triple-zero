@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return getMetadata({
     title: page.title,
     pathname: `/p/${pageSlug}`,
-    description: page.meta?.description || "",
+    description: page.meta?.description ?? undefined,
   })
 }
 
@@ -40,11 +40,13 @@ export default async ({ params }: Props) => {
       <section className="section">
         <h1>{page.title}</h1>
       </section>
-      {page.blocks.map((block) => {
-        if (block.blockType === "text-block") {
-          return <BlocText key={block.id} block={block} />
-        }
-      })}
+      <div className="space-y-8 pb-32">
+        {page.blocks.map((block) => {
+          if (block.blockType === "text-block") {
+            return <BlocText key={block.id} block={block} />
+          }
+        })}
+      </div>
     </main>
   )
 }

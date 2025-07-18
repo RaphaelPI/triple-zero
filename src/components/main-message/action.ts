@@ -1,10 +1,10 @@
 "use server"
 
-import { Locale } from "@/i18n/config"
 import { getClient } from "@/lib/payload"
+import { getLocale } from "next-intl/server"
 
-export const getMainMessage = async (locale: Locale) => {
-  const payload = await getClient()
+export const getMainMessage = async () => {
+  const [locale, payload] = await Promise.all([getLocale(), getClient()])
 
   const mainMessage = await payload.findGlobal({
     slug: "message",

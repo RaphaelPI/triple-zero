@@ -138,74 +138,65 @@ export const Product: CollectionConfig = {
           label: "Fiche technique",
           fields: [
             {
-              name: "technicalInfos",
-              label: "Informations techniques",
+              name: "blocInfos",
               type: "array",
+              required: true,
               admin: {
                 initCollapsed: true,
+                components: {
+                  RowLabel: {
+                    path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+                    clientProps: {
+                      placeholder: "Bloc d'information",
+                      labelPath: ["title"],
+                    },
+                  },
+                },
               },
               fields: [
                 {
                   name: "title",
                   type: "text",
                   localized: true,
+                  required: true,
                   admin: {
                     description:
                       "Remplace le titre par défaut du bloc d'information pour ce produit.",
                   },
                 },
                 {
-                  name: "info",
-                  type: "relationship",
-                  relationTo: "blocInfo",
-                },
-              ],
-            },
-            {
-              name: "materials",
-              label: "Matériaux",
-              type: "array",
-              admin: {
-                initCollapsed: true,
-              },
-              fields: [
-                {
-                  name: "title",
-                  type: "text",
-                  localized: true,
+                  name: "infos",
+                  type: "array",
+                  required: true,
                   admin: {
-                    description:
-                      "Remplace le titre par défaut du bloc d'information pour ce produit.",
+                    initCollapsed: true,
+                    components: {
+                      RowLabel: {
+                        path: "/app/(payload)/_ui/list-row-label#ListRowLabel",
+                        clientProps: {
+                          placeholder: "Bloc d'information",
+                          labelPath: ["title"],
+                        },
+                      },
+                    },
                   },
-                },
-                {
-                  name: "info",
-                  type: "relationship",
-                  relationTo: "blocInfo",
-                },
-              ],
-            },
-            {
-              name: "care",
-              label: "Entretien",
-              type: "array",
-              admin: {
-                initCollapsed: true,
-              },
-              fields: [
-                {
-                  name: "title",
-                  type: "text",
-                  localized: true,
-                  admin: {
-                    description:
-                      "Remplace le titre par défaut du bloc d'information pour ce produit.",
-                  },
-                },
-                {
-                  name: "info",
-                  type: "relationship",
-                  relationTo: "blocInfo",
+                  fields: [
+                    {
+                      name: "title",
+                      type: "text",
+                      localized: true,
+                      admin: {
+                        description:
+                          "Remplace le titre par défaut du bloc d'information pour ce produit.",
+                      },
+                    },
+                    {
+                      name: "info",
+                      type: "relationship",
+                      relationTo: "blocInfo",
+                      required: true,
+                    },
+                  ],
                 },
               ],
             },

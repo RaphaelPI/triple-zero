@@ -2,7 +2,6 @@
 
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useSessionStorageState } from "@/hooks/use-storage-state"
-import { Locale } from "@/i18n/config"
 import { Media, Message } from "@/payload-types"
 import { format, setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
@@ -21,7 +20,7 @@ export const MainMessageModal = () => {
   setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
 
   const fetchMessage = useCallback(async () => {
-    const m = await getMainMessage(locale as Locale)
+    const m = await getMainMessage()
     return m
   }, [locale])
 

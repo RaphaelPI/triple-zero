@@ -119,9 +119,9 @@ export default async (props: Props) => {
         </ProductProvider>
       </div>
       <section className="section space-y-8">
-        <ProductInformations title={t("product.technicalInfos")} data={product.technicalInfos} />
-        <ProductInformations title={t("product.materials")} data={product.materials} />
-        <ProductInformations title={t("product.care")} data={product.care} />
+        {product.blocInfos?.map((bloc) => (
+          <ProductInformations key={bloc.id} bloc={bloc} />
+        ))}
       </section>
     </main>
   )

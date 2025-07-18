@@ -5,7 +5,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { Category } from "@/payload-types"
 import { getLocale, getTranslations } from "next-intl/server"
@@ -14,7 +13,7 @@ import { MainNavMobile } from "./main-nav-mobile"
 
 export const MainNav = async () => {
   const locale = await getLocale()
-  const nav = await getNavData(locale as Locale)
+  const nav = await getNavData()
   const t = await getTranslations()
 
   return (
@@ -72,6 +71,11 @@ export const MainNav = async () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
           ))}
+          <NavigationMenuItem>
+            <Link prefetch={false} href="/promotions" className="px-4">
+              {t("promotions.nav")}
+            </Link>
+          </NavigationMenuItem>
           {/* <NavigationMenuItem>
             <Link prefetch={false} href="/savoir-faire" className="px-4">
               {t("menu.knowledge")}

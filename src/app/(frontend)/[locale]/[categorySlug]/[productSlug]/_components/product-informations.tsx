@@ -3,22 +3,21 @@ import { Link } from "@/i18n/navigation"
 import { Product } from "@/payload-types"
 
 interface ProductInfosProps {
-  title: string
-  data: Product["technicalInfos"] | Product["materials"] | Product["care"]
+  bloc: Product["blocInfos"][number]
 }
 
-export const ProductInformations = ({ title, data }: ProductInfosProps) => {
-  if (!data || data.length === 0) {
+export const ProductInformations = ({ bloc }: ProductInfosProps) => {
+  if (!bloc || bloc.infos?.length === 0) {
     return null
   }
 
   return (
     <div>
       <div className="rounded-t-2xl border-8 border-b-0 border-white bg-white lg:w-1/3">
-        <div className="bg-blue-grey w-full rounded-2xl px-12 py-4 text-center">{title}</div>
+        <div className="bg-blue-grey w-full rounded-2xl px-12 py-4 text-center">{bloc.title}</div>
       </div>
-      <div className="panel mb-16 rounded-tl-none max-lg:rounded-tr-none">
-        {data.map(({ id, info, title: blocTitle }) => {
+      <div className="panel rounded-tl-none max-lg:rounded-tr-none">
+        {bloc.infos?.map(({ id, info, title: blocTitle }) => {
           if (!info || typeof info === "string") {
             return null
           }

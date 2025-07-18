@@ -4,11 +4,12 @@ import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
-import { Category, SizeGuide } from "@/payload-types"
-import { getTranslations } from "next-intl/server"
+import { Category, Product, SizeGuide } from "@/payload-types"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
+import { getProductsData } from "../data"
 import { ProductAddToCart } from "./_components/product-add-to-cart"
 import { ProductColors } from "./_components/product-colors"
 import { ProductImages } from "./_components/product-images"
@@ -17,6 +18,7 @@ import { ProductOptions } from "./_components/product-options"
 import { ProductPrice } from "./_components/product-price"
 import { ProductProvider } from "./_components/product-provider"
 import { ProductTechnicalValues } from "./_components/product-technical-values"
+import { ProductsRelated } from "./_components/products-related"
 import { getProductData } from "./data"
 
 export const dynamic = "force-static"
@@ -31,7 +33,13 @@ interface Props {
 
 const getData = cache(async ({ params }: Props) => {
   const { locale, categorySlug, productSlug } = await params
-  const productData = await getProductData(productSlug, locale)
+  const [productData, productsData] = await Promise.all([
+    getProductData(productSlug),
+    getProductsData(categorySlug, productSlug),
+  ])
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!productData.docs[0]) {
     notFound()
@@ -42,7 +50,7 @@ const getData = cache(async ({ params }: Props) => {
     notFound()
   }
 
-  return { product: productData.docs[0], category: pCat }
+  return { product: productData.docs[0], category: pCat, related: productsData.docs as Product[] }
 })
 
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
@@ -60,7 +68,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
 export default async (props: Props) => {
   const { locale } = await props.params
-  const { product, category } = await getData(props)
+  const { product, category, related } = await getData(props)
   const t = await getTranslations()
 
   return (
@@ -75,10 +83,12 @@ export default async (props: Props) => {
         />
         <h1 className="mb-4">{product.title}</h1>
       </div>
-      <div className="w-section grid gap-8 lg:grid-cols-2">
-        <section className="px-section order-1 lg:pr-0">{product.description}</section>
+      <div className="w-section grid gap-8 lg:grid-cols-12">
+        <section className="px-section order-1 lg:col-span-7 lg:pr-0">
+          {product.description}
+        </section>
         <ProductProvider product={product}>
-          <div className="px-section sticky top-0 order-3 lg:order-2 lg:row-span-3 lg:pl-0">
+          <div className="px-section sticky top-0 order-3 lg:order-2 lg:col-span-5 lg:row-span-3 lg:pl-0">
             <div className="panel">
               <ProductOptions
                 options={product.options?.map(({ option }) => option)}
@@ -103,17 +113,22 @@ export default async (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3">
+          <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3 lg:col-span-7">
             <ProductImages />
           </div>
           <ProductTechnicalValues />
         </ProductProvider>
       </div>
-      <section className="section space-y-8">
-        <ProductInformations title={t("product.technicalInfos")} data={product.technicalInfos} />
-        <ProductInformations title={t("product.materials")} data={product.materials} />
-        <ProductInformations title={t("product.care")} data={product.care} />
+      <section className="section space-y-4 lg:space-y-8">
+        {product.blocInfos?.map((bloc) => (
+          <ProductInformations key={bloc.id} bloc={bloc} />
+        ))}
       </section>
+      {related.length > 0 && (
+        <section className="section space-y-4 lg:space-y-8">
+          <ProductsRelated products={related} categorySlug={category.slug} />
+        </section>
+      )}
     </main>
   )
 }

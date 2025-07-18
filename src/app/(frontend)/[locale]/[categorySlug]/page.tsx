@@ -1,14 +1,13 @@
 import { Amount } from "@/components/amount"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Image } from "@/components/image"
-import { MainMessage } from "@/components/main-message"
 import { Button } from "@/components/ui/button"
 import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
 import { Category, Media } from "@/payload-types"
-import { getTranslations } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getNavData } from "../data"
@@ -26,10 +25,14 @@ interface Props {
 
 const getData = cache(async ({ params }: Props) => {
   const { locale, categorySlug } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
+
   const [categoryData, productsData, nav] = await Promise.all([
-    getCategoryData(categorySlug, locale),
-    getProductsData(categorySlug, locale),
-    getNavData(locale),
+    getCategoryData(categorySlug),
+    getProductsData(categorySlug),
+    getNavData(),
   ])
 
   if (!categoryData.docs[0]) {
@@ -56,7 +59,7 @@ export default async (props: Props) => {
   const t = await getTranslations()
 
   return (
-    <main className="bg-flake bg-flake-tr bg-no-repeat">
+    <main className="bg-flake bg-flake-bl md:bg-flake-tr bg-no-repeat">
       <div className="section flex xl:gap-x-20">
         <div className="relative hidden xl:block">
           <div className="sticky top-32 w-56">
@@ -147,7 +150,6 @@ export default async (props: Props) => {
           </div>
         </div>
       </div>
-      <MainMessage />
     </main>
   )
 }
