@@ -16,7 +16,7 @@ import { BillingFormFields } from "./billing-form-fields"
 import { DeliveryFormFields } from "./delivery-form-fields"
 
 export const CheckoutForm = () => {
-  const { deliveryData, setDeliveryData } = useCheckout()
+  const { deliveryData, setDeliveryData, cart } = useCheckout()
   const t = useTranslations()
 
   // Default locale
@@ -82,6 +82,14 @@ export const CheckoutForm = () => {
 
     // Store data in session storage
     setDeliveryData(values)
+  }
+
+  if (cart.lines.length === 0) {
+    return (
+      <section className="w-section px-section">
+        <div className="panel px-panel py-panel">{t("cart.empty")}...</div>
+      </section>
+    )
   }
 
   return (

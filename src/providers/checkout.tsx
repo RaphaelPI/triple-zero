@@ -148,8 +148,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   const deliveryFee = data ?? undefined
 
   const nextDiscount = DISCOUNTS.find(([amount]) => total < amount)
-  const currentDiscount =
-    [...DISCOUNTS].reverse().find(([amount]) => total >= amount) ?? DISCOUNTS[0]
+  const currentDiscount = [...DISCOUNTS].reverse().find(([amount]) => total >= amount)
 
   const totalToPay = total * (1 - (currentDiscount?.[1] ?? 0) / 100) + (deliveryFee ?? 0)
 

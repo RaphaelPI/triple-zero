@@ -11,7 +11,6 @@ export const getShippingFees = rawProcedure
   .createServerAction()
   .input(z.object({ country: z.string().optional(), total: z.number().optional() }))
   .handler(async ({ input }) => {
-    console.log("getShippingFees", input)
     if (!input.country) {
       return undefined
     }
@@ -44,3 +43,16 @@ export const getShippingFees = rawProcedure
 
     return shippingFees.docs[0].value
   })
+
+export const getDelay = rawProcedure.createServerAction().handler(async () => {
+  const payload = await getClient()
+  const delay = await payload.findGlobal({
+    slug: "delay",
+  })
+
+  if (delay.active) {
+    return delay.date
+  }
+
+  return undefined
+})

@@ -92,7 +92,8 @@
     "globalDiscount": "Si vous atteignez <amount>{amount}</amount> vous bénéficierez d'une réduction de <discount>{discount}</discount>",
     "globalDiscountMax": "Vous avez atteint <amount>{amount}</amount> vous bénéficierez de la réduction maximale de <discount>{discount}</discount>",
     "freeShipping": "Offert",
-    "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€."
+    "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€.",
+    "delay": "La date d’expédition prévue est actuellement fixée au <strong>{date}</strong>, au départ de chez nous."
   },
   "notFound": {
     "title": "404 - Page introuvable",

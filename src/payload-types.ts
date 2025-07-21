@@ -82,7 +82,6 @@ export interface Config {
     promotion: Promotion;
     'shipping-fees': ShippingFee;
     sizeGuide: SizeGuide;
-    taxes: Tax;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -100,7 +99,6 @@ export interface Config {
     promotion: PromotionSelect<false> | PromotionSelect<true>;
     'shipping-fees': ShippingFeesSelect<false> | ShippingFeesSelect<true>;
     sizeGuide: SizeGuideSelect<false> | SizeGuideSelect<true>;
-    taxes: TaxesSelect<false> | TaxesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -110,11 +108,13 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
+    delay: Delay;
     faq: Faq;
     message: Message;
     nav: Nav;
   };
   globalsSelect: {
+    delay: DelaySelect<false> | DelaySelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     message: MessageSelect<false> | MessageSelect<true>;
     nav: NavSelect<false> | NavSelect<true>;
@@ -784,174 +784,6 @@ export interface ShippingFee {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "taxes".
- */
-export interface Tax {
-  id: string;
-  title: string;
-  /**
-   * La valeur, en pourcentage, des taxes appliquées sur les produits pour liste de pays sélectionnées.
-   */
-  value: number;
-  countries: (
-    | 'FR'
-    | 'CH'
-    | 'GB'
-    | 'US'
-    | 'DE'
-    | 'IT'
-    | 'ES'
-    | 'DZ'
-    | 'AO'
-    | 'BJ'
-    | 'BW'
-    | 'BF'
-    | 'BI'
-    | 'CM'
-    | 'CV'
-    | 'CF'
-    | 'TD'
-    | 'CG'
-    | 'DJ'
-    | 'EG'
-    | 'GA'
-    | 'GM'
-    | 'GN'
-    | 'CI'
-    | 'KE'
-    | 'LS'
-    | 'LR'
-    | 'LY'
-    | 'MG'
-    | 'ML'
-    | 'MR'
-    | 'MU'
-    | 'MA'
-    | 'MZ'
-    | 'NA'
-    | 'NE'
-    | 'RW'
-    | 'RE'
-    | 'SH'
-    | 'SN'
-    | 'SC'
-    | 'SL'
-    | 'ZA'
-    | 'SD'
-    | 'TZ'
-    | 'TG'
-    | 'TN'
-    | 'UG'
-    | 'ZM'
-    | 'AF'
-    | 'AM'
-    | 'AZ'
-    | 'BD'
-    | 'BT'
-    | 'KH'
-    | 'CN'
-    | 'HK'
-    | 'IN'
-    | 'ID'
-    | 'IR'
-    | 'IQ'
-    | 'IL'
-    | 'JP'
-    | 'JO'
-    | 'LA'
-    | 'LB'
-    | 'MO'
-    | 'MV'
-    | 'NP'
-    | 'PK'
-    | 'PH'
-    | 'SA'
-    | 'SG'
-    | 'LK'
-    | 'SY'
-    | 'TW'
-    | 'TH'
-    | 'TR'
-    | 'VN'
-    | 'YE'
-    | 'AL'
-    | 'AD'
-    | 'AT'
-    | 'BE'
-    | 'BA'
-    | 'BG'
-    | 'HR'
-    | 'CY'
-    | 'CZ'
-    | 'DK'
-    | 'EE'
-    | 'FI'
-    | 'GI'
-    | 'GR'
-    | 'VA'
-    | 'HU'
-    | 'IS'
-    | 'IE'
-    | 'LV'
-    | 'LI'
-    | 'LT'
-    | 'LU'
-    | 'MT'
-    | 'MD'
-    | 'MC'
-    | 'NL'
-    | 'NO'
-    | 'PL'
-    | 'PT'
-    | 'RO'
-    | 'RU'
-    | 'SM'
-    | 'SK'
-    | 'SI'
-    | 'SE'
-    | 'BS'
-    | 'BB'
-    | 'BZ'
-    | 'BM'
-    | 'CA'
-    | 'KY'
-    | 'CR'
-    | 'CU'
-    | 'GD'
-    | 'GP'
-    | 'GT'
-    | 'HT'
-    | 'HN'
-    | 'JM'
-    | 'MQ'
-    | 'MX'
-    | 'NI'
-    | 'PA'
-    | 'PM'
-    | 'AR'
-    | 'BO'
-    | 'BR'
-    | 'CL'
-    | 'CO'
-    | 'EC'
-    | 'FK'
-    | 'GF'
-    | 'PY'
-    | 'PE'
-    | 'UY'
-    | 'VE'
-    | 'AU'
-    | 'FJ'
-    | 'PF'
-    | 'NC'
-    | 'NZ'
-    | 'WF'
-  )[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1020,10 +852,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sizeGuide';
         value: string | SizeGuide;
-      } | null)
-    | ({
-        relationTo: 'taxes';
-        value: string | Tax;
       } | null)
     | ({
         relationTo: 'users';
@@ -1340,17 +1168,6 @@ export interface SizeGuideSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "taxes_select".
- */
-export interface TaxesSelect<T extends boolean = true> {
-  title?: T;
-  value?: T;
-  countries?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -1402,6 +1219,23 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delay".
+ */
+export interface Delay {
+  id: string;
+  /**
+   * Correspond à la date de départ de livraison de chez Triple Zéro
+   */
+  date: string;
+  /**
+   * Si la case est cochée, le message sera affiché
+   */
+  active?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1482,6 +1316,17 @@ export interface Nav {
   }[];
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delay_select".
+ */
+export interface DelaySelect<T extends boolean = true> {
+  date?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
