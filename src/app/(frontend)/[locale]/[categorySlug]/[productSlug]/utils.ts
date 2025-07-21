@@ -6,8 +6,9 @@ import {
   Product,
   ProductOption,
   ProductOptionValue,
+  Promotion,
 } from "@/payload-types"
-import { parseAsString, UseQueryStatesKeysMap, Values } from "nuqs"
+import { parseAsString, UseQueryStatesKeysMap } from "nuqs"
 
 /**
  * Returns all options query names
@@ -31,40 +32,64 @@ export const getOptionsQueryNames = (options: ProductOption[], colors: ColorWith
 }
 
 export const getProductDefaultImages = (
-  params: Values<UseQueryStatesKeysMap<any>>,
   product: Product,
-  activeOptions: [ProductOption, ProductOptionValue][],
   colors: Product["colors"],
+  promotion?: Promotion,
 ): Media[] => {
-  // Get default Images
-  // from product
-  const defaultProductImages = (product.images || []).map(({ image }) => image as Media)
+  // Image list
+  const images: Media[] = []
 
-  // from options
-  // const activeOptionsImages = activeOptions
-  //   .filter(([_, optionValue]) => optionValue.image)
-  //   .map(([option, optionValue]) => [getOptionSlug(option), optionValue.image as Media])
+  // If promotion, return only promo related images (color, options and promo.image)
+  if (promotion) {
+    if (promotion.image) {
+      images.push(promotion.image as Media)
+    }
 
-  const optionImages =
-    product.options
-      ?.map(({ option }) => option.values?.map(({ value }) => value.image as Media) ?? [])
-      .flat()
-      .filter((image) => image) ?? []
+    if (promotion.color) {
+      const color = colors?.find(
+        ({ color }) => (color.color as Color).color === (promotion.color as Color).color,
+      )
+      if (color?.color.image) {
+        images.push(color.color.image as Media)
+      }
+    }
 
-  // from colors
-  // const colorOptionImage = colors?.find(({ color }) => params.color === color.color)?.color.image
-  // const colorOptionImages = colorOptionImage ? [["color", colorOptionImage]] : []
-  const colorOptionImages =
-    colors?.map(({ color }) => color.image as Media).filter((image) => image) ?? []
+    if (promotion.options) {
+      ;(promotion.options as [ProductOption, ProductOptionValue][]).forEach(([option, value]) => {
+        if (value.image) {
+          images.push(value.image as Media)
+        }
+      })
+    }
 
-  // merge all images
-  // return Object.fromEntries([...defaultProductImages, ...colorOptionImages, ...activeOptionsImages])
-  return Object.values(
-    [...defaultProductImages, ...colorOptionImages, ...optionImages].reduce(
-      (prev, current) => ({ ...prev, [current.id]: current }),
-      {},
-    ),
-  )
+    if (images.length > 0) {
+      return images
+    }
+  }
+
+  // Get default Images from product
+  if (product.images) {
+    images.push(...product.images.map(({ image }) => image as Media))
+  }
+
+  // Get default Images from options
+  if (product.options) {
+    images.push(
+      ...(product.options
+        ?.map(({ option }) => option.values?.map(({ value }) => value.image as Media) ?? [])
+        .flat()
+        .filter((image) => image) ?? []),
+    )
+  }
+
+  // Get default images from colors
+  if (product.colors) {
+    images.push(
+      ...(product.colors?.map(({ color }) => color.image as Media).filter((image) => image) ?? []),
+    )
+  }
+
+  return images
 }
 
 export const getOptionSlug = (option: ProductOption) => {

@@ -77,10 +77,7 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
 
   // IMAGES
   // Default images
-  const images = getProductDefaultImages(params, product, activeOptions, product.colors || [])
-  if (promotion?.image) {
-    images.unshift(promotion.image as Media)
-  }
+  const images = getProductDefaultImages(product, product.colors || [], promotion)
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [lastIndex, setLastIndex] = useState(0)
