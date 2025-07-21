@@ -1,16 +1,20 @@
 "use client"
 
+import Info from "@/assets/info.svg"
 import { Amount } from "@/components/amount"
-import { useCheckout } from "@/providers/checkout"
+import { Popover } from "@/components/popover"
+import { Skeleton } from "@/components/ui/skeleton"
+import { formatAmount } from "@/lib/text"
+import { DISCOUNTS, useCheckout } from "@/providers/checkout"
 import { useTranslations } from "next-intl"
-import { ShippingFees } from "./shipping-fees"
 
 interface Props {
   children: React.ReactNode
 }
 
 export const CheckoutSummary = ({ children }: Props) => {
-  const { total, deliveryFee } = useCheckout()
+  const { total, deliveryFee, loadingShippingFees, nextDiscount, currentDiscount, totalToPay } =
+    useCheckout()
   const t = useTranslations()
 
   return (
@@ -19,16 +23,57 @@ export const CheckoutSummary = ({ children }: Props) => {
         {t("cart.resume")}
       </div>
       <div className="panel-table-cell space-y-4 text-lg">
-        <div className="space-y-1">
+        {
+          <div className="rounded-lg bg-white p-2 text-sm leading-tight italic">
+            {nextDiscount
+              ? t.rich("checkout.globalDiscount", {
+                  amount: () => (
+                    <span className="font-semibold">{formatAmount(nextDiscount[0])}</span>
+                  ),
+                  discount: () => <span className="font-semibold">{nextDiscount[1]}%</span>,
+                })
+              : t.rich("checkout.globalDiscountMax", {
+                  amount: () => (
+                    <span className="font-semibold">
+                      {formatAmount(DISCOUNTS[DISCOUNTS.length - 1][0])}
+                    </span>
+                  ),
+                  discount: () => (
+                    <span className="font-semibold">{DISCOUNTS[DISCOUNTS.length - 1][1]}%</span>
+                  ),
+                })}
+          </div>
+        }
+        <div>
           <div>
             {t("cart.totalCart")} : <Amount amount={total} taxIncluded />
           </div>
-          <ShippingFees />
+          {currentDiscount && <div>Réduction : {currentDiscount[1]}%</div>}
+          <div className="flex items-center gap-1">
+            {t("cart.delivery")} :{" "}
+            {loadingShippingFees ? (
+              <Skeleton className="h-6 w-16" />
+            ) : deliveryFee ? (
+              formatAmount(deliveryFee)
+            ) : deliveryFee === 0 ? (
+              <Popover content={t("checkout.freeShippingDescription")}>
+                <div className="flex items-center gap-1">
+                  {t("checkout.freeShipping")} <Info className="size-4" />
+                </div>
+              </Popover>
+            ) : (
+              <Popover content={t("cart.shippingFeesDescription")}>
+                <div className="flex items-center gap-1">
+                  {t("cart.toDetermine")} <Info className="size-4" />
+                </div>
+              </Popover>
+            )}
+          </div>
         </div>
         <div className="text-2xl">
           {t("cart.total")} :{" "}
           <strong className="tracking-wider">
-            <Amount amount={total + (deliveryFee ?? 0)} taxIncluded />
+            <Amount amount={totalToPay} taxIncluded />
           </strong>
         </div>
         {children}

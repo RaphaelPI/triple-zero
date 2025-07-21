@@ -88,7 +88,11 @@
   "checkout": {
     "step1": "Panier",
     "step2": "Coordonnées",
-    "step3": "Paiement"
+    "step3": "Paiement",
+    "globalDiscount": "Si vous atteignez <amount>{amount}</amount> vous bénéficierez d'une réduction de <discount>{discount}</discount>",
+    "globalDiscountMax": "Vous avez atteint <amount>{amount}</amount> vous bénéficierez de la réduction maximale de <discount>{discount}</discount>",
+    "freeShipping": "Offert",
+    "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€."
   },
   "notFound": {
     "title": "404 - Page introuvable",

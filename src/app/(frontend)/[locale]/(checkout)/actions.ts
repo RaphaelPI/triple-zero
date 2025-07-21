@@ -5,12 +5,19 @@ import { getClient } from "@/lib/payload"
 import { rawProcedure } from "@/lib/safe-action"
 import z from "zod"
 
+const FREE_SHIPPING_TOTAL = 2000
+
 export const getShippingFees = rawProcedure
   .createServerAction()
-  .input(z.object({ country: z.string().optional() }))
+  .input(z.object({ country: z.string().optional(), total: z.number().optional() }))
   .handler(async ({ input }) => {
+    console.log("getShippingFees", input)
     if (!input.country) {
       return undefined
+    }
+
+    if (input.total > FREE_SHIPPING_TOTAL) {
+      return 0
     }
 
     const payload = await getClient()

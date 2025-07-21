@@ -10,6 +10,12 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 import z from "zod"
 
+export const DISCOUNTS = [
+  [2000, 5],
+  [3000, 10],
+  [4000, 15],
+]
+
 export interface Cart {
   date: string
   lines: CartLine[]
@@ -107,6 +113,9 @@ interface ICheckoutContext {
   setShippingFeesCountry: (country: string) => void
   shippingFeesCountry: string
   deliveryDone: boolean
+  nextDiscount: number[] | undefined
+  currentDiscount: number[] | undefined
+  totalToPay: number
 }
 
 const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
@@ -121,13 +130,38 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   const [deliveryDone, setDeliveryDone] = useState(false)
   const t = useTranslations()
 
+  // Get cart total
+  const total = cart.lines.reduce((total, line) => {
+    return (
+      total +
+      (line.discount
+        ? line.price * line.quantity * (1 - line.discount / 100)
+        : line.price * line.quantity)
+    )
+  }, 0)
+
   const { data, isPending } = useServerActionQuery(getShippingFees, {
     country: shippingFeesCountry,
+    total,
   })
+
+  const deliveryFee = data ?? undefined
+
+  const nextDiscount = DISCOUNTS.find(([amount]) => total < amount)
+  const currentDiscount =
+    [...DISCOUNTS].reverse().find(([amount]) => total >= amount) ?? DISCOUNTS[0]
+
+  const totalToPay = total * (1 - (currentDiscount?.[1] ?? 0) / 100) + (deliveryFee ?? 0)
 
   useEffect(() => {
     setLoading(false)
   }, [])
+
+  useEffect(() => {
+    if (deliveryData.country) {
+      setShippingFeesCountry(deliveryData.country)
+    }
+  }, [deliveryData])
 
   const addItem = ({
     product,
@@ -203,16 +237,6 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setCart(newCart)
   }
 
-  const total = cart.lines.reduce((total, line) => {
-    return (
-      total +
-      (line.discount
-        ? line.price * line.quantity * (1 - line.discount / 100)
-        : line.price * line.quantity)
-    )
-  }, 0)
-  const deliveryFee = data ?? undefined
-
   return (
     <CheckoutContext.Provider
       value={{
@@ -231,6 +255,9 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         shippingFeesCountry,
         loadingShippingFees: isPending,
         deliveryDone,
+        nextDiscount,
+        currentDiscount,
+        totalToPay,
       }}
     >
       {children}
