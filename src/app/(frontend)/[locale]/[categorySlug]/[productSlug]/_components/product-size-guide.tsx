@@ -17,7 +17,7 @@ export const ProductSizeGuide = ({ sizeGuide }: Props) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="flex cursor-pointer items-center text-xs">
+      <DialogTrigger className="link flex cursor-pointer items-center text-xs">
         <Info className="mr-1 h-3 w-3" /> {t("sizeGuide")}
       </DialogTrigger>
       <DialogContent className="bg-white">
