@@ -58,5 +58,14 @@ export const ProductOption: Field = {
           "Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit",
       },
     },
+    {
+      name: "cartImage",
+      label: "Image de la commande",
+      type: "checkbox",
+      admin: {
+        description:
+          "Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit",
+      },
+    },
   ],
 }

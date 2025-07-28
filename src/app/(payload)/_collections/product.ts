@@ -69,6 +69,18 @@ export const Product: CollectionConfig = {
               type: "relationship",
               relationTo: "sizeGuide",
             },
+            {
+              name: "weightModificator",
+              label: "Modificateur de poids en %",
+              type: "json",
+              jsonSchema: {
+                uri: "https://json-schema.org/draft/2020-12/schema",
+                fileMatch: ["*.json"],
+                schema: {
+                  type: "object",
+                },
+              },
+            },
           ],
         },
         {

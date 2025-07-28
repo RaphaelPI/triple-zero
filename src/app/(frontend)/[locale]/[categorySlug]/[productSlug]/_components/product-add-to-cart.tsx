@@ -15,7 +15,17 @@ export const ProductAddToCart = ({ children }: Props) => {
   const { technicalValues, activeOptions, activeColor, product, promotion } = useProduct()
   const t = useTranslations()
 
-  const image = ((promotion?.image ?? product.images?.[0]?.image) as Media)?.url ?? ""
+  // const image = ((promotion?.image ?? product.images?.[0]?.image) as Media)?.url ?? ""
+  const defaultOptionMedias = activeOptions.filter(
+    ([option, optionvalue]) => option.cartImage && optionvalue.image,
+  )
+  const image = String(
+    (
+      (defaultOptionMedias?.[0]?.[1].image ??
+        activeColor?.image ??
+        product.images?.[0]?.image) as Media
+    ).url,
+  )
 
   return (
     <Button

@@ -285,8 +285,98 @@ export interface Category {
   slug: string;
   description: string;
   active?: boolean | null;
+  order?: (string | Product)[] | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product".
+ */
+export interface Product {
+  id: string;
+  category: string | Category;
+  /**
+   * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
+   */
+  technical?: boolean | null;
+  title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  description: string;
+  images: {
+    image?: (string | null) | Media;
+    id?: string | null;
+  }[];
+  sizeGuide?: (string | null) | SizeGuide;
+  weightModificator?: {
+    [k: string]: unknown;
+  };
+  colors?:
+    | {
+        color: ColorWithImage;
+        id?: string | null;
+      }[]
+    | null;
+  colorsSecondary?:
+    | {
+        color: ColorWithImage;
+        id?: string | null;
+      }[]
+    | null;
+  options?:
+    | {
+        option: ProductOption;
+        id?: string | null;
+      }[]
+    | null;
+  advanced?:
+    | {
+        option: ProductOption;
+        id?: string | null;
+      }[]
+    | null;
+  blocInfos: {
+    /**
+     * Remplace le titre par défaut du bloc d'information pour ce produit.
+     */
+    title: string;
+    infos: {
+      /**
+       * Remplace le titre par défaut du bloc d'information pour ce produit.
+       */
+      title?: string | null;
+      info: string | BlocInfo;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizeGuide".
+ */
+export interface SizeGuide {
+  id: string;
+  title: string;
+  rows: number;
+  cols: number;
+  table?: string[][];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColorWithImage".
+ */
+export interface ColorWithImage {
+  default?: boolean | null;
+  color: string | Color;
+  image?: (string | null) | Media;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -298,6 +388,63 @@ export interface Color {
   color: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOption".
+ */
+export interface ProductOption {
+  title: string;
+  values?:
+    | {
+        value: ProductOptionValue;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
+   */
+  description?: string | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que taille. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  size?: boolean | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  weight?: boolean | null;
+  /**
+   * Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit
+   */
+  cartImage?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionValue".
+ */
+export interface ProductOptionValue {
+  title: string;
+  delta?:
+    | {
+        delta: ProductOptionDeltaValue;
+        id?: string | null;
+      }[]
+    | null;
+  defaultValue?: boolean | null;
+  /**
+   * Facultatif. Image permettant d'illustrer cette option.
+   */
+  image?: (string | null) | Media;
+  value: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionDeltaValue".
+ */
+export interface ProductOptionDeltaValue {
+  type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
+  value: number;
+  unit: '€' | '%';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -396,145 +543,6 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product".
- */
-export interface Product {
-  id: string;
-  category: string | Category;
-  /**
-   * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
-   */
-  technical?: boolean | null;
-  title: string;
-  /**
-   * Cela correspond à l'identifiant dans l'url de la page
-   */
-  slug: string;
-  description: string;
-  images: {
-    image?: (string | null) | Media;
-    id?: string | null;
-  }[];
-  sizeGuide?: (string | null) | SizeGuide;
-  colors?:
-    | {
-        color: ColorWithImage;
-        id?: string | null;
-      }[]
-    | null;
-  colorsSecondary?:
-    | {
-        color: ColorWithImage;
-        id?: string | null;
-      }[]
-    | null;
-  options?:
-    | {
-        option: ProductOption;
-        id?: string | null;
-      }[]
-    | null;
-  advanced?:
-    | {
-        option: ProductOption;
-        id?: string | null;
-      }[]
-    | null;
-  blocInfos: {
-    /**
-     * Remplace le titre par défaut du bloc d'information pour ce produit.
-     */
-    title: string;
-    infos: {
-      /**
-       * Remplace le titre par défaut du bloc d'information pour ce produit.
-       */
-      title?: string | null;
-      info: string | BlocInfo;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sizeGuide".
- */
-export interface SizeGuide {
-  id: string;
-  title: string;
-  rows: number;
-  cols: number;
-  table?: string[][];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ColorWithImage".
- */
-export interface ColorWithImage {
-  default?: boolean | null;
-  color: string | Color;
-  image?: (string | null) | Media;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductOption".
- */
-export interface ProductOption {
-  title: string;
-  values?:
-    | {
-        value: ProductOptionValue;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
-   */
-  description?: string | null;
-  /**
-   * Si cochée, cette option sera affichée en tant que taille. Pour des calculs supplémentaires sur les valeurs techniques du produit
-   */
-  size?: boolean | null;
-  /**
-   * Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit
-   */
-  weight?: boolean | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductOptionValue".
- */
-export interface ProductOptionValue {
-  title: string;
-  delta?:
-    | {
-        delta: ProductOptionDeltaValue;
-        id?: string | null;
-      }[]
-    | null;
-  defaultValue?: boolean | null;
-  /**
-   * Facultatif. Image permettant d'illustrer cette option.
-   */
-  image?: (string | null) | Media;
-  value: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductOptionDeltaValue".
- */
-export interface ProductOptionDeltaValue {
-  type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
-  value: number;
-  unit: '€' | '%';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -922,6 +930,7 @@ export interface CategorySelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   active?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1027,6 +1036,7 @@ export interface ProductSelect<T extends boolean = true> {
         id?: T;
       };
   sizeGuide?: T;
+  weightModificator?: T;
   colors?:
     | T
     | {
@@ -1091,6 +1101,7 @@ export interface ProductOptionSelect<T extends boolean = true> {
   description?: T;
   size?: T;
   weight?: T;
+  cartImage?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

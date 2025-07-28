@@ -33,5 +33,17 @@ export const Category: CollectionConfig = {
       type: "checkbox",
       defaultValue: true,
     },
+    {
+      name: "order",
+      label: "Ordre des produits",
+      type: "relationship",
+      relationTo: "product",
+      hasMany: true,
+      filterOptions: ({ data }) => {
+        return {
+          "category.slug": { equals: data.slug },
+        }
+      },
+    },
   ],
 }

@@ -6,7 +6,7 @@ import { Locale } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
-import { Category, Media } from "@/payload-types"
+import { Category, Media, Product } from "@/payload-types"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
@@ -58,6 +58,13 @@ export default async (props: Props) => {
   const { category, products, nav } = await getData(props)
   const t = await getTranslations()
 
+  // Sort products by category order
+  products.sort((a, b) => {
+    const aOrder = category.order?.findIndex((order) => (order as Product).id === a.id)
+    const bOrder = category.order?.findIndex((order) => (order as Product).id === b.id)
+    return (aOrder ?? 0) - (bOrder ?? 0)
+  })
+
   return (
     <main className="bg-flake bg-flake-bl md:bg-flake-tr bg-no-repeat">
       <div className="section flex xl:gap-x-20">
@@ -108,8 +115,8 @@ export default async (props: Props) => {
               <ul className="space-y-8">
                 {products.map((product, index) => {
                   const image = product.images[0].image as Media
-                  const image2 = product.images[1]?.image
-                  const image3 = product.images[2]?.image
+                  // const image2 = product.images[1]?.image
+                  // const image3 = product.images[2]?.image
                   const price = getStartingPrice([
                     ...(product.options?.map((option) => option.option) ?? []),
                     ...(product.advanced?.map((advanced) => advanced.option) ?? []),
@@ -123,9 +130,9 @@ export default async (props: Props) => {
                         className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
                       >
                         <div
-                          className={cn("w-full md:h-full md:w-5/12", {
-                            "grid grid-cols-2 max-sm:grid-cols-1": image2,
-                            "max-md:grid-cols-3": image3,
+                          className={cn("flex w-full items-center md:h-full md:w-5/12", {
+                            // "grid grid-cols-2 max-sm:grid-cols-1": image2,
+                            // "max-md:grid-cols-3": image3,
                           })}
                         >
                           {image && (
@@ -133,17 +140,14 @@ export default async (props: Props) => {
                               priority={index < 3}
                               media={image}
                               alt={product.title}
-                              className={cn(
-                                "mx-auto h-60 w-auto object-cover object-right md:h-full",
-                                {
-                                  "md:border-blue-light w-full object-contain object-center md:border-r":
-                                    image2,
-                                  "md:row-span-2": image3,
-                                },
-                              )}
+                              className={cn("mx-auto h-auto w-full", {
+                                // "md:border-blue-light w-full object-contain object-center md:border-r":
+                                //   image2,
+                                // "md:row-span-2": image3,
+                              })}
                             />
                           )}
-                          {image2 && (
+                          {/* {image2 && (
                             <Image
                               priority={index < 3}
                               media={image2 as Media}
@@ -164,7 +168,7 @@ export default async (props: Props) => {
                                 "md:border-blue-light mx-auto h-60 w-full object-contain max-sm:hidden md:h-full md:border-r",
                               )}
                             />
-                          )}
+                          )} */}
                         </div>
                         <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                           <h2 className="text-xl font-bold">{product.title}</h2>

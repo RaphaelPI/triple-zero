@@ -30,6 +30,7 @@ const DOWN_JACKET_DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
 
 export const getTechnicalValues = (
   optionValues: [ProductOption, ProductOptionValue][],
+  modificators?: Record<string, number>,
 ): Record<TechnicalValue, number> => {
   const stats: TechnicalValue[] = ["temperature", "volume", "weight", "price"]
   const technicalValues: Record<TechnicalValue, number> = {
@@ -75,7 +76,7 @@ export const getTechnicalValues = (
           // If we're dealing with the down weight option, we need to apply a modificator
           if (option.weight && delta?.type === "weight" && sizeOption) {
             const sizeValue = String(sizeOption[1]?.title.toLowerCase())
-            const modificator = SLEEPING_BAG_DOWN_WEIGHT_MODIFICATORS[sizeValue]
+            const modificator = modificators?.[sizeValue]
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
             }

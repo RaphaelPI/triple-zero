@@ -12,6 +12,7 @@ export const getCategoryData = cache(async (slug: string) => {
       title: true,
       slug: true,
       description: true,
+      order: true,
     },
     locale,
   })

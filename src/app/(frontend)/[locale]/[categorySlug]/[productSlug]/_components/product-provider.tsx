@@ -101,7 +101,10 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
   return (
     <ProductContext.Provider
       value={{
-        technicalValues: getTechnicalValues(activeOptions),
+        technicalValues: getTechnicalValues(
+          activeOptions,
+          product.weightModificator as Record<string, number>,
+        ),
         activeOptions,
         activeColor,
         images,

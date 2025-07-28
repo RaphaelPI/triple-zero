@@ -6,6 +6,8 @@ import { useEffect } from "react"
 interface Props {
   field: { label: string; required?: boolean }
   path: string
+  cols?: number
+  rows?: number
 }
 
 export const TableInput = (props: Props) => {
@@ -13,8 +15,11 @@ export const TableInput = (props: Props) => {
   const { path } = props
 
   const { value, setValue } = useField<string[][]>({ path })
-  const { value: cols } = useField<number>({ path: "cols" })
-  const { value: rows } = useField<number>({ path: "rows" })
+  const { value: colsField } = useField<number>({ path: "cols" })
+  const { value: rowsField } = useField<number>({ path: "rows" })
+
+  const cols = colsField ?? props.cols
+  const rows = rowsField ?? props.rows
 
   useEffect(() => {
     if (!rows || !cols) {
