@@ -27,6 +27,16 @@ export const Product: CollectionConfig = {
               required: true,
             },
             {
+              name: "technical",
+              type: "checkbox",
+              label: "Produit technique ?",
+              defaultValue: false,
+              admin: {
+                description:
+                  "Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.",
+              },
+            },
+            {
               name: "title",
               label: "Titre",
               type: "text",

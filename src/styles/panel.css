@@ -34,7 +34,7 @@
 }
 
 @utility panel {
-  @apply shadow-panel rounded-2xl bg-white;
+  @apply shadow-panel overflow-hidden rounded-2xl bg-white;
 }
 
 @utility panel-table-cell {

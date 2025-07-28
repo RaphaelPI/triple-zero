@@ -404,6 +404,10 @@ export interface Page {
 export interface Product {
   id: string;
   category: string | Category;
+  /**
+   * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
+   */
+  technical?: boolean | null;
   title: string;
   /**
    * Cela correspond à l'identifiant dans l'url de la page
@@ -1012,6 +1016,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface ProductSelect<T extends boolean = true> {
   category?: T;
+  technical?: T;
   title?: T;
   slug?: T;
   description?: T;

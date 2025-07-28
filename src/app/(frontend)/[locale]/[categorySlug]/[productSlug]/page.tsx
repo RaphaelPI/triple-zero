@@ -116,7 +116,7 @@ export default async (props: Props) => {
           <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3 lg:col-span-7">
             <ProductImages />
           </div>
-          <ProductTechnicalValues />
+          {product.technical && <ProductTechnicalValues />}
         </ProductProvider>
       </div>
       <section className="section space-y-4 lg:space-y-8">

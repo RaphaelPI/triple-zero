@@ -79,11 +79,6 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  // db: postgresAdapter({
-  //   pool: {
-  //     connectionString: process.env.SERVER_DATABASE_URI || "",
-  //   },
-  // }),
   db: mongooseAdapter({
     url: process.env.SERVER_DATABASE_URI!,
   }),

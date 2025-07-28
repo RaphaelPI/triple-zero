@@ -89,7 +89,8 @@ export const getProductDefaultImages = (
     )
   }
 
-  return images
+  // remove dupplicate images
+  return images.filter((image, index, self) => index === self.findIndex((t) => t.id === image.id))
 }
 
 export const getOptionSlug = (option: ProductOption) => {

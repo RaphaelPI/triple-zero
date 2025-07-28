@@ -108,6 +108,8 @@ export default async (props: Props) => {
               <ul className="space-y-8">
                 {products.map((product, index) => {
                   const image = product.images[0].image as Media
+                  const image2 = product.images[1]?.image
+                  const image3 = product.images[2]?.image
                   const price = getStartingPrice([
                     ...(product.options?.map((option) => option.option) ?? []),
                     ...(product.advanced?.map((advanced) => advanced.option) ?? []),
@@ -120,13 +122,47 @@ export default async (props: Props) => {
                         href={`/${category.slug}/${product.slug}`}
                         className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
                       >
-                        <div className="w-full md:h-full md:w-5/12">
+                        <div
+                          className={cn("w-full md:h-full md:w-5/12", {
+                            "grid grid-cols-2 max-sm:grid-cols-1": image2,
+                            "max-md:grid-cols-3": image3,
+                          })}
+                        >
                           {image && (
                             <Image
                               priority={index < 3}
                               media={image}
                               alt={product.title}
-                              className="mx-auto h-60 w-auto rounded-2xl object-cover object-right md:h-full md:rounded-r-none"
+                              className={cn(
+                                "mx-auto h-60 w-auto object-cover object-right md:h-full",
+                                {
+                                  "md:border-blue-light w-full object-contain object-center md:border-r":
+                                    image2,
+                                  "md:row-span-2": image3,
+                                },
+                              )}
+                            />
+                          )}
+                          {image2 && (
+                            <Image
+                              priority={index < 3}
+                              media={image2 as Media}
+                              alt={product.title}
+                              className={cn("mx-auto h-60 w-full object-contain md:h-full", {
+                                "md:border-blue-light object-center max-sm:hidden md:border-r":
+                                  image2,
+                                "md:border-b": image3,
+                              })}
+                            />
+                          )}
+                          {image3 && (
+                            <Image
+                              priority={index < 3}
+                              media={image3 as Media}
+                              alt={product.title}
+                              className={cn(
+                                "md:border-blue-light mx-auto h-60 w-full object-contain max-sm:hidden md:h-full md:border-r",
+                              )}
                             />
                           )}
                         </div>
