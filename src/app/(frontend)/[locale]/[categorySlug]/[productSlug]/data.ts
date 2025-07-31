@@ -9,6 +9,7 @@ export const getProductData = cache(async (slug: string) => {
     where: { slug: { equals: slug } },
     locale,
     depth: 2,
+    limit: 999,
   })
   return product
 })

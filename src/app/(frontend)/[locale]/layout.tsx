@@ -69,7 +69,7 @@ export default async function LocaleLayout({
           {children}
           <Footer />
           <MainMessageModal />
-          <Toaster position="top-center" richColors />
+          <Toaster position="bottom-center" richColors />
         </Providers>
       </body>
     </html>

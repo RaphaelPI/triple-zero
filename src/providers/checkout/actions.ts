@@ -30,7 +30,7 @@ export const getShippingFees = rawProcedure
     })
 
     if (shippingFees.docs.length === 0) {
-      return undefined
+      return 80
     }
 
     if (shippingFees.docs.length > 1) {
@@ -56,3 +56,37 @@ export const getDelay = rawProcedure.createServerAction().handler(async () => {
 
   return undefined
 })
+
+export const saveOrder = rawProcedure
+  .createServerAction()
+  .input(
+    z.object({
+      amount: z.number(),
+      date: z.string(),
+      delay: z.string().optional(),
+      status: z.enum(["pending", "paid", "shipped"]),
+      shippingFee: z.number(),
+      detail: z.object({
+        total: z.number(),
+        totalWithDiscount: z.number(),
+        discount: z.number().optional(),
+        lines: z.array(z.any()),
+        deliveryData: z.any(),
+      }),
+      payment: z.enum(["card", "phone", "transfer"]),
+      uid: z.string(),
+      workTime: z.number(),
+      comment: z.string().optional(),
+      customer: z.string(),
+      email: z.string(),
+    }),
+  )
+  .handler(async ({ input }) => {
+    const payload = await getClient()
+    const order = await payload.create({
+      collection: "order",
+      data: input,
+    })
+
+    return order.id
+  })

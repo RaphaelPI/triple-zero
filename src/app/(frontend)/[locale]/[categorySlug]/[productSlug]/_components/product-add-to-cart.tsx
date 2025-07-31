@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Category, Media } from "@/payload-types"
-import { useCheckout } from "@/providers/checkout"
+import { useCheckout } from "@/providers/checkout/checkout"
 import { useTranslations } from "next-intl"
 import { useProduct } from "./product-provider"
 
@@ -21,7 +21,8 @@ export const ProductAddToCart = ({ children }: Props) => {
   )
   const image = String(
     (
-      (defaultOptionMedias?.[0]?.[1].image ??
+      (promotion?.image ??
+        defaultOptionMedias?.[0]?.[1].image ??
         activeColor?.image ??
         product.images?.[0]?.image) as Media
     ).url,

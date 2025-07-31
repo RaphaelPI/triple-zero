@@ -130,17 +130,20 @@ export default async (props: Props) => {
                         className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
                       >
                         <div
-                          className={cn("flex w-full items-center md:h-full md:w-5/12", {
-                            // "grid grid-cols-2 max-sm:grid-cols-1": image2,
-                            // "max-md:grid-cols-3": image3,
-                          })}
+                          className={cn(
+                            "flex w-full items-center justify-center md:h-full md:w-5/12",
+                            {
+                              // "grid grid-cols-2 max-sm:grid-cols-1": image2,
+                              // "max-md:grid-cols-3": image3,
+                            },
+                          )}
                         >
                           {image && (
                             <Image
                               priority={index < 3}
                               media={image}
                               alt={product.title}
-                              className={cn("mx-auto h-auto w-full", {
+                              className={cn("mx-auto h-auto max-h-full w-auto max-w-full", {
                                 // "md:border-blue-light w-full object-contain object-center md:border-r":
                                 //   image2,
                                 // "md:row-span-2": image3,
@@ -176,7 +179,7 @@ export default async (props: Props) => {
                           {price && (
                             <div className="text-lg font-semibold">
                               {t("priceFrom")}
-                              <Amount amount={price} taxIncluded />
+                              <Amount amount={price} />
                             </div>
                           )}
                           <Button aria-label={t("product.see")}>{t("product.see")}</Button>

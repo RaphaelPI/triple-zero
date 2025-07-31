@@ -11,7 +11,9 @@ export const getHomeCategoriesData = cache(async () => {
       slug: true,
     },
     locale,
+    limit: 999,
   })
+
   return category
 })
 
@@ -43,6 +45,7 @@ export const getHomeProductVariantsData = cache(async () => {
     collection: "product-variant",
     depth: 2,
     locale,
+    limit: 999,
   })
   return variants
 })

@@ -1,5 +1,4 @@
 import { PromotionCard } from "@/components/cards/promotion-card"
-import { Locale } from "@/i18n/config"
 import { Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
 import { getMetadata } from "../metadata"
@@ -7,14 +6,7 @@ import { getPromotionsData } from "./data"
 
 export const dynamic = "force-static"
 
-interface Props {
-  params: Promise<{
-    locale: Locale
-    categorySlug: string
-  }>
-}
-
-export const generateMetadata = async (props: Props) => {
+export const generateMetadata = async () => {
   const t = await getTranslations()
 
   return getMetadata({
@@ -24,7 +16,7 @@ export const generateMetadata = async (props: Props) => {
   })
 }
 
-export default async (props: Props) => {
+export default async () => {
   const promotions = await getPromotionsData()
   const t = await getTranslations()
 

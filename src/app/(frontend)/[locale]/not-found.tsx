@@ -1,17 +1,11 @@
 import { Button } from "@/components/ui/button"
-import { DEFAULT_LOCALE, Locale } from "@/i18n/config"
+import { DEFAULT_LOCALE } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { Metadata } from "next"
 import { useTranslations } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import Logo from "src/assets/logo.svg"
 import { getMetadata } from "./metadata"
-
-interface Props {
-  params: Promise<{
-    locale: Locale
-  }>
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations()

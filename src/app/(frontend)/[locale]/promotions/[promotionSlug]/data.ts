@@ -9,6 +9,7 @@ export const getPromotionData = cache(async (slug: string, locale: Locale) => {
     where: { slug: { equals: slug } },
     locale,
     depth: 2,
+    limit: 999,
   })
   return promotion
 })

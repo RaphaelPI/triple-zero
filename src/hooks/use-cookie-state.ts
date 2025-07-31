@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 export const useCookieState = <T>(
   key: string,
   initialValue: T,
+  expires?: Date,
 ): [T, (value: T) => void, boolean] => {
   const [value, setValue] = useState<T>(initialValue)
   const [loading, setLoading] = useState(true)
@@ -22,7 +23,7 @@ export const useCookieState = <T>(
   }, [])
 
   const setNextValue = (value: T) => {
-    cookies.set(key, JSON.stringify(value))
+    cookies.set(key, JSON.stringify(value), { expires })
     setValue(value)
   }
 

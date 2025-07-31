@@ -5,7 +5,7 @@ import { Amount } from "@/components/amount"
 import { Popover } from "@/components/popover"
 import { Skeleton } from "@/components/ui/skeleton"
 import { formatAmount } from "@/lib/text"
-import { DISCOUNTS, useCheckout } from "@/providers/checkout"
+import { DISCOUNTS, useCheckout } from "@/providers/checkout/checkout"
 import { useTranslations } from "next-intl"
 import { CheckoutDelay } from "./checkout-delay"
 
@@ -40,8 +40,7 @@ export const CheckoutSummary = ({ children }: Props) => {
         <div>
           <Popover content={discountContent}>
             <div className="flex items-center gap-1">
-              {t("cart.totalCart")} : <Amount amount={total} taxIncluded />{" "}
-              <Info className="size-4" />
+              {t("cart.totalCart")} : <Amount amount={total} raw /> <Info className="size-4" />
             </div>
           </Popover>
           {currentDiscount && <div>Réduction : {currentDiscount[1]}%</div>}
@@ -69,7 +68,7 @@ export const CheckoutSummary = ({ children }: Props) => {
         <div className="text-2xl">
           {t("cart.total")} :{" "}
           <strong className="tracking-wider">
-            <Amount amount={totalToPay} taxIncluded />
+            <Amount amount={totalToPay} raw />
           </strong>
         </div>
         <CheckoutDelay />

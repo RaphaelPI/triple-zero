@@ -11,6 +11,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_URL: z.url(),
     NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().optional(),
+    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: z.string(),
   },
   server: {
     SERVER_INDEXING_ENABLED: z.string().optional().transform(booleanTransformer),
@@ -20,6 +21,7 @@ export const env = createEnv({
     SERVER_S3_ACCESS_KEY_ID: z.string(),
     SERVER_S3_SECRET_ACCESS_KEY: z.string(),
     SERVER_S3_REGION: z.string(),
+    SERVER_STRIPE_SECRET_KEY: z.string(),
   },
   shared: {
     NODE_ENV: z.string().default("development"),
@@ -29,5 +31,6 @@ export const env = createEnv({
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     NODE_ENV: process.env.NODE_ENV,
+    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
   },
 })

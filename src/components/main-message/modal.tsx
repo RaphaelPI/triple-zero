@@ -22,7 +22,7 @@ export const MainMessageModal = () => {
   const fetchMessage = useCallback(async () => {
     const m = await getMainMessage()
     return m
-  }, [locale])
+  }, [])
 
   const [message] = useSessionStorageState<Message | null>("main-message", null, fetchMessage)
   const [shown, setShown] = useCookieState<boolean>("main-message-shown", false)

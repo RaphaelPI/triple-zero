@@ -7,12 +7,11 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Link } from "@/i18n/navigation"
 import { Category } from "@/payload-types"
-import { getLocale, getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 import { getNavData } from "../data"
 import { MainNavMobile } from "./main-nav-mobile"
 
 export const MainNav = async () => {
-  const locale = await getLocale()
   const nav = await getNavData()
   const t = await getTranslations()
 
@@ -25,7 +24,7 @@ export const MainNav = async () => {
         className="max-md:hidden"
       >
         <NavigationMenuList>
-          {nav.items.map((item, index) => (
+          {nav.items.map((item) => (
             <NavigationMenuItem key={item.id}>
               <NavigationMenuTrigger className="cursor-pointer">{item.title}</NavigationMenuTrigger>
               <NavigationMenuContent className="bg-white p-6 shadow-lg shadow-[#00000011]">

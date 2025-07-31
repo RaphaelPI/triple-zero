@@ -1,4 +1,5 @@
 import { ProductOption, ProductOptionValue } from "@/payload-types"
+import { formatAmountForStripe } from "./text"
 
 export type TechnicalValue = "temperature" | "volume" | "weight" | "price"
 
@@ -12,21 +13,6 @@ const COMPRESSION_BAGS = [
   [12, 46],
   [13.5, 50],
 ]
-
-// Pourcentages per size to apply to down weight on products
-const SLEEPING_BAG_DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
-  s: -10,
-  m: 0,
-  l: 10,
-}
-
-// doudounes + combis + pantalons
-const DOWN_JACKET_DOWN_WEIGHT_MODIFICATORS: Record<string, number> = {
-  s: -5,
-  m: 0,
-  l: 5,
-  xl: 10,
-}
 
 export const getTechnicalValues = (
   optionValues: [ProductOption, ProductOptionValue][],
@@ -115,7 +101,7 @@ export const getTechnicalValues = (
     Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),
     COMPRESSION_BAGS[0][0],
   )
-  technicalValues.price = Math.round(technicalValues.price)
+  technicalValues.price = formatAmountForStripe(technicalValues.price, "EUR") / 100
   technicalValues.weight = Math.round(technicalValues.weight)
   technicalValues.temperature = Math.round(technicalValues.temperature)
 

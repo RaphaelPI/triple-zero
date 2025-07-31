@@ -5,8 +5,9 @@ import { formatAmount } from "@/lib/text"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
-import { useCheckout } from "@/providers/checkout"
+import { useCheckout } from "@/providers/checkout/checkout"
 import { useTranslations } from "next-intl"
+import { CheckoutSkeleton } from "../../_components/checkout-skeleton"
 import { CheckoutSummary } from "../../_components/checkout-summary"
 import { CartLine } from "./cart-line"
 
@@ -15,12 +16,7 @@ export const Cart = () => {
   const t = useTranslations()
 
   if (loading) {
-    return (
-      <section className="w-section px-section flex gap-8">
-        <div className="panel h-72 w-3/4 animate-pulse" />
-        <div className="panel bg-blue-light h-72 w-1/4 animate-pulse self-start" />
-      </section>
-    )
+    return <CheckoutSkeleton />
   }
 
   if (cart.lines.length === 0) {
@@ -70,7 +66,9 @@ export const Cart = () => {
           <strong className="tracking-wider">{formatAmount(total + (deliveryFee ?? 0))}</strong>
         </div>
         <Link prefetch={false} href="/coordonnees" className="mx-auto block">
-          <Button aria-label={t("cart.validate")}>{t("cart.validate")}</Button>
+          <Button aria-label={t("cart.validate")} loading={loading}>
+            {t("cart.validate")}
+          </Button>
         </Link>
       </div>
     </section>

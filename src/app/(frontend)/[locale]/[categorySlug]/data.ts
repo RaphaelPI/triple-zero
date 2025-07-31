@@ -15,6 +15,7 @@ export const getCategoryData = cache(async (slug: string) => {
       order: true,
     },
     locale,
+    limit: 999,
   })
   return category
 })
@@ -45,6 +46,7 @@ export const getProductsData = cache(async (categorySlug: string, exludeSlug?: s
       options: true,
       advanced: true,
     },
+    limit: 999,
   })
 
   return products

@@ -4,7 +4,7 @@ import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { Locale } from "@/i18n/config"
-import { CheckoutProvider } from "@/providers/checkout"
+import { CheckoutProvider } from "@/providers/checkout/checkout"
 import { CountryProvider } from "@/providers/country"
 
 interface Props {

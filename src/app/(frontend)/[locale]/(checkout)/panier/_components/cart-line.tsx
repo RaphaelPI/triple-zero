@@ -3,7 +3,7 @@
 import { Amount } from "@/components/amount"
 import { PromotionDiscount } from "@/components/discount"
 import { Button } from "@/components/ui/button"
-import { CartLine as CartLineType, useCheckout } from "@/providers/checkout"
+import { CartLine as CartLineType, useCheckout } from "@/providers/checkout/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import NextImage from "next/image"
@@ -65,7 +65,7 @@ export const CartLine = ({ line, index }: CartLineProps) => {
           </Link>
           <div className="flex items-center gap-2">
             <div>{t("color")} :</div>
-            {line.colors.map((color) => (
+            {line.colors.map(([_, color]) => (
               <div
                 key={color}
                 style={{ backgroundColor: color }}
@@ -107,14 +107,14 @@ export const CartLine = ({ line, index }: CartLineProps) => {
           {line.discount ? (
             <>
               <Amount
-                amount={line.price * line.quantity}
-                taxIncluded
+                amount={line.price}
+                quantity={line.quantity}
                 className="text-sm font-normal line-through"
               />
-              <Amount amount={line.price * line.quantity * (1 - line.discount / 100)} taxIncluded />
+              <Amount amount={line.price * (1 - line.discount / 100)} quantity={line.quantity} />
             </>
           ) : (
-            <Amount amount={line.price * line.quantity} taxIncluded />
+            <Amount amount={line.price} quantity={line.quantity} />
           )}
         </div>
       </div>

@@ -6,7 +6,9 @@ import dynamic from "next/dynamic"
 import { useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 
-import { useCheckout } from "@/providers/checkout"
+import { isTTCCountry } from "@/lib/price"
+import { useCheckout } from "@/providers/checkout/checkout"
+import { toast } from "sonner"
 import { InputField } from "./input-field"
 
 const CountrySelectField = dynamic(
@@ -23,9 +25,18 @@ interface Props {
 export const BillingFormFields = ({ form }: Props) => {
   const [address2, setAddress2] = useState(false)
   const t = useTranslations()
-  const { setShippingFeesCountry } = useCheckout()
+  const { setShippingFeesCountry, shippingFeesCountry } = useCheckout()
 
   const handleCountryChange = (value: string) => {
+    if (isTTCCountry(value) && shippingFeesCountry && !isTTCCountry(shippingFeesCountry)) {
+      toast.info(t("delivery.ue-info"))
+    } else if (
+      !isTTCCountry(value) &&
+      (!shippingFeesCountry || isTTCCountry(shippingFeesCountry))
+    ) {
+      toast.info(t("delivery.non-ue-info"))
+    }
+
     // country
     setShippingFeesCountry(value)
   }

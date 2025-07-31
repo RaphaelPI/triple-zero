@@ -13,6 +13,7 @@ export const getPromotionsData = cache(async () => {
     },
     depth: 2,
     locale,
+    limit: 999,
   })
 
   return promotions

@@ -76,6 +76,7 @@ export interface Config {
     category: Category;
     color: Color;
     media: Media;
+    order: Order;
     pages: Page;
     product: Product;
     'product-variant': ProductVariant;
@@ -93,6 +94,7 @@ export interface Config {
     category: CategorySelect<false> | CategorySelect<true>;
     color: ColorSelect<false> | ColorSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    order: OrderSelect<false> | OrderSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
     'product-variant': ProductVariantSelect<false> | ProductVariantSelect<true>;
@@ -445,6 +447,36 @@ export interface ProductOptionDeltaValue {
   type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
   value: number;
   unit: '€' | '%';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order".
+ */
+export interface Order {
+  id: string;
+  uid: string;
+  customer: string;
+  email: string;
+  date: string;
+  /**
+   * Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.
+   */
+  delay: string;
+  payment?: ('transfer' | 'card' | 'check') | null;
+  amount: number;
+  shippingFee: number;
+  /**
+   * Temps de travail en minutes
+   */
+  workTime: number;
+  status?: ('pending' | 'paid' | 'shipped') | null;
+  shippingInfo?: string | null;
+  comment?: string | null;
+  detail?: {
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -842,6 +874,10 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'order';
+        value: string | Order;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: string | Page;
       } | null)
@@ -961,6 +997,27 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order_select".
+ */
+export interface OrderSelect<T extends boolean = true> {
+  uid?: T;
+  customer?: T;
+  email?: T;
+  date?: T;
+  delay?: T;
+  payment?: T;
+  amount?: T;
+  shippingFee?: T;
+  workTime?: T;
+  status?: T;
+  shippingInfo?: T;
+  comment?: T;
+  detail?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

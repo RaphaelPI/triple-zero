@@ -31,7 +31,7 @@ export const ProductTechnicalValues = () => {
             <div>
               <div className="text-sm leading-3">{t("price")}</div>
               <div className="font-semibold md:text-lg">
-                <Amount amount={price} taxIncluded />
+                <Amount amount={price} />
               </div>
             </div>
           </div>
@@ -89,13 +89,13 @@ export const ProductTechnicalValues = () => {
         </div>
         <div className="py-panel px-panel flex flex-wrap items-center justify-center gap-4 bg-white text-center lg:hidden">
           <div className="max-xs:hidden text-4xl font-bold">
-            <Amount amount={Number(technicalValues?.price)} taxIncluded />
+            <Amount amount={Number(technicalValues?.price)} />
           </div>
           <ProductAddToCart>
             {t("cart.add")}
             <span className="xs:hidden flex items-center gap-2">
               -
-              <Amount amount={Number(technicalValues?.price)} taxIncluded />
+              <Amount amount={Number(technicalValues?.price)} />
             </span>
           </ProductAddToCart>
         </div>

@@ -32,12 +32,12 @@ export const ProductsRelated = async ({ products, categorySlug }: Props) => {
                 href={`/${categorySlug}/${product.slug}`}
                 className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
               >
-                <div className="w-full md:h-full md:w-5/12">
+                <div className="flex w-full items-center justify-center md:h-full md:w-5/12">
                   {image && (
                     <Image
                       media={image}
                       alt={product.title}
-                      className="mx-auto h-60 w-auto rounded-2xl object-cover object-right md:h-full md:rounded-r-none"
+                      className="mx-auto h-auto max-h-full w-auto max-w-full rounded-2xl md:rounded-r-none"
                     />
                   )}
                 </div>
@@ -47,7 +47,7 @@ export const ProductsRelated = async ({ products, categorySlug }: Props) => {
                   {price && (
                     <div className="text-lg font-semibold">
                       {t("priceFrom")}
-                      <Amount amount={price} taxIncluded />
+                      <Amount amount={price} />
                     </div>
                   )}
                   <Button aria-label={t("product.see")}>{t("product.see")}</Button>

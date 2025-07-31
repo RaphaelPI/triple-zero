@@ -3,7 +3,7 @@
 import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Media, Message } from "@/payload-types"
 import { format } from "date-fns"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import { useCallback } from "react"
 import { Image } from "../image"
 import { RichText } from "../rich-text"
@@ -11,13 +11,12 @@ import { Skeleton } from "../ui/skeleton"
 import { getMainMessage } from "./action"
 
 export const MainMessage = () => {
-  const locale = useLocale()
   const t = useTranslations()
 
   const fetchMessage = useCallback(async () => {
     const m = await getMainMessage()
     return m
-  }, [locale])
+  }, [])
 
   const [message] = useSessionStorageState<Message | null>("main-message", null, fetchMessage)
 

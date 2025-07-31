@@ -11,16 +11,12 @@ export const ProductPrice = () => {
         <>
           <Amount
             amount={Number(technicalValues?.price)}
-            taxIncluded
             className="text-sm font-normal line-through"
           />
-          <Amount
-            amount={Number(technicalValues?.price) * (1 - promotion.value / 100)}
-            taxIncluded
-          />
+          <Amount amount={Number(technicalValues?.price) * (1 - promotion.value / 100)} />
         </>
       ) : (
-        <Amount amount={Number(technicalValues?.price)} taxIncluded />
+        <Amount amount={Number(technicalValues?.price)} />
       )}
     </div>
   )

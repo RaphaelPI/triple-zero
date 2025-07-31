@@ -1,14 +1,18 @@
 "use client"
 
-import { getShippingFees } from "@/app/(frontend)/[locale]/(checkout)/actions"
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useServerActionQuery } from "@/hooks/use-server-action-query"
 import { Link } from "@/i18n/navigation"
+import { isTTCCountry } from "@/lib/price"
+import { formatAmountForStripe } from "@/lib/text"
+import { uuid } from "@/lib/uuid"
 import { Color, ColorWithImage, ProductOption, ProductOptionValue } from "@/payload-types"
+import { getDelay, getShippingFees, saveOrder } from "@/providers/checkout/actions"
 import { useTranslations } from "next-intl"
 import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 import z from "zod"
+import { useServerAction } from "zsa-react"
 
 export const DISCOUNTS = [
   [2000, 5],
@@ -26,7 +30,7 @@ export interface CartLine {
   promotion?: string
   title: string
   image: string
-  colors: string[]
+  colors: string[][] // [titre, valeur]
   options: string[][] // [titre, valeur]
   quantity: number
   price: number
@@ -107,7 +111,7 @@ interface ICheckoutContext {
   addItem: (args: AddCartItemArgs) => void
   updateLineQuantity: (index: number, quantity: number) => void
   total: number
-  deliveryFee: number
+  deliveryFee: number | undefined
   deliveryData: z.infer<typeof formSchema>
   setDeliveryData: (data: z.infer<typeof formSchema>) => void
   setShippingFeesCountry: (country: string) => void
@@ -116,13 +120,20 @@ interface ICheckoutContext {
   nextDiscount: number[] | undefined
   currentDiscount: number[] | undefined
   totalToPay: number
+  isPendingDelay: boolean
+  delayDate?: string
+  storeOrder: (paymentType: string, comment?: string) => Promise<void>
 }
 
 const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
 export const CheckoutProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
   const [shippingFeesCountry, setShippingFeesCountry] = useState("")
-  const [cart, setCart] = useCookieState<Cart>("cart", DEFAULT_CART)
+  const [cart, setCart] = useCookieState<Cart>(
+    "cart",
+    DEFAULT_CART,
+    new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
+  )
   const [deliveryData, setDeliveryData] = useCookieState<z.infer<typeof formSchema>>(
     "deliveryData",
     DEFAULT_DELIVERY_DATA,
@@ -130,14 +141,13 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   const [deliveryDone, setDeliveryDone] = useState(false)
   const t = useTranslations()
 
+  const { isPending: isPendingDelay, data: delayDate } = useServerActionQuery(getDelay)
+  const { execute: executeSaveOrder } = useServerAction(saveOrder)
+
   // Get cart total
-  const total = cart.lines.reduce((total, line) => {
-    return (
-      total +
-      (line.discount
-        ? line.price * line.quantity * (1 - line.discount / 100)
-        : line.price * line.quantity)
-    )
+  const total = cart.lines.reduce((t, line) => {
+    const unitPrice = line.discount ? line.price * (1 - line.discount / 100) : line.price
+    return t + (formatAmountForStripe(unitPrice, "EUR", shippingFeesCountry) / 100) * line.quantity
   }, 0)
 
   const { data, isPending } = useServerActionQuery(getShippingFees, {
@@ -145,12 +155,12 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     total,
   })
 
-  const deliveryFee = data ?? undefined
-
+  const deliveryFee = data
   const nextDiscount = DISCOUNTS.find(([amount]) => total < amount)
   const currentDiscount = [...DISCOUNTS].reverse().find(([amount]) => total >= amount)
-
-  const totalToPay = total * (1 - (currentDiscount?.[1] ?? 0) / 100) + (deliveryFee ?? 0)
+  const totalWithDiscount =
+    formatAmountForStripe(total * (1 - (currentDiscount?.[1] ?? 0) / 100), "EUR") / 100
+  const totalToPay = totalWithDiscount + (deliveryFee ?? 0)
 
   useEffect(() => {
     setLoading(false)
@@ -176,7 +186,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   }: AddCartItemArgs) => {
     const newCart = { ...cart }
     const lineOptions = options.map(([option, value]) => [option.title, value.title])
-    const lineColors = color ? [(color.color as Color).color] : []
+    const lineColors = color ? [[(color.color as Color).name, (color.color as Color).color]] : []
 
     // Do we already have the same product ?
     const existingLine = cart?.lines.findIndex(
@@ -236,6 +246,41 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setCart(newCart)
   }
 
+  const storeOrder = async (paymentType: string, comment?: string) => {
+    const data = {
+      amount: totalToPay,
+      date: new Date().toISOString(),
+      delay: delayDate ?? "",
+      status: "pending" as "pending" | "paid" | "shipped",
+      shippingFee: deliveryFee ?? 0,
+      customer: `${deliveryData.firstName} ${deliveryData.lastName}`,
+      email: deliveryData.email,
+      detail: {
+        total,
+        totalWithDiscount,
+        ttc: isTTCCountry(deliveryData.d_country || deliveryData.country),
+        discount: currentDiscount?.[1],
+        lines: cart.lines.map((line) => {
+          const unitPrice = line.discount ? line.price * (1 - line.discount / 100) : line.price
+          return {
+            ...line,
+            unitPrice: formatAmountForStripe(unitPrice, "EUR", shippingFeesCountry) / 100,
+          }
+        }),
+        deliveryData,
+      },
+      comment,
+      payment: paymentType as "phone" | "transfer" | "card",
+      uid: uuid().toUpperCase(),
+      workTime: 99,
+    }
+
+    const [id] = await executeSaveOrder(data)
+
+    localStorage.setItem("current-order", JSON.stringify(data))
+    localStorage.setItem("current-order-id", id)
+  }
+
   return (
     <CheckoutContext.Provider
       value={{
@@ -257,6 +302,9 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         nextDiscount,
         currentDiscount,
         totalToPay,
+        isPendingDelay,
+        delayDate,
+        storeOrder,
       }}
     >
       {children}

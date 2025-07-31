@@ -1,3 +1,13 @@
+export const getAmountFromCountry = (
+  amount: number,
+  country?: string,
+): { amount: number; tax: boolean } => {
+  if (country && !isTTCCountry(country)) {
+    return { amount: amount / 1.2, tax: false }
+  }
+  return { amount, tax: true }
+}
+
 export const isTTCCountry = (country: string) => {
   return [
     "FR",

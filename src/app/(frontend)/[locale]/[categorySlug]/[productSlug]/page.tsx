@@ -5,7 +5,7 @@ import { Metadata } from "next"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
 import { Category, Product, SizeGuide } from "@/payload-types"
-import { getTranslations, setRequestLocale } from "next-intl/server"
+import { setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
@@ -69,7 +69,6 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 export default async (props: Props) => {
   const { locale } = await props.params
   const { product, category, related } = await getData(props)
-  const t = await getTranslations()
 
   return (
     <main className="bg-flake bg-flake-bl pb-section space-y-8 bg-no-repeat">

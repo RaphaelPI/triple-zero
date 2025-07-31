@@ -18,32 +18,35 @@ export const Stepper = ({ steps }: Props) => {
 
   return (
     <div className="section flex items-center justify-center gap-6 pb-0">
-      {steps.map(({ href, label, disabled }, index) => (
-        <Fragment key={href}>
-          {disabled ? (
-            <div className="flex items-center gap-1">
-              <div className="bg-primary border-primary xs:size-8 flex size-10 items-center justify-center rounded-full border border-solid text-white">
-                {index + 1}
-              </div>
-              <div className="max-xs:hidden">{label}</div>
+      {steps.map(({ href, label, disabled }, index) => {
+        const step = (
+          <>
+            <div
+              className={cn(
+                "bg-primary border-primary xs:size-8 flex size-10 items-center justify-center rounded-full border border-solid text-white",
+                {
+                  "bg-green text-primary": currentStep === index,
+                },
+              )}
+            >
+              {index + 1}
             </div>
-          ) : (
-            <Link prefetch={false} href={href} className="flex items-center gap-1">
-              <div
-                className={cn(
-                  "bg-primary border-primary xs:size-8 flex size-10 items-center justify-center rounded-full border border-solid text-white",
-                  {
-                    "bg-green text-primary": currentStep === index,
-                  },
-                )}
-              >
-                {index + 1}
-              </div>
-              <div className="max-xs:hidden">{label}</div>
-            </Link>
-          )}
-        </Fragment>
-      ))}
+            <div className="max-xs:hidden">{label}</div>
+          </>
+        )
+
+        return (
+          <Fragment key={href}>
+            {disabled ? (
+              <div className="flex items-center gap-1">{step}</div>
+            ) : (
+              <Link prefetch={false} href={href} className="flex items-center gap-1">
+                {step}
+              </Link>
+            )}
+          </Fragment>
+        )
+      })}
     </div>
   )
 }

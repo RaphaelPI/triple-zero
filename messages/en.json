@@ -32,14 +32,14 @@
   "care": "Entretien",
   "cart": {
     "title": "Panier",
-    "description": "Validez votre commande afin de procéder au paiement.",
+    "description": "Validez votre commande afin de procéder au paiement. Votre panier sera conservé pendant 24h.",
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
     "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
-    "priceVTA": "Prix TTC",
+    "priceVTA": "Prix",
     "order": "Commande",
     "resume": "Récapitulatif",
     "removeLine": "Voulez-vous supprimer ce produit de votre panier ?",
@@ -73,7 +73,39 @@
     "addAddress2": "Ajouter un complément d’adresse",
     "useDeliveryAddress": "Utiliser l’adresse de facturation comme adresse d’expédition",
     "deliveryAddress": "Adresse de livraison",
-    "billingAddress": "Adresse de facturation"
+    "billingAddress": "Adresse de facturation",
+    "ue-info": "Les tarifs indiqués comprennent la TVA, car votre pays de livraison fait partie de l'Union européenne.",
+    "non-ue-info": "Les prix affichés sont hors taxes (HT), votre pays de livraison se trouvant en dehors de l'Union européenne."
+  },
+  "payment": {
+    "title": "Paiement",
+    "description": "Choisissez votre moyen de paiement afin de finaliser votre commande.",
+    "validate": "Valider le paiement",
+    "finish": "Finaliser la commande",
+    "select": "Sélectionner votre moyen de paiement",
+    "comment": "Si vous souhaitez ajouter un commentaire, poser une question, demander ou apporter une précision, faites-le ci-dessous :",
+    "phone": {
+      "title": "Paiement par carte bancaire (par téléphone)",
+      "description": "Avec ce mode de paiement, vous payez la totalité du montant de votre commande, en nous communiquant numéro et date d'expiration de votre carte par téléphone au {phone}",
+      "openingHours": "Pendant nos heures d'ouverture : du mardi au vendredi de 9h à 12h et de 14h à 19h et le samedi matin de 9h à 12h (fermé le lundi). \n<strong>Nous sommes agréés VPC</strong> et vous pouvez donc nous transmettre ces informations en toute sécurité."
+    },
+    "check": {
+      "title": "Paiement par chèque",
+      "description": "Vous devez règler <strong>la totalité du montant de votre commande</strong>.",
+      "description2": "Nous acceptons les chèques <strong>bancaires ou postaux français</strong>, libellés en Euros, à l'ordre de TRIPLEZERO.\n<strong>Imprimez l'accusé de réception</strong> que vous allez recevoir, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <em>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</em>\nLa préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés)."
+    },
+    "transfer": {
+      "title": "Paiement par virement bancaire",
+      "description": "Veuillez régler l’intégralité de votre commande par virement bancaire.",
+      "description2": "La préparation de votre commande commencera dès réception de votre paiement."
+    },
+    "card": {
+      "title": "Paiement sécurisé en ligne par carte bancaire"
+    },
+    "confirmation": {
+      "title": "Confirmation de paiement",
+      "description": "Nous vous remercions pour votre commande. Celle-ci a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
+    }
   },
   "product": {
     "options": "Options",

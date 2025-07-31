@@ -8,16 +8,19 @@ import { useLocale, useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { formSchema, useCheckout } from "@/providers/checkout"
+import { useRouter } from "@/i18n/navigation"
+import { isTTCCountry } from "@/lib/price"
+import { formSchema, useCheckout } from "@/providers/checkout/checkout"
 import { en, fr } from "zod/v4/locales"
+import { CheckoutSkeleton } from "../../_components/checkout-skeleton"
 import { CheckoutSummary } from "../../_components/checkout-summary"
-import { isTTCCountry } from "../utils"
 import { BillingFormFields } from "./billing-form-fields"
 import { DeliveryFormFields } from "./delivery-form-fields"
 
 export const CheckoutForm = () => {
-  const { deliveryData, setDeliveryData, cart } = useCheckout()
+  const { deliveryData, setDeliveryData, cart, loading, loadingShippingFees } = useCheckout()
   const t = useTranslations()
+  const { push } = useRouter()
 
   // Default locale
   const locale = useLocale()
@@ -82,6 +85,12 @@ export const CheckoutForm = () => {
 
     // Store data in session storage
     setDeliveryData(values)
+
+    push("/paiement")
+  }
+
+  if (loading) {
+    return <CheckoutSkeleton />
   }
 
   if (cart.lines.length === 0) {
@@ -110,7 +119,13 @@ export const CheckoutForm = () => {
             </div>
           </div>
           <CheckoutSummary>
-            <Button type="submit" className="w-full" aria-label={t("delivery.validate")}>
+            <Button
+              type="submit"
+              className="w-full"
+              aria-label={t("delivery.validate")}
+              loading={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || loadingShippingFees}
+            >
               {t("delivery.validate")}
             </Button>
           </CheckoutSummary>

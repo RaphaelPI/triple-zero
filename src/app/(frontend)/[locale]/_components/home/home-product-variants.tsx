@@ -51,7 +51,7 @@ export const HomeProductVariants = async () => {
               className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8"
               key={variant.id}
             >
-              <div className="w-full lg:h-full lg:w-5/12">
+              <div className="flex w-full items-center justify-center lg:h-full lg:w-5/12">
                 {image && (
                   <Image
                     media={image}
@@ -59,7 +59,7 @@ export const HomeProductVariants = async () => {
                     width={500}
                     height={250}
                     sizes="500px"
-                    className="mx-auto h-60 w-auto rounded-2xl object-cover object-right md:h-full md:rounded-r-none"
+                    className="mx-auto h-auto max-h-full w-auto max-w-full rounded-2xl md:rounded-r-none"
                   />
                 )}
               </div>
@@ -81,7 +81,7 @@ export const HomeProductVariants = async () => {
                 </div>
                 <div className="text-lg font-semibold">
                   {t("priceFrom")}
-                  <Amount amount={getTechnicalValues(priceOptions).price} taxIncluded />
+                  <Amount amount={getTechnicalValues(priceOptions).price} />
                 </div>
 
                 <Button aria-label={t("product.see")}>{t("product.see")}</Button>

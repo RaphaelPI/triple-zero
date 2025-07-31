@@ -29,15 +29,15 @@ export const PromotionCard = ({
       className="hover:ring-blue panel relative block snap-start hover:ring-8 max-md:min-w-sm md:h-full"
     >
       <PromotionDiscount>{discount}%</PromotionDiscount>
-      <Image
-        priority
-        media={image}
-        alt={title}
-        width={350}
-        height={300}
-        className="h-44 w-full rounded-t-2xl object-contain lg:h-52"
-        sizes="350px"
-      />
+      <div className="flex h-44 w-full items-center justify-center lg:h-52">
+        <Image
+          priority
+          media={image}
+          alt={title}
+          className="h-auto max-h-full w-auto max-w-full"
+          sizes="350px"
+        />
+      </div>
       <div className="px-panel py-panel space-y-1 lg:space-y-2">
         <div className="text-lg font-semibold">{title}</div>
         <div

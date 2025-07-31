@@ -55,7 +55,8 @@ export const getProductDefaultImages = (
     }
 
     if (promotion.options) {
-      ;(promotion.options as [ProductOption, ProductOptionValue][]).forEach(([option, value]) => {
+      const options = promotion.options as [ProductOption, ProductOptionValue][]
+      options.forEach(([_, value]) => {
         if (value.image) {
           images.push(value.image as Media)
         }

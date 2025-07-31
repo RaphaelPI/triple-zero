@@ -3,7 +3,7 @@
 import Basket from "src/assets/basket.svg"
 
 import { Link } from "@/i18n/navigation"
-import { useCheckout } from "@/providers/checkout"
+import { useCheckout } from "@/providers/checkout/checkout"
 import { useTranslations } from "next-intl"
 
 export const CartButton = () => {
