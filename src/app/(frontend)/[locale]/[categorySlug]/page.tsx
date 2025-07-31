@@ -69,7 +69,7 @@ export default async (props: Props) => {
     <main className="bg-flake bg-flake-bl md:bg-flake-tr bg-no-repeat">
       <div className="section flex xl:gap-x-20">
         <div className="relative hidden xl:block">
-          <div className="sticky top-32 w-56">
+          <div className="sticky top-24 w-56">
             {nav.items.map(({ title, category }) => {
               return (
                 <div key={title} className="panel mb-8">
