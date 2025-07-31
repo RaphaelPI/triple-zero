@@ -485,15 +485,6 @@ export interface Order {
 export interface Page {
   id: string;
   title: string;
-  blocksJson?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
   blocks: (
     | {
         title?: string | null;
@@ -1025,7 +1016,6 @@ export interface OrderSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  blocksJson?: T;
   blocks?:
     | T
     | {

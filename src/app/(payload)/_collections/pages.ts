@@ -20,17 +20,6 @@ export const Pages: CollectionConfig = {
       localized: true,
     },
     {
-      localized: true,
-      name: "blocksJson",
-      type: "json",
-      admin: { hidden: true },
-      access: { read: () => false },
-      hooks: {
-        beforeChange: [({ data }) => data?.blocks],
-      },
-    },
-
-    {
       name: "blocks",
       type: "blocks",
       admin: {
@@ -38,10 +27,6 @@ export const Pages: CollectionConfig = {
       },
       required: true,
       blocks: [TextBlock, TextImgBlock, ImgBlock, TitleBlock],
-      virtual: true,
-      hooks: {
-        afterRead: [({ data }) => data?.blocksJson],
-      },
     },
     Slug,
     {

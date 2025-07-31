@@ -1,7 +1,10 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getMetadata } from "../../metadata"
-import { BlocText } from "./_components/BlocText"
+import { BlocText } from "./_components/bloc-text"
+import { BlockImg } from "./_components/block-img"
+import { BlockTextImg } from "./_components/block-text-img"
+import { BlockTitle } from "./_components/block-title"
 import { getPageData } from "./data"
 
 export const dynamic = "force-static"
@@ -44,6 +47,15 @@ export default async ({ params }: Props) => {
         {page.blocks.map((block) => {
           if (block.blockType === "text-block") {
             return <BlocText key={block.id} block={block} />
+          }
+          if (block.blockType === "text-img-block") {
+            return <BlockTextImg key={block.id} block={block} />
+          }
+          if (block.blockType === "img-block") {
+            return <BlockImg key={block.id} block={block} />
+          }
+          if (block.blockType === "title-block") {
+            return <BlockTitle key={block.id} block={block} />
           }
         })}
       </div>

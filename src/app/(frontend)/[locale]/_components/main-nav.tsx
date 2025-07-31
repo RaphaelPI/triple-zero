@@ -75,11 +75,11 @@ export const MainNav = async () => {
               {t("promotions.nav")}
             </Link>
           </NavigationMenuItem>
-          {/* <NavigationMenuItem>
-            <Link prefetch={false} href="/savoir-faire" className="px-4">
+          <NavigationMenuItem>
+            <Link prefetch={false} href="/p/savoir-faire" className="px-4">
               {t("menu.knowledge")}
             </Link>
-          </NavigationMenuItem> */}
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
 
