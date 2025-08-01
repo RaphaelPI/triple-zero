@@ -55,7 +55,7 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
           {value === "pending" && (
             <div>
               <div>Valider le paiement</div>
-              <Button onClick={handlePaid} className="my-0">
+              <Button onClick={handlePaid} className="my-0 bg-green-700 hover:bg-green-600">
                 Paiement effectué
               </Button>
             </div>
@@ -70,7 +70,7 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
                   value={shippingInfoField.value ?? ""}
                 />
               </div>
-              <Button onClick={handleShipped} className="my-0">
+              <Button onClick={handleShipped} className="my-0 bg-blue-700 hover:bg-blue-600">
                 Commande expédiée
               </Button>
             </div>
@@ -79,7 +79,7 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
             <div>
               <div>Informations colis</div>
               <div className="rounded bg-white p-1 whitespace-pre-line">
-                {shippingInfoField.value}
+                {shippingInfoField.value ?? "Aucune information de colis"}
               </div>
             </div>
           )}

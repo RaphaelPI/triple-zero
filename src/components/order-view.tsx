@@ -116,13 +116,16 @@ export const OrderView = ({
                 </tr>
                 <tr>
                   <td width="227" height="18" align="left">
-                    &nbsp;&nbsp;Date : {format(date, "dd/MM/yyyy")}
+                    &nbsp;&nbsp;DATE : <strong>{format(date, "dd/MM/yyyy")}</strong>
+                    {delay && (
+                      <>
+                        <br />
+                        &nbsp;&nbsp;A LIVRER LE : <strong>{format(delay, "dd/MM/yyyy")}</strong>
+                      </>
+                    )}
                   </td>
-                  <td width="254" height="18" align="left" className="font-semibold">
+                  <td width="300" height="18" align="left" className="font-semibold" colSpan={2}>
                     &nbsp;&nbsp;COMMANDE n° <strong>{uid.toUpperCase()}</strong>
-                  </td>
-                  <td width="197" align="left">
-                    {delay && <>A LIVRER LE {format(delay, "dd/MM/yyyy")}</>}
                   </td>
                 </tr>
                 <tr>
