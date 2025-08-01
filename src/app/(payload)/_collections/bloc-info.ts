@@ -1,3 +1,4 @@
+import { env } from "@/env"
 import { CollectionConfig } from "payload"
 
 export const BlocInfo: CollectionConfig = {
@@ -9,6 +10,16 @@ export const BlocInfo: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "Information produit",
+  },
+  hooks: {
+    afterChange: [
+      async (doc) => {
+        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/products`, {
+          method: "POST",
+        })
+        return doc
+      },
+    ],
   },
   fields: [
     {

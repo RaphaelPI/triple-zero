@@ -6,7 +6,9 @@ import { Popover } from "@/components/popover"
 import { Skeleton } from "@/components/ui/skeleton"
 import { formatAmount } from "@/lib/text"
 import { DISCOUNTS, useCheckout } from "@/providers/checkout/checkout"
-import { useTranslations } from "next-intl"
+import { setDefaultOptions } from "date-fns"
+import { enGB, fr } from "date-fns/locale"
+import { useLocale, useTranslations } from "next-intl"
 import { CheckoutDelay } from "./checkout-delay"
 
 interface Props {
@@ -14,9 +16,13 @@ interface Props {
 }
 
 export const CheckoutSummary = ({ children }: Props) => {
+  const locale = useLocale()
   const { total, deliveryFee, loadingShippingFees, nextDiscount, currentDiscount, totalToPay } =
     useCheckout()
   const t = useTranslations()
+  // Set the locale for date-fns
+  setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
+
   const discountContent = nextDiscount
     ? t.rich("checkout.globalDiscount", {
         amount: () => <span className="font-semibold">{formatAmount(nextDiscount[0])}</span>,

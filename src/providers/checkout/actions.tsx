@@ -1,6 +1,6 @@
 "use server"
 
-import { Order } from "@/components/order"
+import { OrderView } from "@/components/order-view"
 import {
   TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_EN,
   TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_FR,
@@ -9,6 +9,7 @@ import { logger } from "@/lib/logger"
 import { sendEmail } from "@/lib/mailjet.server"
 import { getClient } from "@/lib/payload"
 import { rawProcedure } from "@/lib/safe-action"
+import { OrderCartLine } from "@/types/global"
 import { format } from "date-fns"
 import { getLocale, getTranslations } from "next-intl/server"
 import z from "zod"
@@ -97,9 +98,32 @@ export const saveOrder = rawProcedure
       data: input,
     })
 
+    // Deactivate promotions if exists
+    input.detail.lines.forEach(async (line: OrderCartLine) => {
+      if (line.promotion) {
+        const promotion = await payload.findByID({
+          collection: "promotion",
+          id: line.promotion,
+        })
+
+        if (promotion) {
+          console.log("---- deactivate promotion", line.promotion)
+          await payload.update({
+            collection: "promotion",
+            id: line.promotion,
+            data: {
+              ...promotion,
+              active: false,
+            },
+          })
+        }
+      }
+    })
+
+    // Prepare email content
     const { renderToString } = await import("react-dom/server")
     const content = renderToString(
-      <Order
+      <OrderView
         deliveryData={input.detail.deliveryData}
         lines={input.detail.lines}
         detail={input.detail}
@@ -129,11 +153,10 @@ export const saveOrder = rawProcedure
       }),
     )
 
-    console.log(payment)
-
     // send email to customer
     await sendEmail({
       to: [{ Email: input.email, Name: input.customer }],
+      // bcc: [{ Email: "triplezero@triplezero.fr", Name: "Triple Zero" }],
       subject: t("email.orderConfirmation.subject"),
       templateId,
       variables: {

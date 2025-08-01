@@ -57,7 +57,6 @@ export const ProductOptionsInput = (props: Props) => {
     }
 
     const selectedOptionValue = option.values?.find(({ value }) => value.value === selectedValue)
-    console.log(selectedValue, selectedOptionValue)
     if (!selectedOptionValue) {
       return
     }
@@ -79,17 +78,15 @@ export const ProductOptionsInput = (props: Props) => {
     ...(product.advanced?.map(({ option }) => option) ?? []),
   ]
 
-  // console.log(options)
-
   return (
     <div className="mb-4 space-y-2">
       <div>{label}</div>
       {options.map((option) => {
-        const selectedOptionValue = value?.find(([opt]) => opt.title === option.title)
+        const selectedOptionValue = value?.find((args) => {
+          const [opt] = args
+          return opt.title === option.title
+        })
         const selectedValue = selectedOptionValue?.[1].value
-
-        // console.log(option, selectedValue)
-
         const defaultOptionValue = option.values?.find(({ value }) => value.defaultValue)
 
         return (

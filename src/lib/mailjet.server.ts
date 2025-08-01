@@ -1,5 +1,3 @@
-import "server-only"
-
 import { env } from "@/env"
 import Mailjet, { LibraryResponse, SendEmailV3_1 } from "node-mailjet"
 import { logger } from "./logger"
@@ -18,6 +16,10 @@ interface SendEmailProps {
     Email: string
     Name: string
   }[]
+  bcc?: {
+    Email: string
+    Name: string
+  }[]
   from?: {
     Email: string
     Name: string
@@ -29,6 +31,7 @@ interface SendEmailProps {
 
 export const sendEmail = async ({
   to,
+  bcc,
   from = { Email: "triplezero@triplezero.fr", Name: "Triple Zero" },
   subject,
   templateId,
@@ -40,6 +43,7 @@ export const sendEmail = async ({
         {
           From: from,
           To: to,
+          Bcc: bcc,
           Subject: subject,
           TemplateID: templateId,
           TemplateLanguage: true,

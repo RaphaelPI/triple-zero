@@ -123,6 +123,7 @@ interface ICheckoutContext {
   isPendingDelay: boolean
   delayDate?: string
   storeOrder: (paymentType: string, comment?: string) => Promise<void>
+  clearCart: () => void
 }
 
 const CheckoutContext = createContext<ICheckoutContext>({} as ICheckoutContext)
@@ -303,6 +304,9 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         isPendingDelay,
         delayDate,
         storeOrder,
+        clearCart: () => {
+          setCart(DEFAULT_CART)
+        },
       }}
     >
       {children}

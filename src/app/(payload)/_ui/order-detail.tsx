@@ -1,6 +1,6 @@
 "use client"
 
-import { Order } from "@/components/order"
+import { OrderView } from "@/components/order-view"
 import { CartLine, formSchema } from "@/providers/checkout/checkout"
 import { OrderCartLine } from "@/types/global"
 import { Button, useAllFormFields, useField } from "@payloadcms/ui"
@@ -13,7 +13,7 @@ interface Props {
 
 export const OrderDetail = ({ path }: Props) => {
   const { value } = useField<CartLine[]>({ path })
-  const [fields, dispatchFields] = useAllFormFields()
+  const [fields] = useAllFormFields()
 
   // Pass in fields, and indicate if you'd like to "unflatten" field data.
   // The result below will reflect the data stored in the form at the given time
@@ -51,7 +51,7 @@ export const OrderDetail = ({ path }: Props) => {
           Imprimer
         </Button>
       </div>
-      <Order
+      <OrderView
         deliveryData={deliveryData}
         lines={lines}
         detail={formData.detail}

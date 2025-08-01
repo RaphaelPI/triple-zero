@@ -1,6 +1,8 @@
-import { formatDate } from "date-fns"
-import { getTranslations } from "next-intl/server"
+import { formatDate, setDefaultOptions } from "date-fns"
+import { enGB, fr } from "date-fns/locale"
+import { getLocale, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
+import { CartCleaner } from "./_components/cart-cleaner"
 import { getOrder, updateOrder } from "./data"
 
 export const dynamic = "force-dynamic"
@@ -20,6 +22,10 @@ export const generateMetadata = async () => {
 export default async ({ searchParams }: Props) => {
   const { payment, orderId } = await searchParams
   const t = await getTranslations()
+  const locale = await getLocale()
+
+  // Set the locale for date-fns
+  setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
 
   if (!orderId) {
     notFound()
@@ -44,6 +50,7 @@ export default async ({ searchParams }: Props) => {
           </div>
         )}
       </div>
+      <CartCleaner />
     </div>
   )
 }

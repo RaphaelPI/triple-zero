@@ -469,7 +469,7 @@ export interface Order {
    * Temps de travail en minutes
    */
   workTime: number;
-  status?: ('pending' | 'paid' | 'shipped') | null;
+  status?: ('cancelled' | 'pending' | 'paid' | 'shipped') | null;
   shippingInfo?: string | null;
   comment?: string | null;
   detail?: {

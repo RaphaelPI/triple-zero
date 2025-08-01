@@ -43,6 +43,9 @@ export default async () => {
             )
           })}
         </div>
+        {promotions.docs.length === 0 && (
+          <div className="text-center text-lg font-semibold">{t("promotions.noPromotions")}</div>
+        )}
       </section>
     </main>
   )

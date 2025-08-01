@@ -22,7 +22,7 @@ interface Props {
   }
 }
 
-export const Order = ({
+export const OrderView = ({
   deliveryData,
   lines,
   detail,

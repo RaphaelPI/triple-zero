@@ -1,5 +1,7 @@
+import { env } from "@/env"
 import { CollectionConfig } from "payload"
 import { Slug } from "../_fields/slug"
+import { getProduct } from "../_ui/action"
 
 export const Promotion: CollectionConfig = {
   slug: "promotion",
@@ -10,6 +12,39 @@ export const Promotion: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "Produits",
+    defaultColumns: ["title", "active", "reference", "value", "description"],
+  },
+  hooks: {
+    beforeChange: [
+      async ({ data }) => {
+        if (!data.options || data.options.length === 0) {
+          if (!data.reference || data.reference.relationTo !== "product") {
+            return data
+          }
+
+          const product = await getProduct(data.reference.value)
+          data.options = product.options
+            ?.filter((option) => option.option.values?.some(({ value }) => value.defaultValue))
+            .map((option) => {
+              return [
+                option.option,
+                option.option.values?.find(({ value }) => value.defaultValue)?.value,
+              ]
+            })
+        }
+
+        return data
+      },
+    ],
+    afterChange: [
+      async ({ doc }) => {
+        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/promotions/${doc.id}`, {
+          method: "POST",
+        })
+
+        return doc
+      },
+    ],
   },
   fields: [
     {

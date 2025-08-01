@@ -147,7 +147,8 @@
     "meta_description": "Profitez de nos offres spéciales sur une sélection de matériel de haute montagne, sacs de couchage, doudounes, couettes, oreillers et literie pour toute la famille. Stock limité !",
     "nav": "Promotions",
     "title": "Promos du moment",
-    "seeAll": "Voir toutes les promotions"
+    "seeAll": "Voir toutes les promotions",
+    "noPromotions": "Aucune promotion disponible pour le moment..."
   },
   "variants": "Les incontournables",
   "cgu": "Conditions générales de vente",
