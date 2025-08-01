@@ -2,20 +2,19 @@
 
 import { LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
-import dynamic from "next/dynamic"
-import { useState } from "react"
+import { lazy, Suspense, useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 
+import { Skeleton } from "@/components/ui/skeleton"
 import { isTTCCountry } from "@/lib/price"
 import { useCheckout } from "@/providers/checkout/checkout"
 import { toast } from "sonner"
 import { InputField } from "./input-field"
 
-const CountrySelectField = dynamic(
-  () => import("./country-select-field").then((mod) => mod.CountrySelectField),
-  {
-    ssr: false,
-  },
+const CountrySelectField = lazy(() =>
+  import("./country-select-field").then((mod) => ({
+    default: mod.CountrySelectField,
+  })),
 )
 
 interface Props {
@@ -117,14 +116,16 @@ export const BillingFormFields = ({ form }: Props) => {
           required
         />
       </div>
-      <CountrySelectField
-        control={form.control}
-        name="country"
-        label={t("delivery.country")}
-        placeholder={t("delivery.country")}
-        required
-        onChange={handleCountryChange}
-      />
+      <Suspense fallback={<Skeleton className="h-14 w-full" />}>
+        <CountrySelectField
+          control={form.control}
+          name="country"
+          label={t("delivery.country")}
+          placeholder={t("delivery.country")}
+          required
+          onChange={handleCountryChange}
+        />
+      </Suspense>
     </>
   )
 }

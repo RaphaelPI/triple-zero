@@ -22,6 +22,8 @@ export const env = createEnv({
     SERVER_S3_SECRET_ACCESS_KEY: z.string(),
     SERVER_S3_REGION: z.string(),
     SERVER_STRIPE_SECRET_KEY: z.string(),
+    SERVER_MAILJET_API_KEY: z.string(),
+    SERVER_MAILJET_API_SECRET: z.string(),
   },
   shared: {
     NODE_ENV: z.string().default("development"),

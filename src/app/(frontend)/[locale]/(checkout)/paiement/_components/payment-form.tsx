@@ -21,11 +21,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Textarea } from "@/components/ui/textarea"
+import { env } from "@/env"
+import { useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout/checkout"
 import { useCheckout as useStripeCheckout } from "@stripe/react-stripe-js"
 import { BanknoteArrowUpIcon, CreditCardIcon, MailIcon } from "lucide-react"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 import { en, fr } from "zod/v4/locales"
 import { CheckoutSummary } from "../../_components/checkout-summary"
 import { BankTransfer } from "./bank-transfer"
@@ -38,6 +41,7 @@ export const PaymentForm = () => {
   const [paymentType, setPaymentType] = useState<PaymentType>("card")
   const { cart, loadingShippingFees, storeOrder } = useCheckout()
   const t = useTranslations()
+  const { push } = useRouter()
 
   const checkout = useStripeCheckout()
   const form = useForm()
@@ -71,23 +75,27 @@ export const PaymentForm = () => {
   }
 
   const onSubmit = async (values: any) => {
-    await storeOrder(paymentType, values.comment)
+    const orderId = await storeOrder(paymentType, values.comment)
+    const returnUrl = `${env.NEXT_PUBLIC_URL}/confirmation?orderId=${orderId}`
 
     if (paymentType === "card") {
-      const result = await checkout.confirm()
+      const result = await checkout.confirm({
+        returnUrl: `${returnUrl}&payment=1`,
+      })
 
       if (result.type === "error") {
-        // Show error to your customer (for example, payment details incomplete)
-        console.log(result.error.message)
+        // show errormessage
+        form.setError("root", { message: result.error.message })
+        toast.error(result.error.message)
+        return
       }
+      // Your customer will be redirected to your `return_url`. For some payment
+      // methods like iDEAL, your customer will be redirected to an intermediate
+      // site first to authorize the payment, then redirected to the `return_url`.
       return
     }
 
-    alert(paymentType)
-
-    // Your customer will be redirected to your `return_url`. For some payment
-    // methods like iDEAL, your customer will be redirected to an intermediate
-    // site first to authorize the payment, then redirected to the `return_url`.
+    push(returnUrl)
   }
 
   const payments = [
@@ -106,7 +114,7 @@ export const PaymentForm = () => {
     {
       title: t("payment.check.title"),
       icon: <MailIcon className="size-6" />,
-      value: "phone",
+      value: "check",
       content: <Check />,
     },
   ]
@@ -164,6 +172,9 @@ export const PaymentForm = () => {
             </div>
           </div>
           <CheckoutSummary>
+            {form.formState.errors.root && (
+              <div className="text-destructive">{form.formState.errors.root.message}</div>
+            )}
             <Button
               type="submit"
               className="w-full"

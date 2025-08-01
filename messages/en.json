@@ -92,7 +92,7 @@
     "check": {
       "title": "Paiement par chèque",
       "description": "Vous devez règler <strong>la totalité du montant de votre commande</strong>.",
-      "description2": "Nous acceptons les chèques <strong>bancaires ou postaux français</strong>, libellés en Euros, à l'ordre de TRIPLEZERO.\n<strong>Imprimez l'accusé de réception</strong> que vous allez recevoir, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <em>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</em>\nLa préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés)."
+      "description2": "Nous acceptons les chèques <strong>bancaires ou postaux français</strong>, libellés en Euros, à l'ordre de TRIPLEZERO.\n<strong>Imprimez l'email de confirmation</strong> que vous allez recevoir, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <em>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</em>\nLa préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés)."
     },
     "transfer": {
       "title": "Paiement par virement bancaire",
@@ -103,8 +103,8 @@
       "title": "Paiement sécurisé en ligne par carte bancaire"
     },
     "confirmation": {
-      "title": "Confirmation de paiement",
-      "description": "Nous vous remercions pour votre commande. Celle-ci a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
+      "title": "Merci pour votre commande",
+      "description": "Votre commande a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
     }
   },
   "product": {
@@ -125,7 +125,8 @@
     "globalDiscountMax": "Vous avez atteint <amount>{amount}</amount> vous bénéficierez de la réduction maximale de <discount>{discount}</discount>",
     "freeShipping": "Offert",
     "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€.",
-    "delay": "La date d’expédition prévue est actuellement fixée au <strong>{date}</strong>, au départ de chez nous."
+    "delay": "La date d’expédition prévue est actuellement fixée au <strong>{date}</strong>, au départ de chez nous.",
+    "confirmation-delay": "La date d’expédition prévue pour votre commande est fixée au <strong>{date}</strong>, au départ de chez nous."
   },
   "notFound": {
     "title": "404 - Page introuvable",
@@ -154,5 +155,13 @@
   "faq": {
     "title": "Vos questions fréquentes",
     "description": "Trouvez toutes les réponses à vos questions sur nos équipements de haute montagne : expéditions, livraisons, tailles, entretien des doudounes, sacs de couchage, et plus encore."
+  },
+  "email": {
+    "orderConfirmation": {
+      "subject": "Triple Zero - Order confirmation",
+      "card": "Votre règlement par carte bancaire en ligne a bien été enregistré et la commande est mise en route.",
+      "check": "Vous avez choisi de règler par chèque : vous devez règler la totalité du montant de votre commande.<br></br>Imprimez cet email, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <strong>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</strong><br></br>La préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés).",
+      "transfer": "Vous avez choisi de règler par virement bancaire : vous devez règler la totalité du montant de votre commande.<br></br>Effectuez votre virement :  <strong>IBAN FR76 1005 7194 6700 0682 0890 143</strong><br></br>SWIFT <strong>CMCIFRPP</strong>.<br></br>La préparation de votre commande démarrera dès réception du règlement."
+    }
   }
 }

@@ -103,6 +103,17 @@ export const Order: CollectionConfig = {
         update: ({ data }) => !Boolean(data?.id),
       },
     },
+    // {
+    //   name: "paymentUrl",
+    //   type: "text",
+    //   label: "URL de paiement",
+    //   admin: {
+    //     position: "sidebar",
+    //   },
+    //   access: {
+    //     update: ({ data }) => !Boolean(data?.id),
+    //   },
+    // },
     {
       name: "amount",
       label: "Montant total",

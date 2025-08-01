@@ -40,13 +40,13 @@ export const CartLine = ({ line, index }: CartLineProps) => {
             prefetch={false}
             href={line.url}
             aria-label={line.title}
-            className="relative flex-shrink-0"
+            className="relative flex flex-shrink-0 items-center justify-center"
           >
             <NextImage
               src={line.image}
               width={320}
               height={320}
-              className="h-auto w-full rounded-xl"
+              className="h-auto max-h-56 w-auto max-w-full rounded-xl"
               alt={line.title}
             />
             {line.discount && <PromotionDiscount size="sm">{line.discount}%</PromotionDiscount>}

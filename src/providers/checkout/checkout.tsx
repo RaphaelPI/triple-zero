@@ -276,9 +276,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     }
 
     const [id] = await executeSaveOrder(data)
-
-    localStorage.setItem("current-order", JSON.stringify(data))
-    localStorage.setItem("current-order-id", id)
+    return id
   }
 
   return (

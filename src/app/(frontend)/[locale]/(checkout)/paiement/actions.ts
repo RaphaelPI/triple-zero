@@ -1,7 +1,5 @@
 "use server"
 
-import { env } from "@/env"
-
 import { rawProcedure } from "@/lib/safe-action"
 import { stripe } from "@/lib/stripe.server"
 import { formatAmountForStripe } from "@/lib/text"
@@ -119,7 +117,7 @@ export const createCheckoutSession = rawProcedure
       mode: "payment",
       ui_mode: "custom",
       // return_url: `${env.NEXT_PUBLIC_URL}/paiement`,
-      return_url: `${env.NEXT_PUBLIC_URL}/confirmation/{CHECKOUT_SESSION_ID}`,
+      // return_url: `${env.NEXT_PUBLIC_URL}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
     }
 
     const checkoutSession = await stripe.checkout.sessions.create(params)
