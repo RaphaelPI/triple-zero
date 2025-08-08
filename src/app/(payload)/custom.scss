@@ -1,16 +1,51 @@
 /* src/styles/payloadStyles.css */
 
-/* Define the Tailwind layers in the correct order */
-@layer theme, base, components, utilities;
+// /* Define the Tailwind layers in the correct order */
+// @layer theme, base, components, utilities;
 
-/* Import the Tailwind theme styles */
-@import "tailwindcss/theme.css" layer(theme);
+// /* Import the Tailwind theme styles */
+// @import "tailwindcss/theme.css" layer(theme);
 
-/* Skip the preflight reset to avoid conflicts with Payload's admin styles */
-/* @import 'tailwindcss/preflight.css' layer(base); */
+// /* Skip the preflight reset to avoid conflicts with Payload's admin styles */
+// /* @import 'tailwindcss/preflight.css' layer(base); */
 
-/* Import Tailwind utilities */
-@import "tailwindcss/utilities.css" layer(utilities);
+// /* Import Tailwind utilities */
+// @import "tailwindcss/utilities.css" layer(utilities);
+
+@layer theme {
+  @import "tailwindcss/theme.css";
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@layer base {
+  .twp {
+    @import "tailwindcss/preflight.css";
+  }
+
+  :root {
+    --font-inter: "Inter", sans-serif;
+  }
+
+  .no-twp {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+      all: revert-layer;
+    }
+  }
+  * {
+    font-family: var(--font-inter);
+  }
+}
+
+@layer components;
+
+@layer utilities {
+  @import "tailwindcss/utilities.css";
+}
 
 /* Support Payload’s dark mode toggle by adding a custom variant */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
