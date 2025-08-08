@@ -9,7 +9,7 @@ export const BlocInfo: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Information produit",
+    group: "3 - Information produit",
   },
   hooks: {
     afterChange: [
@@ -31,7 +31,7 @@ export const BlocInfo: CollectionConfig = {
     },
     {
       name: "content",
-      label: "Contenu",
+      label: "2 - Contenu",
       type: "richText",
       localized: true,
     },

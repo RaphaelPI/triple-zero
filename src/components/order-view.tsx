@@ -7,7 +7,7 @@ import { z } from "zod"
 
 interface Props {
   lines: OrderCartLine[]
-  comment: string
+  comment?: string
   deliveryData: z.infer<typeof formSchema>
   shippingFee: number
   amount: number

@@ -4,7 +4,7 @@ export const Message: GlobalConfig = {
   slug: "message",
   label: "Le mot de Luis Fernand",
   admin: {
-    group: "Contenu",
+    group: "2 - Contenu",
   },
   fields: [
     {

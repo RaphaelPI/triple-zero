@@ -11,7 +11,7 @@ export const Promotion: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Produits",
+    group: "1 - Produits",
     defaultColumns: ["title", "active", "reference", "value", "description"],
   },
   hooks: {

@@ -3,6 +3,7 @@
 import { Amount } from "@/components/amount"
 import { PromotionDiscount } from "@/components/discount"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { CartLine as CartLineType, useCheckout } from "@/providers/checkout/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -69,7 +70,9 @@ export const CartLine = ({ line, index }: CartLineProps) => {
               <div
                 key={color}
                 style={{ backgroundColor: color }}
-                className="h-4 w-4 rounded-full"
+                className={cn("h-4 w-4 rounded-full", {
+                  "border-primary border": color.toLowerCase() === "#ffffff",
+                })}
               />
             ))}
           </div>

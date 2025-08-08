@@ -1,5 +1,5 @@
 import { OrderView } from "@/components/order-view"
-import { TEMPLATE_EMAIL_ORDER_SHIPPED_FR } from "@/constants"
+import { TEMPLATE_EMAIL_ORDER_SHIPPED_EN, TEMPLATE_EMAIL_ORDER_SHIPPED_FR } from "@/constants"
 import { sendEmail } from "@/lib/mailjet.server"
 import { uuid } from "@/lib/uuid"
 import { CollectionConfig } from "payload"
@@ -11,7 +11,7 @@ export const Order: CollectionConfig = {
     plural: "Commandes",
   },
   admin: {
-    group: "Produits",
+    group: "1 - Produits",
     defaultColumns: ["uid", "status", "date", "amount", "customer", "email", "status", "payment"],
     pagination: {
       defaultLimit: 50,
@@ -47,8 +47,10 @@ export const Order: CollectionConfig = {
                 Name: doc.customer,
               },
             ],
-            subject: "Votre commande a été expédiée",
-            templateId: TEMPLATE_EMAIL_ORDER_SHIPPED_FR,
+            templateId:
+              doc.locale === "fr"
+                ? TEMPLATE_EMAIL_ORDER_SHIPPED_FR
+                : TEMPLATE_EMAIL_ORDER_SHIPPED_EN,
             variables: {
               shippingInfo: doc.shippingInfo,
               order: content,
@@ -67,6 +69,19 @@ export const Order: CollectionConfig = {
       required: true,
       admin: {
         readOnly: true,
+      },
+    },
+    {
+      name: "week",
+      label: "Semaine de production",
+      type: "text",
+      required: true,
+      admin: {
+        components: {
+          Field: {
+            path: "/app/(payload)/_ui/order-week#OrderWeek",
+          },
+        },
       },
     },
     {
@@ -150,17 +165,6 @@ export const Order: CollectionConfig = {
         update: ({ data }) => !Boolean(data?.id),
       },
     },
-    // {
-    //   name: "paymentUrl",
-    //   type: "text",
-    //   label: "URL de paiement",
-    //   admin: {
-    //     position: "sidebar",
-    //   },
-    //   access: {
-    //     update: ({ data }) => !Boolean(data?.id),
-    //   },
-    // },
     {
       name: "amount",
       label: "Montant total",
@@ -192,6 +196,29 @@ export const Order: CollectionConfig = {
       required: true,
       admin: {
         description: "Temps de travail en minutes",
+        position: "sidebar",
+      },
+      access: {
+        update: ({ data }) => !Boolean(data?.id),
+      },
+    },
+    {
+      name: "locale",
+      label: "Langue",
+      type: "select",
+      options: [
+        {
+          label: "Français",
+          value: "fr",
+        },
+        {
+          label: "Anglais",
+          value: "en",
+        },
+      ],
+      defaultValue: "fr",
+      admin: {
+        description: "La langue dans laquelle la commande a été faite",
         position: "sidebar",
       },
       access: {
@@ -234,9 +261,6 @@ export const Order: CollectionConfig = {
       admin: {
         hidden: true,
       },
-      // access: {
-      //   update: ({ data }) => !Boolean(data?.id),
-      // },
     },
     {
       name: "comment",

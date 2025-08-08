@@ -8,7 +8,7 @@ export const ShippingFees: CollectionConfig = {
     plural: "Frais de port",
   },
   admin: {
-    group: "Contenu",
+    group: "2 - Contenu",
   },
   fields: [
     {

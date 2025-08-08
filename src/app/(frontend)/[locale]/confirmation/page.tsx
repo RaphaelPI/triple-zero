@@ -2,7 +2,6 @@ import { formatDate, setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { getLocale, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
-import { CartCleaner } from "./_components/cart-cleaner"
 import { getOrder, updateOrder } from "./data"
 
 export const dynamic = "force-dynamic"
@@ -37,7 +36,7 @@ export default async ({ searchParams }: Props) => {
 
   const order = await getOrder(orderId)
   return (
-    <div className="section space-y-8 pb-16">
+    <div className="section space-y-8 py-32">
       <div className="text-h1 font-semibold">{t("payment.confirmation.title")}</div>
       <div className="space-y-4">
         <div className="text-lg whitespace-pre-line">{t("payment.confirmation.description")}</div>
@@ -50,7 +49,7 @@ export default async ({ searchParams }: Props) => {
           </div>
         )}
       </div>
-      <CartCleaner />
+      {/* <CartCleaner /> */}
     </div>
   )
 }

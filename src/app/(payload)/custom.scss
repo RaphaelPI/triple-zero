@@ -11,3 +11,51 @@
 
 /* Import Tailwind utilities */
 @import "tailwindcss/utilities.css" layer(utilities);
+
+/* Support Payload’s dark mode toggle by adding a custom variant */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --breakpoint-xs: 450px;
+
+  /* Light theme colors */
+  --color-primary: #151515;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #7aa8da;
+  --color-secondary-foreground: #151515;
+  --color-tertiary: #151515;
+  --color-muted: oklch(0.97 0 0);
+  --color-muted-foreground: oklch(0.556 0 0);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-ring: oklch(0.708 0 0);
+  --color-accent: var(--color-grey-light);
+  --color-input: var(--color-grey-light);
+  --color-ring: var(--color-blue);
+
+  /* Custom brand colors */
+  --color-dark: #151515;
+  --color-blue: #7aa8da;
+  --color-blue-light: #edf4ff;
+  --color-blue-grey: #c8d8f0;
+  --color-blue-logo: #007ec3;
+  --color-green: #c2ff75;
+  --color-grey-light: #f5f8fc;
+
+  /* Typography */
+  --text-xs: 0.8rem;
+  --text-sm: 1rem;
+  --text-base: 1.1rem;
+  --text-lg: 1.3rem;
+  --text-xl: 1.5rem;
+  --text-h1: clamp(2rem, 4vmax, 4rem);
+  --spacing-h1: clamp(2.5rem, 4vmax, 4rem);
+  --text-h2: clamp(1.8rem, 3vmax, 3rem);
+  --spacing-h2: clamp(2rem, 3vmax, 3rem);
+
+  /* Shadows */
+  --shadow-panel:
+    0px 10px 20px -10px rgba(63, 63, 63, 0.1), 0px 20px 40px -10px rgba(50, 50, 93, 0.1),
+    0px 1px 1px 0px rgba(255, 255, 255, 0.1) inset;
+
+  --background-image-flake: url("/flake.webp");
+}

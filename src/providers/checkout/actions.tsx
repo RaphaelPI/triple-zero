@@ -8,6 +8,7 @@ import {
 import { logger } from "@/lib/logger"
 import { sendEmail } from "@/lib/mailjet.server"
 import { getClient } from "@/lib/payload"
+import { getNextAvailableWeek } from "@/lib/planning.server"
 import { rawProcedure } from "@/lib/safe-action"
 import { OrderCartLine } from "@/types/global"
 import { format } from "date-fns"
@@ -93,9 +94,12 @@ export const saveOrder = rawProcedure
   )
   .handler(async ({ input }) => {
     const payload = await getClient()
+    const orderWeek = await getNextAvailableWeek(input.workTime)
+
+    // Create order
     const order = await payload.create({
       collection: "order",
-      data: input,
+      data: { ...input, week: orderWeek },
     })
 
     // Deactivate promotions if exists
@@ -107,7 +111,6 @@ export const saveOrder = rawProcedure
         })
 
         if (promotion) {
-          console.log("---- deactivate promotion", line.promotion)
           await payload.update({
             collection: "promotion",
             id: line.promotion,

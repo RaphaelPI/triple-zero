@@ -4,7 +4,7 @@ export const Faq: GlobalConfig = {
   slug: "faq",
   label: "FAQ",
   admin: {
-    group: "Contenu",
+    group: "2 - Contenu",
   },
   fields: [
     {

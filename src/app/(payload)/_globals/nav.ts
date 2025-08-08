@@ -4,7 +4,7 @@ export const Nav: GlobalConfig = {
   slug: "nav",
   label: "Menu",
   admin: {
-    group: "Contenu",
+    group: "2 - Contenu",
   },
   fields: [
     {

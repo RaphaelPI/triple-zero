@@ -36,14 +36,15 @@ export const HomePromotions = async () => {
           )
         })}
       </div>
-      <div className="w-section px-section text-center">
-        <Link href="/promotions">
-          <Button variant="outline">
-            {t("promotions.seeAll")}{" "}
-            {promotions.totalDocs > promotions.limit ? `(${promotions.totalDocs})` : ``}
-          </Button>
-        </Link>
-      </div>
+      {promotions.totalDocs > promotions.limit && (
+        <div className="w-section px-section text-center">
+          <Link href="/promotions">
+            <Button variant="outline">
+              {t("promotions.seeAll")} (${promotions.totalDocs})
+            </Button>
+          </Link>
+        </div>
+      )}
     </section>
   )
 }

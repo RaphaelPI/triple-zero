@@ -9,7 +9,7 @@ export const ProductVariant: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Produits",
+    group: "1 - Produits",
   },
   fields: [
     {

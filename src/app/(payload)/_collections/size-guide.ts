@@ -9,7 +9,7 @@ export const SizeGuide: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Information produit",
+    group: "3 - Information produit",
   },
   fields: [
     {

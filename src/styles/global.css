@@ -62,6 +62,12 @@
   --muted-foreground: oklch(0.708 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --ring: oklch(0.556 0 0);
+  --color-dark: #ffffff;
+  --color-blue: #7aa8da;
+  --color-blue-light: #333333;
+  --color-blue-logo: #007ec3;
+  --color-green: #c2ff75;
+  --color-grey-light: #333333;
 }
 
 html,

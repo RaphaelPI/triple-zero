@@ -3,7 +3,7 @@ import { Field } from "payload"
 export const Table: Field = {
   name: "table",
   type: "json",
-  label: "Contenu",
+  label: "2 - Contenu",
   jsonSchema: {
     uri: "https://json-schema.org/draft/2020-12/schema",
     fileMatch: ["*.json"],

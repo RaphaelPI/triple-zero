@@ -17,7 +17,7 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
   //   path: `${path}.shippingInfo`,
   // })
   const option = field.options.find((o) => (o as OptionObject).value === value) || field.options[0]
-  console.log(path, props)
+
   const handlePaid = () => {
     setValue("paid")
   }
@@ -41,15 +41,18 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
           "bg-blue-100": value === "shipped",
         })}
       >
-        <div
-          className={cn("w-fit rounded-lg px-2 py-1 text-xl font-semibold", {
-            "bg-green-400": value === "paid",
-            "bg-red-400": value === "cancelled",
-            "bg-yellow-400": value === "pending",
-            "bg-blue-400": value === "shipped",
-          })}
-        >
-          {String((option as OptionObject).label)}
+        <div className="flex items-center gap-2 text-xl font-semibold">
+          La commande est
+          <div
+            className={cn("w-fit rounded-lg px-2 py-1", {
+              "bg-green-400": value === "paid",
+              "bg-red-400": value === "cancelled",
+              "bg-yellow-400": value === "pending",
+              "bg-blue-400": value === "shipped",
+            })}
+          >
+            {String((option as OptionObject).label)}
+          </div>
         </div>
         <div className="space-y-4">
           {value === "pending" && (

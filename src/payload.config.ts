@@ -48,8 +48,18 @@ export default buildConfig({
     fallbackLanguage: "fr",
     supportedLanguages: { en, fr },
   },
-  collections: Object.values(collections),
-  globals: Object.values(globals),
+  collections: Object.values(collections).sort((a, b) => {
+    if (a.admin?.group && b.admin?.group) {
+      return (a.admin.group as string).localeCompare(b.admin.group as string)
+    }
+    return 0
+  }),
+  globals: Object.values(globals).sort((a, b) => {
+    if (a.admin?.group && b.admin?.group) {
+      return (a.admin.group as string).localeCompare(b.admin.group as string)
+    }
+    return 0
+  }),
   blocks: Object.values(blocks),
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

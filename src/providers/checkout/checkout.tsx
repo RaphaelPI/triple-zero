@@ -3,6 +3,7 @@
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useServerActionQuery } from "@/hooks/use-server-action-query"
 import { Link } from "@/i18n/navigation"
+import { getWorktime } from "@/lib/planning"
 import { isTTCCountry } from "@/lib/price"
 import { formatAmountForStripe } from "@/lib/text"
 import { uuid } from "@/lib/uuid"
@@ -38,6 +39,7 @@ export interface CartLine {
   categorySlug: string
   category: string
   discount?: number
+  worktime: number
 }
 
 const RequiredStringSchema = z.string().trim().min(1, { message: "Champ obligatoire" })
@@ -218,6 +220,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         discount,
         categorySlug: categorySlug ?? "",
         category: categoryTitle ?? "",
+        worktime: getWorktime(options),
       })
     }
 
@@ -273,7 +276,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
       comment,
       payment: paymentType as "phone" | "transfer" | "card",
       uid: uuid().toUpperCase(),
-      workTime: 99,
+      workTime: cart.lines.reduce((acc, line) => acc + line.worktime * line.quantity, 0),
     }
 
     const [id] = await executeSaveOrder(data)

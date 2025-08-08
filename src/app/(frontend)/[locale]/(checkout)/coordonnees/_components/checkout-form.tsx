@@ -123,7 +123,7 @@ export const CheckoutForm = () => {
               type="submit"
               className="w-full"
               aria-label={t("delivery.validate")}
-              loading={form.formState.isSubmitting}
+              loading={form.formState.isSubmitting || form.formState.isLoading}
               disabled={form.formState.isSubmitting || loadingShippingFees}
             >
               {t("delivery.validate")}

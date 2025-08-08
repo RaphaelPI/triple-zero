@@ -24,7 +24,7 @@ interface SendEmailProps {
     Email: string
     Name: string
   }
-  subject: string
+  subject?: string
   templateId: number
   variables?: Record<string, any>
 }

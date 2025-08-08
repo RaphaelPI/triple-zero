@@ -4,7 +4,7 @@ export const Delay: GlobalConfig = {
   slug: "delay",
   label: "Délai de livraison",
   admin: {
-    group: "Contenu",
+    group: "2 - Contenu",
   },
   fields: [
     {
