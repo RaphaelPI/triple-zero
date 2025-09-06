@@ -18,7 +18,7 @@ export const HomeProductVariants = async () => {
 
   return (
     <section className="section space-y-4 lg:space-y-8">
-      <h1>{t("variants")}</h1>
+      <div className="h1">{t("variants")}</div>
       <div className="space-y-4">
         {variants.docs.map((variant) => {
           const product = variant.reference.value as Product

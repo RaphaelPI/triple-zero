@@ -23,7 +23,7 @@ export default async () => {
   return (
     <main>
       <section className="section space-y-2">
-        <h1>{t("payment.title")}</h1>
+        <div className="h1">{t("payment.title")}</div>
         <p className="whitespace-pre-line">{t("payment.description")}</p>
       </section>
       <StripeProvider>

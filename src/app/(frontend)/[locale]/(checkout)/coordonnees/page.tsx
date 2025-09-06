@@ -22,7 +22,7 @@ export default async () => {
   return (
     <main>
       <section className="section space-y-2">
-        <h1>{t("delivery.title")}</h1>
+        <div className="h1">{t("delivery.title")}</div>
         <p className="whitespace-pre-line">{t("delivery.description")}</p>
       </section>
       <CheckoutForm />

@@ -14,7 +14,7 @@ export const HomePromotions = async () => {
   }
 
   return (
-    <section className="py-section space-y-4 lg:space-y-8">
+    <section className="pt-section space-y-4 lg:space-y-8">
       <h1 className="w-section px-section">{t("promotions.title")}</h1>
       <div className="max-md:scrollable md:w-section md:px-section max-md:pb-8 md:grid md:grid-cols-2 md:gap-10 xl:grid-cols-3">
         {promotions.docs.map((promotion) => {

@@ -26,7 +26,7 @@ export const PromotionCard = ({
   return (
     <Link
       href={`/promotions/${slug}`}
-      className="hover:ring-blue panel relative block snap-start hover:ring-8 max-md:min-w-sm md:h-full"
+      className="hover:ring-blue panel relative block max-w-full snap-start hover:ring-8 max-md:w-sm max-md:max-w-full md:h-full"
     >
       <PromotionDiscount>{discount}%</PromotionDiscount>
       <div className="flex h-44 w-full items-center justify-center lg:h-52">
