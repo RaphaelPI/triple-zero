@@ -72,6 +72,20 @@ export const Order: CollectionConfig = {
       },
     },
     {
+      name: "delay",
+      label: "Délai de livraison",
+      type: "date",
+      required: true,
+      admin: {
+        description:
+          "Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.",
+        date: {
+          pickerAppearance: "dayOnly",
+          displayFormat: "PPPP (dd/MM/yyyy)",
+        },
+      },
+    },
+    {
       name: "week",
       label: "Semaine de production",
       type: "text",
@@ -124,25 +138,8 @@ export const Order: CollectionConfig = {
       },
     },
     {
-      name: "delay",
-      label: "Délai de livraison",
-      type: "date",
-      required: true,
-      admin: {
-        description:
-          "Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.",
-        date: {
-          pickerAppearance: "dayOnly",
-          displayFormat: "PPPP (dd/MM/yyyy)",
-        },
-        position: "sidebar",
-      },
-      access: {
-        update: ({ data }) => !Boolean(data?.id),
-      },
-    },
-    {
       name: "payment",
+      label: "Méthode de paiement",
       type: "select",
       options: [
         {

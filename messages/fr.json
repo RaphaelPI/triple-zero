@@ -36,7 +36,7 @@
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
-    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
+    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
     "priceVTA": "Prix",

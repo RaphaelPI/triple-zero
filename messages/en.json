@@ -36,7 +36,7 @@
     "add": "Add to cart",
     "validate": "Confirm order",
     "shippingFees": "Shipping fees guide",
-    "shippingFeesDescription": "Shipping fees are calculated based on the country entered in the delivery address.\nIf no amount appears after entering the country, it means fees will be provided on request.",
+    "shippingFeesDescription": "Shipping fees are calculated based on the country entered in the delivery address.",
     "features": "Features",
     "quantity": "Quantity",
     "priceVTA": "Price",

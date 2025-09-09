@@ -457,14 +457,14 @@ export interface BlocInfo {
 export interface Order {
   id: string;
   uid: string;
-  week: string;
-  customer: string;
-  email: string;
-  date: string;
   /**
    * Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.
    */
   delay: string;
+  week: string;
+  customer: string;
+  email: string;
+  date: string;
   payment?: ('transfer' | 'card' | 'check') | null;
   amount: number;
   shippingFee: number;
@@ -669,6 +669,7 @@ export interface ShippingFee {
   value: number;
   countries: (
     | 'FR'
+    | 'BE'
     | 'CH'
     | 'GB'
     | 'US'
@@ -751,7 +752,6 @@ export interface ShippingFee {
     | 'AL'
     | 'AD'
     | 'AT'
-    | 'BE'
     | 'BA'
     | 'BG'
     | 'HR'
@@ -964,11 +964,11 @@ export interface CategorySelect<T extends boolean = true> {
  */
 export interface OrderSelect<T extends boolean = true> {
   uid?: T;
+  delay?: T;
   week?: T;
   customer?: T;
   email?: T;
   date?: T;
-  delay?: T;
   payment?: T;
   amount?: T;
   shippingFee?: T;

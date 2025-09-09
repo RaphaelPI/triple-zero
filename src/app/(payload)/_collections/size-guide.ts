@@ -14,16 +14,19 @@ export const SizeGuide: CollectionConfig = {
   fields: [
     {
       name: "title",
+      label: "Titre",
       type: "text",
       required: true,
     },
     {
       name: "rows",
+      label: "Nombre de lignes",
       type: "number",
       required: true,
     },
     {
       name: "cols",
+      label: "Nombre de colonnes",
       type: "number",
       required: true,
     },

@@ -7,6 +7,7 @@ const COUNTRIES_EN: Record<string, Record<string, string>> = {
     IT: "Italy",
     ES: "Spain",
     FR: "France",
+    BE: "Belgium",
   },
   Africa: {
     DZ: "Algeria",
