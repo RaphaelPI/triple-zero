@@ -41,6 +41,8 @@ next-env.d.ts
 .env
 
 /media
+/supabase
+local
 
 # Playwright
 node_modules/

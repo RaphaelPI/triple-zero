@@ -1,36 +1,96 @@
-import { s3Storage } from "@payloadcms/storage-s3"
+// import { postgresAdapter } from "@payloadcms/db-postgres"
+import { mongooseAdapter } from "@payloadcms/db-mongodb"
 
-import { postgresAdapter } from "@payloadcms/db-postgres"
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
-import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import { FixedToolbarFeature, lexicalEditor, LinkFeature } from "@payloadcms/richtext-lexical"
+import { s3Storage } from "@payloadcms/storage-s3"
+import { en } from "@payloadcms/translations/languages/en"
+import { fr } from "@payloadcms/translations/languages/fr"
 import path from "path"
 import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
-import { Media } from "./collections/Media"
-import { Users } from "./collections/Users"
+import * as blocks from "./app/(payload)/_blocks"
+import * as collections from "./app/(payload)/_collections"
+import * as globals from "./app/(payload)/_globals"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    user: collections.Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: "/app/(payload)/_ui/admin/logo#Logo",
+        Icon: "/app/(payload)/_ui/admin/icon#Icon",
+      },
+    },
   },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  localization: {
+    locales: [
+      {
+        label: "English",
+        code: "en",
+      },
+      {
+        label: "Français",
+        code: "fr",
+      },
+    ], // required
+    defaultLocale: "fr", // required
+  },
+  i18n: {
+    fallbackLanguage: "fr",
+    supportedLanguages: { en, fr },
+  },
+  collections: Object.values(collections).sort((a, b) => {
+    if (a.admin?.group && b.admin?.group) {
+      return (a.admin.group as string).localeCompare(b.admin.group as string)
+    }
+    return 0
+  }),
+  globals: Object.values(globals).sort((a, b) => {
+    if (a.admin?.group && b.admin?.group) {
+      return (a.admin.group as string).localeCompare(b.admin.group as string)
+    }
+    return 0
+  }),
+  blocks: Object.values(blocks),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      FixedToolbarFeature(),
+      LinkFeature({
+        // Example showing how to customize the built-in fields
+        // of the Link feature
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          {
+            name: "rel",
+            label: "Rel Attribute",
+            type: "select",
+            hasMany: true,
+            options: ["noopener", "noreferrer", "nofollow"],
+            admin: {
+              description:
+                "The rel attribute defines the relationship between a linked resource and the current document. This is a custom link field.",
+            },
+          },
+        ],
+      }),
+    ],
+  }),
+  secret: process.env.SERVER_PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || "",
-    },
+  db: mongooseAdapter({
+    url: process.env.SERVER_DATABASE_URI!,
   }),
   sharp,
   plugins: [
@@ -39,13 +99,13 @@ export default buildConfig({
       collections: {
         media: true,
       },
-      bucket: process.env.S3_BUCKET!,
+      bucket: process.env.SERVER_S3_BUCKET!,
       config: {
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+          accessKeyId: process.env.SERVER_S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.SERVER_S3_SECRET_ACCESS_KEY!,
         },
-        region: process.env.S3_REGION!,
+        region: process.env.SERVER_S3_REGION!,
       },
     }),
   ],

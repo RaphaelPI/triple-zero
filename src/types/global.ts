@@ -1,0 +1,16 @@
+import formats from "@/i18n/request"
+import { routing } from "@/i18n/routing"
+import { CartLine } from "@/providers/checkout/checkout"
+import messages from "messages/fr.json"
+
+declare module "next-intl" {
+  interface AppConfig {
+    Locale: (typeof routing.locales)[number]
+    Messages: typeof messages
+    Formats: typeof formats
+  }
+}
+
+export interface OrderCartLine extends CartLine {
+  unitPrice: number
+}

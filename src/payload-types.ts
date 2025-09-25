@@ -65,28 +65,65 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    'img-block': ImgBlock;
+    'text-block': TextBlock;
+    'text-img-block': TextImgBlock;
+    'title-block': TitleBlock;
+  };
   collections: {
-    users: User;
+    category: Category;
+    order: Order;
+    product: Product;
+    'product-variant': ProductVariant;
+    promotion: Promotion;
+    pages: Page;
+    'shipping-fees': ShippingFee;
+    blocInfo: BlocInfo;
+    color: Color;
+    sizeGuide: SizeGuide;
     media: Media;
+    users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    category: CategorySelect<false> | CategorySelect<true>;
+    order: OrderSelect<false> | OrderSelect<true>;
+    product: ProductSelect<false> | ProductSelect<true>;
+    'product-variant': ProductVariantSelect<false> | ProductVariantSelect<true>;
+    promotion: PromotionSelect<false> | PromotionSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    'shipping-fees': ShippingFeesSelect<false> | ShippingFeesSelect<true>;
+    blocInfo: BlocInfoSelect<false> | BlocInfoSelect<true>;
+    color: ColorSelect<false> | ColorSelect<true>;
+    sizeGuide: SizeGuideSelect<false> | SizeGuideSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  globals: {
+    delay: Delay;
+    faq: Faq;
+    message: Message;
+    nav: Nav;
+    planning: Planning;
+  };
+  globalsSelect: {
+    delay: DelaySelect<false> | DelaySelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
+    message: MessageSelect<false> | MessageSelect<true>;
+    nav: NavSelect<false> | NavSelect<true>;
+    planning: PlanningSelect<false> | PlanningSelect<true>;
+  };
+  locale: 'en' | 'fr';
   user: User & {
     collection: 'users';
   };
@@ -115,10 +152,684 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "img-block".
+ */
+export interface ImgBlock {
+  image: string | Media;
+  size?: ('small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'img-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text-block".
+ */
+export interface TextBlock {
+  title?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Si coché, le bloc sera affiché dans un encadré blanc
+   */
+  panel?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text-img-block".
+ */
+export interface TextImgBlock {
+  title?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: string | Media;
+  /**
+   * Si coché, le bloc sera affiché dans un encadré blanc
+   */
+  panel?: boolean | null;
+  align?: ('left' | 'right') | null;
+  size?: ('small' | 'medium' | 'large') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text-img-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "title-block".
+ */
+export interface TitleBlock {
+  title: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'title-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  description: string;
+  active?: boolean | null;
+  order?: (string | Product)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product".
+ */
+export interface Product {
+  id: string;
+  category: string | Category;
+  /**
+   * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
+   */
+  technical?: boolean | null;
+  title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  description: string;
+  images: {
+    image?: (string | null) | Media;
+    id?: string | null;
+  }[];
+  sizeGuide?: (string | null) | SizeGuide;
+  weightModificator?: {
+    [k: string]: unknown;
+  };
+  colors?:
+    | {
+        color: ColorWithImage;
+        id?: string | null;
+      }[]
+    | null;
+  colorsSecondary?:
+    | {
+        color: ColorWithImage;
+        id?: string | null;
+      }[]
+    | null;
+  options?:
+    | {
+        option: ProductOption;
+        id?: string | null;
+      }[]
+    | null;
+  advanced?:
+    | {
+        option: ProductOption;
+        id?: string | null;
+      }[]
+    | null;
+  blocInfos: {
+    /**
+     * Remplace le titre par défaut du bloc d'information pour ce produit.
+     */
+    title: string;
+    infos: {
+      /**
+       * Remplace le titre par défaut du bloc d'information pour ce produit.
+       */
+      title?: string | null;
+      info: string | BlocInfo;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizeGuide".
+ */
+export interface SizeGuide {
+  id: string;
+  title: string;
+  rows: number;
+  cols: number;
+  table?: string[][];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColorWithImage".
+ */
+export interface ColorWithImage {
+  default?: boolean | null;
+  color: string | Color;
+  image?: (string | null) | Media;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color".
+ */
+export interface Color {
+  id: string;
+  name: string;
+  color: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOption".
+ */
+export interface ProductOption {
+  title: string;
+  values?:
+    | {
+        value: ProductOptionValue;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Facultatif. Ce texte s'affichera en tooltip au survol de l'option.
+   */
+  description?: string | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que taille. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  size?: boolean | null;
+  /**
+   * Si cochée, cette option sera affichée en tant que poids. Pour des calculs supplémentaires sur les valeurs techniques du produit
+   */
+  weight?: boolean | null;
+  /**
+   * Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit
+   */
+  cartImage?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionValue".
+ */
+export interface ProductOptionValue {
+  title: string;
+  delta?:
+    | {
+        delta: ProductOptionDeltaValue;
+        id?: string | null;
+      }[]
+    | null;
+  defaultValue?: boolean | null;
+  /**
+   * Facultatif. Image permettant d'illustrer cette option.
+   */
+  image?: (string | null) | Media;
+  value: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionDeltaValue".
+ */
+export interface ProductOptionDeltaValue {
+  type: 'price' | 'weight' | 'temperature' | 'volume' | 'time';
+  value: number;
+  unit: '€' | '%';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocInfo".
+ */
+export interface BlocInfo {
+  id: string;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order".
+ */
+export interface Order {
+  id: string;
+  uid: string;
+  week: string;
+  customer: string;
+  email: string;
+  date: string;
+  /**
+   * Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.
+   */
+  delay: string;
+  payment?: ('transfer' | 'card' | 'check') | null;
+  amount: number;
+  shippingFee: number;
+  /**
+   * Temps de travail en minutes
+   */
+  workTime: number;
+  /**
+   * La langue dans laquelle la commande a été faite
+   */
+  locale?: ('fr' | 'en') | null;
+  status?: ('cancelled' | 'pending' | 'paid' | 'shipped') | null;
+  shippingInfo?: string | null;
+  comment?: string | null;
+  detail?: {
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variant".
+ */
+export interface ProductVariant {
+  id: string;
+  title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  description: string;
+  /**
+   * Si la case est cochée, cette variante de produit sera visible
+   */
+  active?: boolean | null;
+  /**
+   * Choisissez un produit afin de choisir les options correspondantes
+   */
+  reference: {
+    relationTo: 'product';
+    value: string | Product;
+  };
+  options?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotion".
+ */
+export interface Promotion {
+  id: string;
+  title: string;
+  description?: string | null;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  /**
+   * L'image n'est pas obligatoire, si il n'y en a pas on affichera la premiere image du produit lié à la promo
+   */
+  image?: (string | null) | Media;
+  value: number;
+  /**
+   * Si la case est cochée, la promotion sera visible
+   */
+  active?: boolean | null;
+  /**
+   * Choisissez un produit ou une catégorie.
+   * Produit: validez les options du produit enquestion. Catégorie: la promotion s'applique sur tous les produits de cette catégorie
+   */
+  reference:
+    | {
+        relationTo: 'product';
+        value: string | Product;
+      }
+    | {
+        relationTo: 'category';
+        value: string | Category;
+      };
+  color?: (string | null) | Color;
+  options?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  blocks: (
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        /**
+         * Si coché, le bloc sera affiché dans un encadré blanc
+         */
+        panel?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'text-block';
+      }
+    | {
+        title?: string | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        image: string | Media;
+        /**
+         * Si coché, le bloc sera affiché dans un encadré blanc
+         */
+        panel?: boolean | null;
+        align?: ('left' | 'right') | null;
+        size?: ('small' | 'medium' | 'large') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'text-img-block';
+      }
+    | {
+        image: string | Media;
+        size?: ('small' | 'medium' | 'large') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'img-block';
+      }
+    | {
+        title: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'title-block';
+      }
+  )[];
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page
+   */
+  slug: string;
+  isPublished?: boolean | null;
+  meta?: {
+    /**
+     * Entre 130 et 160 caractères pour décrire le contenu de la page
+     */
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipping-fees".
+ */
+export interface ShippingFee {
+  id: string;
+  title: string;
+  /**
+   * La valeur, en euros, des frais de ports pour la liste de pays sélectionnées.
+   */
+  value: number;
+  countries: (
+    | 'FR'
+    | 'CH'
+    | 'GB'
+    | 'US'
+    | 'DE'
+    | 'IT'
+    | 'ES'
+    | 'DZ'
+    | 'AO'
+    | 'BJ'
+    | 'BW'
+    | 'BF'
+    | 'BI'
+    | 'CM'
+    | 'CV'
+    | 'CF'
+    | 'TD'
+    | 'CG'
+    | 'DJ'
+    | 'EG'
+    | 'GA'
+    | 'GM'
+    | 'GN'
+    | 'CI'
+    | 'KE'
+    | 'LS'
+    | 'LR'
+    | 'LY'
+    | 'MG'
+    | 'ML'
+    | 'MR'
+    | 'MU'
+    | 'MA'
+    | 'MZ'
+    | 'NA'
+    | 'NE'
+    | 'RW'
+    | 'RE'
+    | 'SH'
+    | 'SN'
+    | 'SC'
+    | 'SL'
+    | 'ZA'
+    | 'SD'
+    | 'TZ'
+    | 'TG'
+    | 'TN'
+    | 'UG'
+    | 'ZM'
+    | 'AF'
+    | 'AM'
+    | 'AZ'
+    | 'BD'
+    | 'BT'
+    | 'KH'
+    | 'CN'
+    | 'HK'
+    | 'IN'
+    | 'ID'
+    | 'IR'
+    | 'IQ'
+    | 'IL'
+    | 'JP'
+    | 'JO'
+    | 'LA'
+    | 'LB'
+    | 'MO'
+    | 'MV'
+    | 'NP'
+    | 'PK'
+    | 'PH'
+    | 'SA'
+    | 'SG'
+    | 'LK'
+    | 'SY'
+    | 'TW'
+    | 'TH'
+    | 'TR'
+    | 'VN'
+    | 'YE'
+    | 'AL'
+    | 'AD'
+    | 'AT'
+    | 'BE'
+    | 'BA'
+    | 'BG'
+    | 'HR'
+    | 'CY'
+    | 'CZ'
+    | 'DK'
+    | 'EE'
+    | 'FI'
+    | 'GI'
+    | 'GR'
+    | 'VA'
+    | 'HU'
+    | 'IS'
+    | 'IE'
+    | 'LV'
+    | 'LI'
+    | 'LT'
+    | 'LU'
+    | 'MT'
+    | 'MD'
+    | 'MC'
+    | 'NL'
+    | 'NO'
+    | 'PL'
+    | 'PT'
+    | 'RO'
+    | 'RU'
+    | 'SM'
+    | 'SK'
+    | 'SI'
+    | 'SE'
+    | 'BS'
+    | 'BB'
+    | 'BZ'
+    | 'BM'
+    | 'CA'
+    | 'KY'
+    | 'CR'
+    | 'CU'
+    | 'GD'
+    | 'GP'
+    | 'GT'
+    | 'HT'
+    | 'HN'
+    | 'JM'
+    | 'MQ'
+    | 'MX'
+    | 'NI'
+    | 'PA'
+    | 'PM'
+    | 'AR'
+    | 'BO'
+    | 'BR'
+    | 'CL'
+    | 'CO'
+    | 'EC'
+    | 'FK'
+    | 'GF'
+    | 'PY'
+    | 'PE'
+    | 'UY'
+    | 'VE'
+    | 'AU'
+    | 'FJ'
+    | 'PF'
+    | 'NC'
+    | 'NZ'
+    | 'WF'
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -139,42 +850,63 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'category';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'order';
+        value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'product';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'product-variant';
+        value: string | ProductVariant;
+      } | null)
+    | ({
+        relationTo: 'promotion';
+        value: string | Promotion;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'shipping-fees';
+        value: string | ShippingFee;
+      } | null)
+    | ({
+        relationTo: 'blocInfo';
+        value: string | BlocInfo;
+      } | null)
+    | ({
+        relationTo: 'color';
+        value: string | Color;
+      } | null)
+    | ({
+        relationTo: 'sizeGuide';
+        value: string | SizeGuide;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -184,10 +916,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -207,11 +939,304 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category_select".
+ */
+export interface CategorySelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  active?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "order_select".
+ */
+export interface OrderSelect<T extends boolean = true> {
+  uid?: T;
+  week?: T;
+  customer?: T;
+  email?: T;
+  date?: T;
+  delay?: T;
+  payment?: T;
+  amount?: T;
+  shippingFee?: T;
+  workTime?: T;
+  locale?: T;
+  status?: T;
+  shippingInfo?: T;
+  comment?: T;
+  detail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product_select".
+ */
+export interface ProductSelect<T extends boolean = true> {
+  category?: T;
+  technical?: T;
+  title?: T;
+  slug?: T;
+  description?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  sizeGuide?: T;
+  weightModificator?: T;
+  colors?:
+    | T
+    | {
+        color?: T | ColorWithImageSelect<T>;
+        id?: T;
+      };
+  colorsSecondary?:
+    | T
+    | {
+        color?: T | ColorWithImageSelect<T>;
+        id?: T;
+      };
+  options?:
+    | T
+    | {
+        option?: T | ProductOptionSelect<T>;
+        id?: T;
+      };
+  advanced?:
+    | T
+    | {
+        option?: T | ProductOptionSelect<T>;
+        id?: T;
+      };
+  blocInfos?:
+    | T
+    | {
+        title?: T;
+        infos?:
+          | T
+          | {
+              title?: T;
+              info?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ColorWithImage_select".
+ */
+export interface ColorWithImageSelect<T extends boolean = true> {
+  default?: T;
+  color?: T;
+  image?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOption_select".
+ */
+export interface ProductOptionSelect<T extends boolean = true> {
+  title?: T;
+  values?:
+    | T
+    | {
+        value?: T | ProductOptionValueSelect<T>;
+        id?: T;
+      };
+  description?: T;
+  size?: T;
+  weight?: T;
+  cartImage?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionValue_select".
+ */
+export interface ProductOptionValueSelect<T extends boolean = true> {
+  title?: T;
+  delta?:
+    | T
+    | {
+        delta?: T | ProductOptionDeltaValueSelect<T>;
+        id?: T;
+      };
+  defaultValue?: T;
+  image?: T;
+  value?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductOptionDeltaValue_select".
+ */
+export interface ProductOptionDeltaValueSelect<T extends boolean = true> {
+  type?: T;
+  value?: T;
+  unit?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product-variant_select".
+ */
+export interface ProductVariantSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  active?: T;
+  reference?: T;
+  options?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotion_select".
+ */
+export interface PromotionSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  slug?: T;
+  image?: T;
+  value?: T;
+  active?: T;
+  reference?: T;
+  color?: T;
+  options?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  blocks?:
+    | T
+    | {
+        'text-block'?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              panel?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'text-img-block'?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              image?: T;
+              panel?: T;
+              align?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'img-block'?:
+          | T
+          | {
+              image?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'title-block'?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  slug?: T;
+  isPublished?: T;
+  meta?:
+    | T
+    | {
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shipping-fees_select".
+ */
+export interface ShippingFeesSelect<T extends boolean = true> {
+  title?: T;
+  value?: T;
+  countries?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocInfo_select".
+ */
+export interface BlocInfoSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color_select".
+ */
+export interface ColorSelect<T extends boolean = true> {
+  name?: T;
+  color?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sizeGuide_select".
+ */
+export interface SizeGuideSelect<T extends boolean = true> {
+  title?: T;
+  rows?: T;
+  cols?: T;
+  table?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -234,24 +1259,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -284,6 +1291,199 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delay".
+ */
+export interface Delay {
+  id: string;
+  /**
+   * Correspond à la date de départ de livraison de chez Triple Zéro
+   */
+  date: string;
+  /**
+   * Si la case est cochée, le message sera affiché
+   */
+  active?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  categories: {
+    title: string;
+    items: {
+      question: string;
+      answer: {
+        root: {
+          type: string;
+          children: {
+            type: string;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          direction: ('ltr' | 'rtl') | null;
+          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      };
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "message".
+ */
+export interface Message {
+  id: string;
+  message: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image?: (string | null) | Media;
+  /**
+   * Si la case est cochée, le message sera affiché
+   */
+  active?: boolean | null;
+  /**
+   * Si la case est cochée, le message s'affichera sur la première page affichée du site dans une modale
+   */
+  modal?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav".
+ */
+export interface Nav {
+  id: string;
+  items: {
+    title: string;
+    image?: (string | null) | Media;
+    category: (string | Category)[];
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "planning".
+ */
+export interface Planning {
+  id: string;
+  /**
+   * Correspond au nombre d'heures travaillées par défaut par semaine
+   */
+  defaultWorktime: number;
+  weeks?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "delay_select".
+ */
+export interface DelaySelect<T extends boolean = true> {
+  date?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  categories?:
+    | T
+    | {
+        title?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "message_select".
+ */
+export interface MessageSelect<T extends boolean = true> {
+  message?: T;
+  image?: T;
+  active?: T;
+  modal?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "nav_select".
+ */
+export interface NavSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        category?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "planning_select".
+ */
+export interface PlanningSelect<T extends boolean = true> {
+  defaultWorktime?: T;
+  weeks?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

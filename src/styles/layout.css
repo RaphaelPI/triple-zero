@@ -1,0 +1,24 @@
+@utility pt-section {
+  @apply pt-4 lg:pt-8;
+}
+@utility pb-section {
+  @apply pb-4 lg:pb-8;
+}
+@utility pr-section {
+  @apply pr-4 lg:pr-8 xl:pr-10;
+}
+@utility pl-section {
+  @apply pl-4 lg:pl-8 xl:pl-10;
+}
+@utility px-section {
+  @apply pr-section pl-section;
+}
+@utility py-section {
+  @apply pt-section pb-section;
+}
+@utility w-section {
+  @apply mx-auto w-full max-w-[1536px];
+}
+@utility section {
+  @apply w-section px-section py-section;
+}

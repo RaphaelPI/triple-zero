@@ -29,6 +29,8 @@ const eslintConfig = [
         },
       ],
       "jsx-a11y/alt-text": "off",
+      "react/display-name": "off",
+      "import/no-anonymous-default-export": "off",
     },
   },
   {

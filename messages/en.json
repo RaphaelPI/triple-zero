@@ -32,23 +32,136 @@
   "care": "Entretien",
   "cart": {
     "title": "Panier",
-    "hint": "Validez votre commande afin de procéder au paiement.",
+    "description": "Validez votre commande afin de procéder au paiement. Votre panier sera conservé pendant 24h.",
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
+    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
-    "priceVTA": "Prix TTC",
+    "priceVTA": "Prix",
     "order": "Commande",
+    "resume": "Récapitulatif",
     "removeLine": "Voulez-vous supprimer ce produit de votre panier ?",
     "empty": "Votre panier est vide",
     "totalCart": "Total panier",
     "total": "Total à payer",
-    "delivery": "Livraison"
+    "delivery": "Livraison",
+    "toDetermine": "A déterminer",
+    "added": "{product} a été ajouté au panier.",
+    "see": "<strong>Cliquez ici</strong> pour voir votre panier",
+    "line": {
+      "remove": "Retirer un produit",
+      "add": "Ajouter un produit"
+    }
   },
-  "notFound": "Page introuvable",
+  "delivery": {
+    "title": "Vos coordonnées",
+    "description": "Merci de renseigner votre adresse de facturation. \nPar défaut, votre commande sera expédiée à l’adresse de facturation. Si vous souhaitez une livraison à une autre adresse, vous pourrez l’indiquer en décochant l’option ci-dessous.",
+    "gender": "Civilité",
+    "lastName": "Nom",
+    "firstName": "Prénom",
+    "company": "Société",
+    "address": "Adresse",
+    "address2": "Complément d'adresse",
+    "zip": "Code postal",
+    "city": "Ville",
+    "country": "Pays",
+    "email": "Email",
+    "phone": "Téléphone",
+    "validate": "Passer au paiement",
+    "addAddress2": "Ajouter un complément d’adresse",
+    "useDeliveryAddress": "Utiliser l’adresse de facturation comme adresse d’expédition",
+    "deliveryAddress": "Adresse de livraison",
+    "billingAddress": "Adresse de facturation",
+    "ue-info": "Les tarifs indiqués comprennent la TVA, car votre pays de livraison fait partie de l'Union européenne.",
+    "non-ue-info": "Les prix affichés sont hors taxes (HT), votre pays de livraison se trouvant en dehors de l'Union européenne."
+  },
+  "payment": {
+    "title": "Paiement",
+    "description": "Choisissez votre moyen de paiement afin de finaliser votre commande.",
+    "validate": "Valider le paiement",
+    "finish": "Finaliser la commande",
+    "select": "Sélectionner votre moyen de paiement",
+    "comment": "Si vous souhaitez ajouter un commentaire, poser une question, demander ou apporter une précision, faites-le ci-dessous :",
+    "phone": {
+      "title": "Paiement par carte bancaire (par téléphone)",
+      "description": "Avec ce mode de paiement, vous payez la totalité du montant de votre commande, en nous communiquant numéro et date d'expiration de votre carte par téléphone au {phone}",
+      "openingHours": "Pendant nos heures d'ouverture : du mardi au vendredi de 9h à 12h et de 14h à 19h et le samedi matin de 9h à 12h (fermé le lundi). \n<strong>Nous sommes agréés VPC</strong> et vous pouvez donc nous transmettre ces informations en toute sécurité."
+    },
+    "check": {
+      "title": "Paiement par chèque",
+      "description": "Vous devez règler <strong>la totalité du montant de votre commande</strong>.",
+      "description2": "Nous acceptons les chèques <strong>bancaires ou postaux français</strong>, libellés en Euros, à l'ordre de TRIPLEZERO.\n<strong>Imprimez l'email de confirmation</strong> que vous allez recevoir, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <em>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</em>\nLa préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés)."
+    },
+    "transfer": {
+      "title": "Paiement par virement bancaire",
+      "description": "Veuillez régler l’intégralité de votre commande par virement bancaire.",
+      "description2": "La préparation de votre commande commencera dès réception de votre paiement."
+    },
+    "card": {
+      "title": "Paiement sécurisé en ligne par carte bancaire"
+    },
+    "confirmation": {
+      "title": "Merci pour votre commande",
+      "description": "Votre commande a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
+    }
+  },
+  "product": {
+    "options": "Options",
+    "advancedOptions": "Options avancées",
+    "see": "Voir le produit",
+    "material": "Duvet d'oie",
+    "technicalInfos": "Informations techniques",
+    "materials": "Matériaux",
+    "care": "Entretien",
+    "related": "Produits similaires"
+  },
+  "checkout": {
+    "step1": "Panier",
+    "step2": "Coordonnées",
+    "step3": "Paiement",
+    "globalDiscount": "Si vous atteignez <amount>{amount}</amount> vous bénéficierez d'une réduction de <discount>{discount}</discount>",
+    "globalDiscountMax": "Vous avez atteint <amount>{amount}</amount> vous bénéficierez de la réduction maximale de <discount>{discount}</discount>",
+    "freeShipping": "Offert",
+    "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€.",
+    "delay": "La date d’expédition prévue est actuellement fixée au <strong>{date}</strong>, au départ de chez nous.",
+    "confirmation-delay": "La date d’expédition prévue pour votre commande est fixée au <strong>{date}</strong>, au départ de chez nous."
+  },
+  "notFound": {
+    "title": "404 - Page introuvable",
+    "description": "La page que vous cherchez n'existe pas."
+  },
+  "error": {
+    "required": "Champ obligatoire",
+    "deliveryRequired": "Champ obligatoire (Si vous choisissez de remplir l'adresse de livraison)",
+    "deliveryRequiredAll": "Si vous choisissez de remplir l'adresse de livraison, vous devez saisir tous les champs obligatoires.",
+    "deliveryCountryTaxFree": "Vous ne pouvez pas choisir un pays de facturation en Europe (TTC) et un pays de livraison hors Europe (HT), ni l'inverse.",
+    "samePromotion": "Cette promotion est déjà présente dans votre panier"
+  },
   "question": "Une question sur nos produits ou nos services ?",
   "contactUs": "Contactez-nous",
   "priceFrom": "À partir de ",
-  "mainMessage": "Le mot de Louis Fernand"
+  "mainMessage": "Le mot de Louis Fernand",
+  "promotions": {
+    "meta_description": "Profitez de nos offres spéciales sur une sélection de matériel de haute montagne, sacs de couchage, doudounes, couettes, oreillers et literie pour toute la famille. Stock limité !",
+    "nav": "Promotions",
+    "title": "Promos du moment",
+    "seeAll": "Voir toutes les promotions"
+  },
+  "variants": "Les incontournables",
+  "cgu": "Conditions générales de vente",
+  "legals": "Mentions légales",
+  "faq": {
+    "title": "Vos questions fréquentes",
+    "description": "Trouvez toutes les réponses à vos questions sur nos équipements de haute montagne : expéditions, livraisons, tailles, entretien des doudounes, sacs de couchage, et plus encore."
+  },
+  "email": {
+    "orderConfirmation": {
+      "subject": "Triple Zero - Order confirmation",
+      "card": "Votre règlement par carte bancaire en ligne a bien été enregistré et la commande est mise en route.",
+      "check": "Vous avez choisi de règler par chèque : vous devez règler la totalité du montant de votre commande.<br></br>Imprimez cet email, <strong>joignez-y votre chèque</strong> et envoyez le tout à : <strong>TRIPLE ZERO - 1 Chemin de la Fontaine - F-81540 DURFORT</strong><br></br>La préparation de votre commande démarrera dès réception et encaissement de votre règlement (en général 4 jours ouvrés).",
+      "transfer": "Vous avez choisi de règler par virement bancaire : vous devez règler la totalité du montant de votre commande.<br></br>Effectuez votre virement :  <strong>IBAN FR76 1005 7194 6700 0682 0890 143</strong><br></br>SWIFT <strong>CMCIFRPP</strong>.<br></br>La préparation de votre commande démarrera dès réception du règlement."
+    }
+  }
 }

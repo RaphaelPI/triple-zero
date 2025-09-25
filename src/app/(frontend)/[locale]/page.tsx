@@ -1,26 +1,38 @@
-import { Image } from "@/components/image"
-import { Button } from "@/components/ui/button"
-import { getClient } from "@/lib/payload"
+import { MainMessage } from "@/components/main-message"
+import { Locale } from "@/i18n/config"
+import { setRequestLocale } from "next-intl/server"
+import { HomeCategories } from "./_components/home/home-categories"
+import { HomeProductVariants } from "./_components/home/home-product-variants"
+import { HomePromotions } from "./_components/home/home-promotions"
+import { getMetadata } from "./metadata"
 
-export default async function HomePage() {
-  const payload = await getClient()
-  const medias = await payload.find({
-    collection: "media",
-    limit: 1,
+export const dynamic = "force-static"
+
+interface Props {
+  params: Promise<{
+    locale: Locale
+  }>
+}
+
+export const generateMetadata = async ({ params }: Props) => {
+  const { locale } = await params
+  return getMetadata({
+    locale,
+    pathname: "/",
   })
+}
 
-  const media = medias.docs[0]
+export default async ({ params }: Props) => {
+  // Enable static rendering
+  const { locale } = await params
+  setRequestLocale(locale)
 
   return (
-    <div className="space-y-10 p-10">
-      <Button variant="destructive">Click me</Button>
-      <Button variant="default">Click me</Button>
-      <Button variant="ghost">Click me</Button>
-      <Button variant="link">Click me</Button>
-      <Button variant="outline">Click me</Button>
-      <Button variant="secondary">Click me</Button>
-
-      {media.url && <Image media={media} className="h-auto" />}
-    </div>
+    <main className="bg-flake bg-flake-bl md:bg-flake-tr space-y-8 bg-no-repeat">
+      <HomePromotions />
+      <MainMessage />
+      <HomeProductVariants />
+      <HomeCategories />
+    </main>
   )
 }
