@@ -18,6 +18,12 @@ export const PlanningWeeksSetup = ({ path }: Props) => {
   const { value: defaultWorktime } = useField<number>({ path: "defaultWorktime" })
 
   const handleChange = (week: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "") {
+      delete value[week]
+      setValue({ ...value })
+      return
+    }
+
     setValue({ ...value, [week]: Number(e.target.value) })
   }
 
@@ -43,7 +49,7 @@ export const PlanningWeeksSetup = ({ path }: Props) => {
                     <div>
                       <TextInput
                         path={`${path}.${week}`}
-                        value={value[week]}
+                        value={value[week]?.toString() ?? ""}
                         placeholder={defaultWorktime?.toString() ?? "90"}
                         onChange={handleChange(week)}
                       />

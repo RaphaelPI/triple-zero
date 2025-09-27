@@ -84,7 +84,7 @@ export const ProductTechnicalValues = () => {
             </div>
           </Popover>
         </div>
-        <div className="lg:bg-dark/10 px-section mx-auto hidden py-1 text-center text-xs font-light text-gray-500 italic lg:block">
+        <div className="lg:bg-dark/10 px-section mx-auto hidden py-1 text-center text-xs font-light text-gray-600 italic lg:block">
           {t("technicalValues.hint")}
         </div>
         <div className="py-panel px-panel flex flex-wrap items-center justify-center gap-4 bg-white text-center lg:hidden">

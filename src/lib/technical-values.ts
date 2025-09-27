@@ -63,7 +63,7 @@ export const getTechnicalValues = (
           if (option.weight && delta?.type === "weight" && sizeOption) {
             const sizeValue = String(sizeOption[1]?.title.toLowerCase())
             const modificator = modificators?.[sizeValue]
-            console.log(sizeValue, modificator)
+
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
             }
@@ -76,9 +76,7 @@ export const getTechnicalValues = (
   })
 
   // apply pourcentages to total
-  console.log(pourcentages)
   stats.forEach((type) => {
-    console.log(type, technicalValues[type], pourcentages[type])
     technicalValues[type] =
       technicalValues[type] + (technicalValues[type] * pourcentages[type]) / 100
   })
