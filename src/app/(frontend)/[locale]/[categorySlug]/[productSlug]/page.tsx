@@ -83,7 +83,7 @@ export default async (props: Props) => {
         <h1 className="mb-4">{product.title}</h1>
       </div>
       <div className="w-section grid gap-8 lg:grid-cols-12">
-        <section className="px-section order-1 lg:col-span-7 lg:pr-0">
+        <section className="px-section order-1 whitespace-pre-line lg:col-span-7 lg:pr-0">
           {product.description}
         </section>
         <ProductProvider product={product}>

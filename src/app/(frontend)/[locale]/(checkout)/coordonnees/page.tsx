@@ -26,11 +26,6 @@ export default async () => {
         <p className="whitespace-pre-line">{t("delivery.description")}</p>
       </section>
       <CheckoutForm />
-      {/* <section className="w-section px-section flex gap-8 max-lg:flex-col">
-        <div className="panel px-panel py-panel flex-1 space-y-4">
-        </div>
-        <CheckoutSummary displayButton={false} />
-      </section> */}
     </main>
   )
 }

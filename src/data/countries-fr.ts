@@ -90,7 +90,7 @@ const COUNTRIES_FR: Record<string, Record<string, string>> = {
     AL: "Albanie",
     AD: "Andorre",
     AT: "Autriche",
-    BE: "Belgique",
+    // BE: "Belgique",
     BA: "Bosnie-Herzégovine",
     BG: "Bulgarie",
     HR: "Croatie",

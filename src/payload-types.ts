@@ -373,6 +373,9 @@ export interface Color {
  * via the `definition` "ProductOption".
  */
 export interface ProductOption {
+  /**
+   * C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit
+   */
   title: string;
   values?:
     | {

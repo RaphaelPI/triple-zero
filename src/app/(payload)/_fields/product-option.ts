@@ -13,6 +13,10 @@ export const ProductOption: Field = {
       type: "text",
       required: true,
       localized: true,
+      admin: {
+        description:
+          "C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit",
+      },
     },
     {
       name: "values",

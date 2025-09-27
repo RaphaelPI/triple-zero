@@ -2,10 +2,11 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { Skeleton } from "@/components/ui/skeleton"
 import { LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 import { InputField } from "./input-field"
 
@@ -87,13 +88,15 @@ export const DeliveryFormFields = ({ form }: Props) => {
               required
             />
           </div>
-          <CountrySelectField
-            control={form.control}
-            name="d_country"
-            label={t("country")}
-            placeholder={t("country")}
-            required
-          />
+          <Suspense fallback={<Skeleton className="h-14 w-full" />}>
+            <CountrySelectField
+              control={form.control}
+              name="d_country"
+              label={t("country")}
+              placeholder={t("country")}
+              required
+            />
+          </Suspense>
         </>
       )}
     </>

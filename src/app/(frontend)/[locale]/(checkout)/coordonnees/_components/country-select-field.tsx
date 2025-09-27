@@ -80,14 +80,14 @@ export const CountrySelectField = ({
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent className="bg-white">
-                {Object.entries(countries).map(([continent, countries], index) => (
-                  <Fragment key={`${continent}-${index}`}>
+                {Object.entries(countries).map(([continent, countries], indexContinent) => (
+                  <Fragment key={`${continent}-${indexContinent}`}>
                     <SelectSeparator />
                     <SelectGroup>
                       <SelectLabel className="pl-2 text-gray-400">{continent}</SelectLabel>
                       <>
-                        {Object.entries(countries).map(([code, country]) => {
-                          const key = `${index}-${code}`
+                        {Object.entries(countries).map(([code, country], indexCountry) => {
+                          const key = `${indexContinent}-${indexCountry}-${code}`
                           return (
                             <SelectItem key={key} value={code}>
                               {country}

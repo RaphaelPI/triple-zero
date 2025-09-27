@@ -63,6 +63,7 @@ export const getTechnicalValues = (
           if (option.weight && delta?.type === "weight" && sizeOption) {
             const sizeValue = String(sizeOption[1]?.title.toLowerCase())
             const modificator = modificators?.[sizeValue]
+            console.log(sizeValue, modificator)
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
             }
@@ -75,27 +76,26 @@ export const getTechnicalValues = (
   })
 
   // apply pourcentages to total
+  console.log(pourcentages)
   stats.forEach((type) => {
+    console.log(type, technicalValues[type], pourcentages[type])
     technicalValues[type] =
       technicalValues[type] + (technicalValues[type] * pourcentages[type]) / 100
   })
 
   // Get real volume
-  COMPRESSION_BAGS.forEach(([volumeReference], index) => {
-    if (COMPRESSION_BAGS.length < index + 1) {
-      return COMPRESSION_BAGS[index - 1]
-    }
-
-    // protect index outside array
-    const bagIndex = Math.min(index + 1, COMPRESSION_BAGS.length - 1)
-    if (
-      technicalValues.volume > volumeReference &&
-      technicalValues.volume <= COMPRESSION_BAGS[bagIndex][0]
-    ) {
-      technicalValues.volume = COMPRESSION_BAGS[bagIndex][0]
-      technicalValues.weight += COMPRESSION_BAGS[bagIndex][1]
-    }
+  const v = COMPRESSION_BAGS.find(([volumeReference], index) => {
+    const nextBagIndex = Math.min(index + 1, COMPRESSION_BAGS.length - 1)
+    return (
+      technicalValues.volume >= volumeReference &&
+      technicalValues.volume <= COMPRESSION_BAGS[nextBagIndex][0]
+    )
   })
+
+  if (v) {
+    technicalValues.volume = v[0]
+    technicalValues.weight += v[1]
+  }
 
   technicalValues.volume = Math.max(
     Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),

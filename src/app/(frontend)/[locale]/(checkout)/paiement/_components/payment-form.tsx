@@ -39,7 +39,7 @@ type PaymentType = "card" | "check" | "transfer"
 
 export const PaymentForm = () => {
   const [paymentType, setPaymentType] = useState<PaymentType>("card")
-  const { cart, loadingShippingFees, storeOrder } = useCheckout()
+  const { cart, loadingShippingFees, storeOrder, deliveryData } = useCheckout()
   const t = useTranslations()
   const { push } = useRouter()
 
@@ -180,7 +180,7 @@ export const PaymentForm = () => {
               className="w-full"
               aria-label={t("payment.validate")}
               loading={form.formState.isSubmitting}
-              disabled={form.formState.isSubmitting || loadingShippingFees}
+              disabled={form.formState.isSubmitting || loadingShippingFees || !deliveryData.country}
             >
               {paymentType === "card" ? t("payment.validate") : t("payment.finish")}
             </Button>

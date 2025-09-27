@@ -105,6 +105,9 @@
     "confirmation": {
       "title": "Merci pour votre commande",
       "description": "Votre commande a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
+    },
+    "error": {
+      "deliveryRequired": "Vous devez saisir vos coordonnées avant de procéder au paiement"
     }
   },
   "product": {
