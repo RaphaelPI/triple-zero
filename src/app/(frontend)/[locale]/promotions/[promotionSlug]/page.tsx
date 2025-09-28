@@ -20,7 +20,7 @@ import { ProductProvider } from "../../[categorySlug]/[productSlug]/_components/
 import { ProductTechnicalValues } from "../../[categorySlug]/[productSlug]/_components/product-technical-values"
 import { getPromotionData } from "./data"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 interface Props {
   params: Promise<{

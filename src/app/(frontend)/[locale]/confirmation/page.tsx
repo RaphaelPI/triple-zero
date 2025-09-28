@@ -2,6 +2,7 @@ import { formatDate, setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { getLocale, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
+import { CartCleaner } from "./_components/cart-cleaner"
 import { getOrder, updateOrder } from "./data"
 
 export const dynamic = "force-dynamic"
@@ -49,7 +50,7 @@ export default async ({ searchParams }: Props) => {
           </div>
         )}
       </div>
-      {/* <CartCleaner /> */}
+      <CartCleaner />
     </div>
   )
 }

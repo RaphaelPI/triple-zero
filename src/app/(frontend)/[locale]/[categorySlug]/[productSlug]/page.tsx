@@ -21,7 +21,7 @@ import { ProductTechnicalValues } from "./_components/product-technical-values"
 import { ProductsRelated } from "./_components/products-related"
 import { getProductData } from "./data"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 interface Props {
   params: Promise<{

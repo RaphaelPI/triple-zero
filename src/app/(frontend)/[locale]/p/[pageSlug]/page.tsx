@@ -7,7 +7,7 @@ import { BlockTextImg } from "./_components/block-text-img"
 import { BlockTitle } from "./_components/block-title"
 import { getPageData } from "./data"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 interface Props {
   params: Promise<{ pageSlug: string }>

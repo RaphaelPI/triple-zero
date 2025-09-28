@@ -364,6 +364,10 @@ export interface ColorWithImage {
 export interface Color {
   id: string;
   name: string;
+  /**
+   * Si la case est cochée, la couleur sera visible
+   */
+  active?: boolean | null;
   color: string;
   updatedAt: string;
   createdAt: string;
@@ -1207,6 +1211,7 @@ export interface BlocInfoSelect<T extends boolean = true> {
  */
 export interface ColorSelect<T extends boolean = true> {
   name?: T;
+  active?: T;
   color?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -3,6 +3,6 @@ import { revalidatePath } from "next/cache"
 
 export const localeRevalidatePath = (path: string) => {
   LOCALES.forEach((locale) => {
-    revalidatePath(`/${locale}${path}`, "page")
+    revalidatePath(`/${locale}${path}`)
   })
 }

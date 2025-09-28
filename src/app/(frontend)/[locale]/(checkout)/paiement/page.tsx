@@ -4,7 +4,7 @@ import { getMetadata } from "../../metadata"
 import { PaymentForm } from "./_components/payment-form"
 import { StripeProvider } from "./_components/stripe-provider"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations()

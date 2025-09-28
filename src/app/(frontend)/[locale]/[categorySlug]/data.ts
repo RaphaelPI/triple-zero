@@ -17,6 +17,7 @@ export const getCategoryData = cache(async (slug: string) => {
     locale,
     limit: 999,
   })
+
   return category
 })
 

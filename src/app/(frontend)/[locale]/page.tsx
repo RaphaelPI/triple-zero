@@ -6,7 +6,7 @@ import { HomeProductVariants } from "./_components/home/home-product-variants"
 import { HomePromotions } from "./_components/home/home-promotions"
 import { getMetadata } from "./metadata"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 interface Props {
   params: Promise<{

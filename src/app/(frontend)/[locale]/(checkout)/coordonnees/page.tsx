@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { getMetadata } from "../../metadata"
 import { CheckoutForm } from "./_components/checkout-form"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations()

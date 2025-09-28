@@ -13,7 +13,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { getMetadata } from "../metadata"
 import { getFaqData } from "./data"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 
 interface Props {
   params: Promise<{

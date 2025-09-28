@@ -19,6 +19,15 @@ export const Color: CollectionConfig = {
       required: true,
       localized: true,
     },
+    {
+      name: "active",
+      type: "checkbox",
+      defaultValue: true,
+      admin: {
+        description: "Si la case est cochée, la couleur sera visible",
+        position: "sidebar",
+      },
+    },
     color({
       name: "color",
       label: "Couleur",
