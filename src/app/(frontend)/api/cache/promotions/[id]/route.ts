@@ -1,6 +1,6 @@
 // export const POST = async (request: NextRequest) => {
 
-import { localeRevalidatePath } from "@/lib/cache"
+import { revalidateLocalePath } from "@/lib/cache"
 import { getClient } from "@/lib/payload"
 
 //   res.
@@ -23,9 +23,9 @@ export const POST = async (request: Request, { params }: { params: Promise<{ id:
     return Response.json({ success: false })
   }
 
-  localeRevalidatePath(`/promotions/${promotion.slug}`)
-  localeRevalidatePath(`/promotions`)
-  localeRevalidatePath(`/`)
+  revalidateLocalePath({ path: `/promotions/${promotion.slug}` })
+  revalidateLocalePath({ path: `/promotions` })
+  revalidateLocalePath({ path: `/` })
 
   return Response.json({ success: true })
 }

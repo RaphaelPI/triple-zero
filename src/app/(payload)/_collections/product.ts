@@ -1,7 +1,29 @@
-import { CollectionConfig } from "payload"
+import { revalidateLocalePath } from "@/lib/cache"
+import { Product as ProductType } from "@/payload-types"
+import { CollectionAfterChangeHook, CollectionConfig } from "payload"
 import { ColorWithImage } from "../_fields/color-with-image"
 import { ProductOption } from "../_fields/product-option"
 import { Slug } from "../_fields/slug"
+
+const revalidateProduct: CollectionAfterChangeHook<ProductType> = async ({ doc, req }) => {
+  let categorySlug = ""
+  if (typeof doc.category === "string") {
+    const category = await req.payload.findByID({
+      collection: "category",
+      id: doc.category,
+    })
+    categorySlug = category.slug
+  } else {
+    categorySlug = doc.category.slug
+  }
+
+  await req.payload.db.commitTransaction(req.transactionID as string)
+
+  revalidateLocalePath({ path: `/${categorySlug}/${doc.slug}` })
+  revalidateLocalePath({ path: `/${categorySlug}` })
+
+  return doc
+}
 
 export const Product: CollectionConfig = {
   slug: "product",
@@ -12,6 +34,9 @@ export const Product: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "1 - Produits",
+  },
+  hooks: {
+    afterChange: [revalidateProduct],
   },
   fields: [
     {

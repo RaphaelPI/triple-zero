@@ -1,5 +1,5 @@
 import { env } from "@/env"
-import Mailjet, { LibraryResponse, SendEmailV3_1 } from "node-mailjet"
+import Mailjet, { SendEmailV3_1 } from "node-mailjet"
 import { logger } from "./logger"
 
 export const mailjet = Mailjet.apiConnect(
@@ -51,9 +51,8 @@ export const sendEmail = async ({
         },
       ],
     }
-    const result: LibraryResponse<SendEmailV3_1.Response> = await mailjet
-      .post("send", { version: "v3.1" })
-      .request(data)
+
+    await mailjet.post("send", { version: "v3.1" }).request(data)
 
     return true
   } catch (err: any) {

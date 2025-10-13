@@ -71,5 +71,15 @@ export const ProductOption: Field = {
           "Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit",
       },
     },
+    {
+      name: "active",
+      label: "Active ?",
+      type: "checkbox",
+      defaultValue: true,
+      admin: {
+        description: "Si la case est cochée, l'option sera visible",
+        position: "sidebar",
+      },
+    },
   ],
 }

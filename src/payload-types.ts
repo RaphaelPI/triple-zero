@@ -190,7 +190,7 @@ export interface TextBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -219,7 +219,7 @@ export interface TextImgBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -259,7 +259,7 @@ export interface Category {
   id: string;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -281,7 +281,7 @@ export interface Product {
   technical?: boolean | null;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -403,6 +403,10 @@ export interface ProductOption {
    * Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit
    */
   cartImage?: boolean | null;
+  /**
+   * Si la case est cochée, l'option sera visible
+   */
+  active?: boolean | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -443,7 +447,7 @@ export interface BlocInfo {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -500,7 +504,7 @@ export interface ProductVariant {
   id: string;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -536,7 +540,7 @@ export interface Promotion {
   title: string;
   description?: string | null;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   /**
@@ -588,7 +592,7 @@ export interface Page {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -613,7 +617,7 @@ export interface Page {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -650,7 +654,7 @@ export interface Page {
       }
   )[];
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   isPublished?: boolean | null;
@@ -1071,6 +1075,7 @@ export interface ProductOptionSelect<T extends boolean = true> {
   size?: T;
   weight?: T;
   cartImage?: T;
+  active?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1331,7 +1336,7 @@ export interface Faq {
         root: {
           type: string;
           children: {
-            type: string;
+            type: any;
             version: number;
             [k: string]: unknown;
           }[];
@@ -1359,7 +1364,7 @@ export interface Message {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];

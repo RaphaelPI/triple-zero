@@ -133,5 +133,5 @@ export const getStartingPrice = (options: ProductOption[]) => {
     return getTechnicalValues(usedOptions).price
   }
 
-  throw new Error("No starting price found")
+  return 0
 }

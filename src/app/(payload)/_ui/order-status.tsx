@@ -10,12 +10,9 @@ interface Props {
   field: SelectField
 }
 
-export const OrderStatus = ({ path, field, ...props }: Props) => {
+export const OrderStatus = ({ path, field }: Props) => {
   const { value, setValue } = useField<Order["status"]>({ path })
   const shippingInfoField = useField<Order["shippingInfo"]>({ path: "shippingInfo" })
-  // const { value: shippingInfo, setValue: setShippingInfo } = useField<Order["shippingInfo"]>({
-  //   path: `${path}.shippingInfo`,
-  // })
   const option = field.options.find((o) => (o as OptionObject).value === value) || field.options[0]
 
   const handlePaid = () => {

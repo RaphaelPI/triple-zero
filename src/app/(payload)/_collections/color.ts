@@ -1,3 +1,4 @@
+import { env } from "@/env"
 import { CollectionConfig } from "payload"
 import { color } from "../_fields/color"
 
@@ -10,6 +11,17 @@ export const Color: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     group: "3 - Information produit",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/products`, {
+          method: "POST",
+        })
+
+        return doc
+      },
+    ],
   },
   fields: [
     {

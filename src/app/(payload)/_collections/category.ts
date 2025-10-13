@@ -1,3 +1,4 @@
+import { revalidateLocalePath } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 import { Slug } from "../_fields/slug"
 
@@ -10,6 +11,14 @@ export const Category: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "1 - Produits",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        await revalidateLocalePath({ path: `/${doc.slug}` })
+        return doc
+      },
+    ],
   },
   fields: [
     {

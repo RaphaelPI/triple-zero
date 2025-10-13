@@ -4,7 +4,7 @@ import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
-import { Category, Product, SizeGuide } from "@/payload-types"
+import { Category, Color, Product, SizeGuide } from "@/payload-types"
 import { setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
@@ -19,9 +19,10 @@ import { ProductPrice } from "./_components/product-price"
 import { ProductProvider } from "./_components/product-provider"
 import { ProductTechnicalValues } from "./_components/product-technical-values"
 import { ProductsRelated } from "./_components/products-related"
+import { Test } from "./_components/test"
 import { getProductData } from "./data"
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
@@ -73,6 +74,7 @@ export default async (props: Props) => {
   return (
     <main className="bg-flake bg-flake-bl pb-section space-y-8 bg-no-repeat">
       <ProductJsonLd product={product} locale={locale} />
+      <Test slug={`/(frontend)/[locale]/[categorySlug]/[productSlug]`} />
       <div className="w-section px-section pt-section">
         <Breadcrumbs
           items={[
@@ -90,8 +92,12 @@ export default async (props: Props) => {
           <div className="px-section sticky top-0 order-3 lg:order-2 lg:col-span-5 lg:row-span-3 lg:pl-0">
             <div className="panel">
               <ProductOptions
-                options={product.options?.map(({ option }) => option)}
-                advanced={product.advanced?.map(({ option }) => option)}
+                options={product.options
+                  ?.filter(({ option }) => option.active)
+                  .map(({ option }) => option)}
+                advanced={product.advanced
+                  ?.filter(({ option }) => option.active)
+                  .map(({ option }) => option)}
                 sizeGuide={product.sizeGuide as SizeGuide}
               >
                 {product.colors && (
@@ -99,7 +105,9 @@ export default async (props: Props) => {
                     <label className="block self-baseline leading-4 lg:w-32">Couleur</label>
                     <div className="flex flex-1 flex-wrap gap-2">
                       <ProductColors
-                        colors={product.colors.map(({ color }) => color)}
+                        colors={product.colors
+                          .filter(({ color }) => (color.color as Color).active)
+                          .map(({ color }) => color)}
                         name="color"
                       />
                     </div>

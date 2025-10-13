@@ -1,4 +1,3 @@
-// import { postgresAdapter } from "@payloadcms/db-postgres"
 import { mongooseAdapter } from "@payloadcms/db-mongodb"
 
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"

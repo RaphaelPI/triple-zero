@@ -3,8 +3,7 @@ import { Media, Product, ProductOption, ProductOptionValue } from "@/payload-typ
 import { getTranslations } from "next-intl/server"
 import { getMetadata } from "../metadata"
 import { getPromotionsData } from "./data"
-
-export const dynamic = "force-dynamic"
+export const dynamic = "force-static"
 
 export const generateMetadata = async () => {
   const t = await getTranslations()

@@ -44,7 +44,7 @@ export const ProductsRelated = async ({ products, categorySlug }: Props) => {
                 <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                   <h2 className="text-xl font-bold">{product.title}</h2>
                   <div className="line-clamp-2">{product.description}</div>
-                  {price && (
+                  {price > 0 && (
                     <div className="text-lg font-semibold">
                       {t("priceFrom")}
                       <Amount amount={price} />

@@ -1,17 +1,7 @@
-import { localeRevalidatePath } from "@/lib/cache"
-import { getClient } from "@/lib/payload"
-import { Category } from "@/payload-types"
+import { revalidatePath } from "next/cache"
 
 export const POST = async () => {
-  const client = await getClient()
-  const products = await client.find({
-    collection: "product",
-    limit: 999,
-  })
-
-  products.docs.forEach(async (product) => {
-    localeRevalidatePath(`/${(product.category as Category).slug}/${product.slug}`)
-  })
+  revalidatePath(`/(frontend)/[locale]/[categorySlug]/[productSlug]`, "page")
 
   return Response.json({ success: true })
 }

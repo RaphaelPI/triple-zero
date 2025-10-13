@@ -1,4 +1,4 @@
-import { env } from "@/env"
+import { revalidateLocalePath } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 
 export const BlocInfo: CollectionConfig = {
@@ -13,10 +13,13 @@ export const BlocInfo: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async (doc) => {
-        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/products`, {
-          method: "POST",
+      ({ doc, req }) => {
+        revalidateLocalePath({
+          path: `/(frontend)/[locale]/[categorySlug]/[productSlug]`,
+          type: "page",
+          req,
         })
+
         return doc
       },
     ],

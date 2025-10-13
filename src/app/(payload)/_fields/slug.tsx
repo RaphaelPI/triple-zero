@@ -19,11 +19,12 @@ export const Slug: Field = {
   },
   access: {
     read: () => true,
-    create: () => true,
+    create: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
     update: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
   },
   admin: {
     position: "sidebar",
-    description: "Cela correspond à l'identifiant dans l'url de la page",
+    description:
+      "Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.",
   },
 }

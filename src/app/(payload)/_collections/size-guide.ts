@@ -1,3 +1,4 @@
+import { env } from "@/env"
 import { CollectionConfig } from "payload"
 import { Table } from "../_fields/table"
 
@@ -10,6 +11,17 @@ export const SizeGuide: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: "3 - Information produit",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/products`, {
+          method: "POST",
+        })
+
+        return doc
+      },
+    ],
   },
   fields: [
     {
