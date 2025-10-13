@@ -54,6 +54,7 @@ export const Order: CollectionConfig = {
             variables: {
               shippingInfo: doc.shippingInfo,
               order: content,
+              link: `https://www.laposte.fr/outils/suivre-vos-envois${doc.parcelId ? `?code=${doc.parcelId}` : ""}`,
             },
           })
         }
@@ -255,6 +256,14 @@ export const Order: CollectionConfig = {
       name: "shippingInfo",
       type: "textarea",
       label: "Informations colis",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "parcelId",
+      type: "text",
+      label: "Identifiant colis",
       admin: {
         hidden: true,
       },

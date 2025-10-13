@@ -489,6 +489,7 @@ export interface Order {
   locale?: ('fr' | 'en') | null;
   status?: ('cancelled' | 'pending' | 'paid' | 'shipped') | null;
   shippingInfo?: string | null;
+  parcelId?: string | null;
   comment?: string | null;
   detail?: {
     [k: string]: unknown;
@@ -987,6 +988,7 @@ export interface OrderSelect<T extends boolean = true> {
   locale?: T;
   status?: T;
   shippingInfo?: T;
+  parcelId?: T;
   comment?: T;
   detail?: T;
   updatedAt?: T;
