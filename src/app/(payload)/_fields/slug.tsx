@@ -19,8 +19,8 @@ export const Slug: Field = {
   },
   access: {
     read: () => true,
-    create: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
-    update: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
+    // create: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
+    // update: ({ req: { user } }) => user?.email === "pi.raph@gmail.com",
   },
   admin: {
     position: "sidebar",
