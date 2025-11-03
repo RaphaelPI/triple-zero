@@ -1,4 +1,4 @@
-import { env } from "@/env"
+import { revalidateGlobalPath } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 import { color } from "../_fields/color"
 
@@ -14,9 +14,11 @@ export const Color: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc }) => {
-        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/products`, {
-          method: "POST",
+      async ({ doc, req }) => {
+        await revalidateGlobalPath({
+          path: `/(frontend)/[locale]/[categorySlug]/[productSlug]`,
+          type: "page",
+          req,
         })
 
         return doc

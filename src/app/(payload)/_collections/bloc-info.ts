@@ -14,7 +14,6 @@ export const BlocInfo: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, req }) => {
-        // await req.payload.db.commitTransaction(req.transactionID as string)
         await revalidateGlobalPath({
           path: `/(frontend)/[locale]/[categorySlug]/[productSlug]`,
           type: "page",

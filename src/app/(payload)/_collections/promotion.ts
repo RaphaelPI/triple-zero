@@ -1,4 +1,4 @@
-import { env } from "@/env"
+import { revalidateLocalePath } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 import { Slug } from "../_fields/slug"
 import { getProduct } from "../_ui/action"
@@ -36,10 +36,21 @@ export const Promotion: CollectionConfig = {
         return data
       },
     ],
+    // afterChange: [
+    //   async ({ doc }) => {
+    //     await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/promotions/${doc.id}`, {
+    //       method: "POST",
+    //     })
+
+    //     return doc
+    //   },
+    // ],
     afterChange: [
-      async ({ doc }) => {
-        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/promotions/${doc.id}`, {
-          method: "POST",
+      async ({ doc, req }) => {
+        await revalidateLocalePath({
+          path: `/promotions/${doc.slug}`,
+          type: "page",
+          req,
         })
 
         return doc

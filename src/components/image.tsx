@@ -16,5 +16,5 @@ export const Image = ({ media, width, height, ...props }: Props) => {
     return null
   }
 
-  return <NextImage unoptimized {...props} src={media.url} width={w} height={h} alt={media.alt} />
+  return <NextImage {...props} src={media.url} width={w} height={h} alt={media.alt} />
 }
