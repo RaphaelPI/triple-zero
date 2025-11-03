@@ -17,6 +17,7 @@ const COMPRESSION_BAGS = [
 export const getTechnicalValues = (
   optionValues: [ProductOption, ProductOptionValue][],
   modificators?: Record<string, number>,
+  volumeThreshold?: boolean,
 ): Record<TechnicalValue, number> => {
   const stats: TechnicalValue[] = ["temperature", "volume", "weight", "price"]
   const technicalValues: Record<TechnicalValue, number> = {
@@ -86,11 +87,11 @@ export const getTechnicalValues = (
     const nextBagIndex = Math.min(index + 1, COMPRESSION_BAGS.length - 1)
     return (
       technicalValues.volume >= volumeReference &&
-      technicalValues.volume <= COMPRESSION_BAGS[nextBagIndex][0]
+      technicalValues.volume < COMPRESSION_BAGS[nextBagIndex][0]
     )
   })
 
-  if (v) {
+  if (v && volumeThreshold) {
     technicalValues.volume = v[0]
     technicalValues.weight += v[1]
   }

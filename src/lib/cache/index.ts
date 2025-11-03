@@ -21,6 +21,15 @@ export const revalidateLocalePath = async ({ path, type, req }: Props) => {
   })
 }
 
+export const revalidateGlobalPath = async ({ path, type, req }: Props) => {
+  // Commit transaction to avoid circular issues
+  if (req) {
+    await req.payload.db.commitTransaction(req.transactionID as string)
+  }
+  logger.log(`Revalidating global path: ${path}`)
+  revalidatePath(path, type)
+}
+
 export const revalidateGenericPath = async ({ path, type, req }: Props) => {
   // Commit transaction to avoid circular issues
   if (req) {

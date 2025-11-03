@@ -52,13 +52,48 @@ export const Product: CollectionConfig = {
               required: true,
             },
             {
-              name: "technical",
-              type: "checkbox",
-              label: "Produit technique ?",
-              defaultValue: false,
+              name: "technicalValues",
+              type: "group",
+              label: "Informations techniques",
+              fields: [
+                {
+                  name: "price",
+                  type: "checkbox",
+                  label: "Prix",
+                  defaultValue: true,
+                },
+                {
+                  name: "volume",
+                  type: "checkbox",
+                  label: "Volume",
+                  defaultValue: true,
+                },
+                {
+                  name: "weight",
+                  type: "checkbox",
+                  label: "Poids",
+                  defaultValue: true,
+                },
+                {
+                  name: "temperature",
+                  type: "checkbox",
+                  label: "Température",
+                  defaultValue: true,
+                },
+              ],
               admin: {
                 description:
                   "Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.",
+              },
+            },
+            {
+              name: "volumeThreshold",
+              type: "checkbox",
+              label: "Activer les paliers de volume ? (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)",
+              defaultValue: true,
+              admin: {
+                description:
+                  "Si vous cochez cette case, le volume du produits sera affiché en fonction des paliers de volume (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)",
               },
             },
             {
@@ -187,7 +222,6 @@ export const Product: CollectionConfig = {
             {
               name: "blocInfos",
               type: "array",
-              required: true,
               admin: {
                 initCollapsed: true,
                 components: {

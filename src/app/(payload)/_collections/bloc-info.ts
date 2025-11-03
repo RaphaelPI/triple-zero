@@ -1,4 +1,4 @@
-import { revalidateLocalePath } from "@/lib/cache"
+import { revalidateGlobalPath } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 
 export const BlocInfo: CollectionConfig = {
@@ -13,8 +13,9 @@ export const BlocInfo: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      ({ doc, req }) => {
-        revalidateLocalePath({
+      async ({ doc, req }) => {
+        // await req.payload.db.commitTransaction(req.transactionID as string)
+        await revalidateGlobalPath({
           path: `/(frontend)/[locale]/[categorySlug]/[productSlug]`,
           type: "page",
           req,

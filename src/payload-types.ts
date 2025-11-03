@@ -278,7 +278,16 @@ export interface Product {
   /**
    * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
    */
-  technical?: boolean | null;
+  technicalValues?: {
+    price?: boolean | null;
+    volume?: boolean | null;
+    weight?: boolean | null;
+    temperature?: boolean | null;
+  };
+  /**
+   * Si vous cochez cette case, le volume du produits sera affiché en fonction des paliers de volume (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)
+   */
+  volumeThreshold?: boolean | null;
   title: string;
   /**
    * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
@@ -317,21 +326,23 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  blocInfos: {
-    /**
-     * Remplace le titre par défaut du bloc d'information pour ce produit.
-     */
-    title: string;
-    infos: {
-      /**
-       * Remplace le titre par défaut du bloc d'information pour ce produit.
-       */
-      title?: string | null;
-      info: string | BlocInfo;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
+  blocInfos?:
+    | {
+        /**
+         * Remplace le titre par défaut du bloc d'information pour ce produit.
+         */
+        title: string;
+        infos: {
+          /**
+           * Remplace le titre par défaut du bloc d'information pour ce produit.
+           */
+          title?: string | null;
+          info: string | BlocInfo;
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1000,7 +1011,15 @@ export interface OrderSelect<T extends boolean = true> {
  */
 export interface ProductSelect<T extends boolean = true> {
   category?: T;
-  technical?: T;
+  technicalValues?:
+    | T
+    | {
+        price?: T;
+        volume?: T;
+        weight?: T;
+        temperature?: T;
+      };
+  volumeThreshold?: T;
   title?: T;
   slug?: T;
   description?: T;

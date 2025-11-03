@@ -19,6 +19,15 @@ export const Category: CollectionConfig = {
         return doc
       },
     ],
+    afterDelete: [
+      async ({ doc }) => {
+        await Promise.all([
+          revalidateLocalePath({ path: `/` }),
+          revalidateLocalePath({ path: `/${doc.slug}` }),
+        ])
+        return doc
+      },
+    ],
   },
   fields: [
     {

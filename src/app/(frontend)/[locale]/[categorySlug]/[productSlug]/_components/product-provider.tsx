@@ -104,6 +104,7 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
         technicalValues: getTechnicalValues(
           activeOptions,
           product.weightModificator as Record<string, number>,
+          product.volumeThreshold ?? true, // default to true
         ),
         activeOptions,
         activeColor,

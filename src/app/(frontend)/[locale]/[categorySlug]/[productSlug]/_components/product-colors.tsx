@@ -46,16 +46,20 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
     return null
   }
 
+  const hasDefaultColor = colors.some((color) => color?.default)
+
   return (
     <>
-      {colors.map((color) => {
+      {colors.map((color, index) => {
         if (!color) {
           return null
         }
 
         const c = color.color as Color
         const hex = String(c.color)
-        const active = Boolean(value ? value === hex : color?.default)
+        const active = Boolean(
+          value ? value === hex : hasDefaultColor ? color?.default : index === 0,
+        )
         const optionRender = (
           <div
             className="option-value-container"

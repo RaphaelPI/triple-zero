@@ -19,7 +19,6 @@ import { ProductPrice } from "./_components/product-price"
 import { ProductProvider } from "./_components/product-provider"
 import { ProductTechnicalValues } from "./_components/product-technical-values"
 import { ProductsRelated } from "./_components/products-related"
-import { Test } from "./_components/test"
 import { getProductData } from "./data"
 
 export const dynamic = "force-static"
@@ -71,10 +70,10 @@ export default async (props: Props) => {
   const { locale } = await props.params
   const { product, category, related } = await getData(props)
 
+  const technical = Object.values(product.technicalValues ?? {}).some((value) => value)
   return (
     <main className="bg-flake bg-flake-bl pb-section space-y-8 bg-no-repeat">
       <ProductJsonLd product={product} locale={locale} />
-      <Test slug={`/(frontend)/[locale]/[categorySlug]/[productSlug]`} />
       <div className="w-section px-section pt-section">
         <Breadcrumbs
           items={[
@@ -123,7 +122,7 @@ export default async (props: Props) => {
           <div className="lg:pl-section relative order-2 lg:sticky lg:top-24 lg:order-3 lg:col-span-7">
             <ProductImages />
           </div>
-          {product.technical && <ProductTechnicalValues />}
+          {technical && <ProductTechnicalValues />}
         </ProductProvider>
       </div>
       <section className="section space-y-4 lg:space-y-8">

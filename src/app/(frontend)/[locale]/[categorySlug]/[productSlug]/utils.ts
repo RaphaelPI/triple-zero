@@ -86,7 +86,10 @@ export const getProductDefaultImages = (
   // Get default images from colors
   if (product.colors) {
     images.push(
-      ...(product.colors?.map(({ color }) => color.image as Media).filter((image) => image) ?? []),
+      ...(product.colors
+        ?.filter(({ color }) => (color.color as Color).active)
+        .map(({ color }) => color.image as Media)
+        .filter((image) => image) ?? []),
     )
   }
 
