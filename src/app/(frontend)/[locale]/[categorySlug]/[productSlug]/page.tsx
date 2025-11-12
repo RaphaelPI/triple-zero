@@ -132,7 +132,7 @@ export default async (props: Props) => {
       </section>
       {related.length > 0 && (
         <section className="section space-y-4 lg:space-y-8">
-          <ProductsRelated products={related} categorySlug={category.slug} />
+          <ProductsRelated products={related} category={category} />
         </section>
       )}
     </main>

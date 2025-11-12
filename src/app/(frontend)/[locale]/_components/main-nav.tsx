@@ -8,13 +8,14 @@ import {
 import { Link } from "@/i18n/navigation"
 import { Category } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
-import { getNavData } from "../data"
+import { getHomePromotionsData, getNavData } from "../data"
 import { MainNavMobile } from "./main-nav-mobile"
 
 export const MainNav = async () => {
-  const nav = await getNavData()
+  const [nav, promotions] = await Promise.all([getNavData(), getHomePromotionsData()])
   const t = await getTranslations()
 
+  const showPromotions = promotions.docs.length > 0
   return (
     <>
       <NavigationMenu
@@ -70,11 +71,13 @@ export const MainNav = async () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
           ))}
-          <NavigationMenuItem>
-            <Link prefetch={false} href="/promotions" className="px-4">
-              {t("promotions.nav")}
-            </Link>
-          </NavigationMenuItem>
+          {showPromotions && (
+            <NavigationMenuItem>
+              <Link prefetch={false} href="/promotions" className="px-4">
+                {t("promotions.nav")}
+              </Link>
+            </NavigationMenuItem>
+          )}
           <NavigationMenuItem>
             <Link prefetch={false} href="/p/savoir-faire" className="px-4">
               {t("menu.knowledge")}
@@ -84,7 +87,7 @@ export const MainNav = async () => {
       </NavigationMenu>
 
       <div className="flex gap-6 md:hidden">
-        <MainNavMobile nav={nav} />
+        <MainNavMobile nav={nav} showPromotions={showPromotions} />
       </div>
     </>
   )

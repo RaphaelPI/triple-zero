@@ -94,12 +94,12 @@ export const getTechnicalValues = (
   if (v && volumeThreshold) {
     technicalValues.volume = v[0]
     technicalValues.weight += v[1]
+    technicalValues.volume = Math.max(
+      Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),
+      COMPRESSION_BAGS[0][0],
+    )
   }
 
-  technicalValues.volume = Math.max(
-    Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),
-    COMPRESSION_BAGS[0][0],
-  )
   technicalValues.price = formatAmountForStripe(technicalValues.price, "EUR") / 100
   technicalValues.weight = Math.round(technicalValues.weight)
   technicalValues.temperature = Math.round(technicalValues.temperature)

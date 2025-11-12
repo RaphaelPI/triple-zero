@@ -66,14 +66,16 @@ export const CartLine = ({ line, index }: CartLineProps) => {
           </Link>
           <div className="flex items-center gap-2">
             <div>{t("color")} :</div>
-            {line.colors.map(([_, color]) => (
-              <div
-                key={color}
-                style={{ backgroundColor: color }}
-                className={cn("h-4 w-4 rounded-full", {
-                  "border-primary border": color.toLowerCase() === "#ffffff",
-                })}
-              />
+            {line.colors.map(([name, color]) => (
+              <div key={color} className="flex items-center gap-1">
+                <div
+                  style={{ backgroundColor: color }}
+                  className={cn("h-4 w-4 rounded-full", {
+                    "border-primary border": color.toLowerCase() === "#ffffff",
+                  })}
+                />
+                ({name})
+              </div>
             ))}
           </div>
           {line.options.map(([title, value]) => (

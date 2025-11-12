@@ -1,3 +1,4 @@
+import { env } from "@/env"
 import { LOCALES } from "@/i18n/config"
 import { revalidatePath } from "next/cache"
 import { PayloadRequest } from "payload"
@@ -37,4 +38,8 @@ export const revalidateGenericPath = async ({ path, type, req }: Props) => {
   }
 
   revalidatePath(path, type)
+}
+
+export const deployHook = async () => {
+  await fetch(env.SERVER_DEPLOY_HOOK_URL)
 }

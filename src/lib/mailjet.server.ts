@@ -11,7 +11,7 @@ export const mailjet = Mailjet.apiConnect(
   },
 )
 
-interface SendEmailProps {
+export interface SendEmailProps {
   to: {
     Email: string
     Name: string

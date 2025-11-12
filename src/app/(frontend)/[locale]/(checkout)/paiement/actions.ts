@@ -1,5 +1,6 @@
 "use server"
 
+import { env } from "@/env"
 import { rawProcedure } from "@/lib/safe-action"
 import { stripe } from "@/lib/stripe.server"
 import { formatAmountForStripe } from "@/lib/text"
@@ -105,8 +106,7 @@ export const createCheckoutSession = rawProcedure
             product_data: {
               name: line.title,
               description: detail.map(([name, value]) => `${name}: ${value}`).join(", "),
-              // images: [new URL(line.image, env.NEXT_PUBLIC_URL).toString()],
-              images: [new URL(line.image, "https://www.raphael-pi-staging.fr").toString()],
+              images: [new URL(line.image, env.NEXT_PUBLIC_URL).toString()],
               metadata,
             },
             unit_amount: formatAmountForStripe(amount, "EUR", deliveryData.country),
