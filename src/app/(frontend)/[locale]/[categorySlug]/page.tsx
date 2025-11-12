@@ -99,7 +99,7 @@ export default async (props: Props) => {
             })}
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full max-md:space-y-4">
           <Breadcrumbs
             items={[
               {

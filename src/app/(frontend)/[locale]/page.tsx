@@ -27,7 +27,7 @@ export default async ({ params }: Props) => {
   setRequestLocale(locale)
 
   return (
-    <main className="bg-flake bg-flake-bl md:bg-flake-tr bg-no-repeat md:space-y-4">
+    <main className="bg-flake bg-flake-bl md:bg-flake-tr space-y-4 bg-no-repeat">
       <HomeHero />
       <HomePromotions />
       <MainMessage />
