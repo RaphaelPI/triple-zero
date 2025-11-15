@@ -25,17 +25,21 @@ export const ProductTechnicalValues = () => {
       <div className="bg-grey-light fixed right-0 bottom-0 left-0 z-10 border-t border-t-gray-200">
         <div className="w-section flex items-center justify-center gap-[2vw] p-2 sm:justify-around">
           {product.technicalValues?.price && (
-            <div className="hidden items-center justify-start gap-1 lg:flex lg:gap-2">
-              <IconContainer>
-                <Euro className="max-h-[60%] max-w-[60%]" />
-              </IconContainer>
-              <div>
-                <div className="text-sm leading-3">{t("price")}</div>
-                <div className="font-semibold md:text-lg">
-                  <Amount amount={price} />
+            <Popover content={t("technicalValues.price")} variant="dark">
+              <div className="hidden items-center justify-start gap-1 lg:flex lg:gap-2">
+                <IconContainer>
+                  <Euro className="max-h-[60%] max-w-[60%]" />
+                </IconContainer>
+                <div>
+                  <div className="text-sm leading-3">
+                    <Info className="size-3 md:inline-block" /> {t("price")}
+                  </div>
+                  <div className="font-semibold md:text-lg">
+                    <Amount amount={price} />
+                  </div>
                 </div>
               </div>
-            </div>
+            </Popover>
           )}
           {product.technicalValues?.weight && (
             <Popover content={t("technicalValues.weight")} variant="dark">
@@ -79,14 +83,14 @@ export const ProductTechnicalValues = () => {
               <div className="flex items-center gap-1 max-md:w-1/3 lg:gap-2">
                 <IconContainer>
                   <Temperature className="h-8 max-h-[60%] w-8 max-w-[60%] md:h-auto md:w-auto" />
-                  <div className="text-lg md:hidden">{technicalValues?.temperature} °</div>
+                  <div className="text-lg md:hidden">{technicalValues?.temperature} °C</div>
                 </IconContainer>
                 <div className="hidden md:block">
                   <div className="line-clamp-1 flex cursor-default items-center text-xs md:text-sm">
                     <Info className="size-3 md:inline-block" />
                     {t("temperature")}
                   </div>
-                  <div className="font-semibold md:text-lg">{technicalValues?.temperature} °</div>
+                  <div className="font-semibold md:text-lg">{technicalValues?.temperature} °C</div>
                 </div>
               </div>
             </Popover>

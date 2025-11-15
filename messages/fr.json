@@ -20,10 +20,11 @@
   "liters": "litres",
   "technicalValues": {
     "title": "Caractéristiques techniques",
+    "price": "Livré avec sac de compression et sac de rangement.",
     "hint": " Tous nos produits sont artisanaux et faits mains. Ces valeurs sont des estimations et peuvent être différentes du produit final.",
     "weight": "Le poids comprend le produit et le sac de compression TripleZéro fournis avec le produit.",
-    "volume": "Volume obtenu avec les sacs de compression TripleZéro fournis avec le produit",
-    "temperature": "Texte à définir expliquant comment comprendre cette valeur"
+    "volume": "Volume obtenu avec les sacs de compression Triple Zero fournis avec le produit que l’on peut encore comprimer avec des sangles.",
+    "temperature": "Nos produits sont testés sur le terrain par des guides partenaires et les informations ci-dessus sont une moyenne tirée de leur retour. L’expérience montre que le ressenti froid est essentiel."
   },
   "sizeGuide": "Guide des tailles",
   "noImg": "Aucune image disponible",
