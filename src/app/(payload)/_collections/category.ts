@@ -16,6 +16,8 @@ export const Category: CollectionConfig = {
     afterChange: [
       async ({ doc }) => {
         await revalidateLocalePath({ path: `/${doc.slug}` })
+
+        // TODO revalidate product page for similar product order ?
         return doc
       },
     ],
