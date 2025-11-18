@@ -28,8 +28,6 @@ export const ProductAddToCart = ({ children }: Props) => {
     ).url,
   )
 
-  console.log(activeColor)
-
   return (
     <Button
       aria-label={t("cart.add")}

@@ -1,13 +1,11 @@
 "use client"
 
 import { Amount } from "@/components/amount"
-import { PromotionDiscount } from "@/components/discount"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { CartLine as CartLineType, useCheckout } from "@/providers/checkout/checkout"
 import { LucideMinus, LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
-import NextImage from "next/image"
 import Link from "next/link"
 import { MouseEvent } from "react"
 
@@ -37,33 +35,14 @@ export const CartLine = ({ line, index }: CartLineProps) => {
     <div className="max-xs:flex-col flex items-start max-xl:flex-wrap">
       <div className="panel-table-cell xs:w-40 w-full sm:w-60 xl:w-1/4">
         {line.image && (
-          <Link
-            prefetch={false}
-            href={line.url}
-            aria-label={line.title}
-            className="relative flex flex-shrink-0 items-center justify-center"
-          >
-            <NextImage
-              src={line.image}
-              width={320}
-              height={320}
-              className="h-auto max-h-56 w-auto max-w-full rounded-xl"
-              alt={line.title}
-            />
-            {line.discount && <PromotionDiscount size="sm">{line.discount}%</PromotionDiscount>}
+          <Link prefetch={false} href={line.url} aria-label={line.title} className="font-semibold">
+            {line.title}
+            {line.discount && <div>Promo : {line.discount}%</div>}
           </Link>
         )}
       </div>
       <div className="w-full flex-1 xl:flex">
         <div className="panel-table-cell xl:w-1/2">
-          <Link
-            prefetch={false}
-            href={line.url}
-            aria-label={line.title}
-            className="block font-bold"
-          >
-            {line.title}
-          </Link>
           <div className="flex items-center gap-2">
             <div>{t("color")} :</div>
             {line.colors.map(([name, color]) => (
