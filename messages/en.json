@@ -1,7 +1,7 @@
 {
   "title": "Triple Zero",
   "slogan": "Light and warm",
-  "description": "French handmade sleeping bags and high-mountain equipment",
+  "description": "French artisanal manufacturing of goose down equipment",
   "contact": "Contact",
   "menu": {
     "products": "Products",
@@ -105,7 +105,11 @@
     },
     "confirmation": {
       "title": "Thank you for your order",
-      "description": "Your order has been successfully registered and will be processed as soon as possible.\nYou will receive a confirmation email shortly."
+      "description": "Your order has been successfully registered and will be processed as soon as possible.\nYou will receive a confirmation email shortly.",
+      "pending": "Finalizing your order..."
+    },
+    "error": {
+      "deliveryRequired": "You must enter your details before proceeding with payment"
     }
   },
   "product": {

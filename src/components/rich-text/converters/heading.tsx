@@ -1,4 +1,3 @@
-import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { SerializedHeadingNode } from "@payloadcms/richtext-lexical"
 import { JSXConverters } from "@payloadcms/richtext-lexical/react"
@@ -22,13 +21,6 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
       >
         <div id={id} className="invisible absolute -top-16" />
         {text}
-        <Link
-          prefetch={false}
-          href={`#${id}`}
-          className="text-blue inline-block opacity-0 group-hover:opacity-100"
-        >
-          #
-        </Link>
       </div>
     )
   },

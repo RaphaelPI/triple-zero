@@ -175,5 +175,5 @@ export const saveOrder = rawProcedure
     // send email to customer
     await sendEmail(options)
 
-    return order.id
+    return [order.id, order.delay]
   })

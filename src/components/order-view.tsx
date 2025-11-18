@@ -1,9 +1,16 @@
 import COUNTRIES_FR from "@/data/countries-fr"
 import { formatAmount } from "@/lib/text"
+import { Order } from "@/payload-types"
 import { formSchema } from "@/providers/checkout/checkout"
 import { OrderCartLine } from "@/types/global"
 import { format } from "date-fns"
 import { z } from "zod"
+
+const translations: Record<NonNullable<Order["payment"]>, string> = {
+  check: "Chèque",
+  transfer: "Virement bancaire",
+  card: "Carte de crédit",
+}
 
 interface Props {
   lines: OrderCartLine[]
@@ -20,6 +27,7 @@ interface Props {
     discount?: number
     ttc: boolean
   }
+  payment?: Order["payment"]
 }
 
 export const OrderView = ({
@@ -32,6 +40,7 @@ export const OrderView = ({
   delay,
   uid,
   date,
+  payment,
 }: Props) => {
   const country = Object.values(COUNTRIES_FR).find((c) => c[deliveryData.country])?.[
     deliveryData.country
@@ -121,6 +130,12 @@ export const OrderView = ({
                       <>
                         <br />
                         &nbsp;&nbsp;A LIVRER LE : <strong>{format(delay, "dd/MM/yyyy")}</strong>
+                      </>
+                    )}
+                    {payment && (
+                      <>
+                        <br />
+                        &nbsp;&nbsp;PAIEMENT : <strong>{translations[payment]}</strong>
                       </>
                     )}
                   </td>

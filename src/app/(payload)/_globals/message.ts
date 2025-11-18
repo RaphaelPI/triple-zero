@@ -1,10 +1,20 @@
+import { deployHook } from "@/lib/cache"
 import { GlobalConfig } from "payload"
 
 export const Message: GlobalConfig = {
   slug: "message",
-  label: "Le mot de Luis Fernand",
+  label: "Le mot de Louis Fernand",
   admin: {
     group: "2 - Contenu",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        await deployHook()
+
+        return doc
+      },
+    ],
   },
   fields: [
     {

@@ -9,14 +9,3 @@ export const getOrder = async (orderId: string) => {
 
   return order
 }
-
-export const updateOrder = async (orderId: string) => {
-  const client = await getClient()
-  await client.update({
-    collection: "order",
-    id: orderId,
-    data: {
-      status: "paid",
-    },
-  })
-}

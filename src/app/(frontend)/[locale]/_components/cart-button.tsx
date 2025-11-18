@@ -20,7 +20,7 @@ export const CartButton = () => {
       <Basket className="fill-dark h-1/2 w-auto" />
       {cart.lines.length > 0 && (
         <div className="bg-dark absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full text-xs text-white">
-          {cart.lines.length}
+          {cart.lines.reduce((acc, line) => acc + line.quantity, 0)}
         </div>
       )}
     </Link>

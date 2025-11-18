@@ -2,6 +2,7 @@
 
 import { env } from "@/env"
 import { rawProcedure } from "@/lib/safe-action"
+import { slugify } from "@/lib/slugify"
 import { stripe } from "@/lib/stripe.server"
 import { formatAmountForStripe } from "@/lib/text"
 import { Cart, formSchema } from "@/providers/checkout/checkout"
@@ -94,7 +95,7 @@ export const createCheckoutSession = rawProcedure
         ]
 
         const metadata = detail.reduce(
-          (acc, [name, value]) => ({ ...acc, [name]: value }),
+          (acc, [name, value]) => ({ ...acc, [slugify(name).substring(0, 40)]: value }),
           {} as Record<string, string>,
         )
 

@@ -76,11 +76,11 @@ export const PaymentForm = () => {
 
   const onSubmit = async (values: any) => {
     const orderId = await storeOrder(paymentType, values.comment)
-    const returnUrl = `${env.NEXT_PUBLIC_URL}/confirmation?orderId=${orderId}`
+    const returnUrl = `${env.NEXT_PUBLIC_URL}/confirmation`
 
     if (paymentType === "card") {
       const result = await checkout.confirm({
-        returnUrl: `${returnUrl}&payment=1`,
+        returnUrl: `${returnUrl}?payment=1`,
       })
 
       if (result.type === "error") {
@@ -95,25 +95,25 @@ export const PaymentForm = () => {
       return
     }
 
-    push(returnUrl)
+    push(`${returnUrl}?orderId=${orderId}`)
   }
 
   const payments = [
     {
       title: t("payment.card.title"),
-      icon: <CreditCardIcon className="size-6" />,
+      icon: <CreditCardIcon className="size-6 flex-shrink-0" />,
       value: "card",
       content: <CreditCard />,
     },
     {
       title: t("payment.transfer.title"),
-      icon: <BanknoteArrowUpIcon className="size-6" />,
+      icon: <BanknoteArrowUpIcon className="size-6 flex-shrink-0" />,
       value: "transfer",
       content: <BankTransfer />,
     },
     {
       title: t("payment.check.title"),
-      icon: <MailIcon className="size-6" />,
+      icon: <MailIcon className="size-6 flex-shrink-0" />,
       value: "check",
       content: <Check />,
     },
@@ -134,13 +134,13 @@ export const PaymentForm = () => {
                 return (
                   <AccordionItem key={payment.value} value={payment.value}>
                     <AccordionTrigger
-                      className="group text-xl font-semibold hover:no-underline"
+                      className="group max-md:text-md text-xl font-semibold hover:no-underline"
                       withIcon={false}
                     >
                       <div className="flex items-center justify-start gap-4">
                         <div
                           className={cn(
-                            "ring-blue-logo size-6 rounded-full border-4 border-white opacity-60 ring-1 transition-colors group-hover:bg-black",
+                            "ring-blue-logo size-6 flex-shrink-0 rounded-full border-4 border-white opacity-60 ring-1 transition-colors group-hover:bg-black",
                             {
                               "bg-black opacity-100 group-hover:bg-black":
                                 paymentType === payment.value,

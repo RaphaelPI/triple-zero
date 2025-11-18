@@ -12,7 +12,7 @@ export const Order: CollectionConfig = {
   },
   admin: {
     group: "1 - Produits",
-    defaultColumns: ["uid", "status", "date", "amount", "customer", "email", "status", "payment"],
+    defaultColumns: ["uid", "payment", "status", "date", "amount", "customer", "email", "status"],
     pagination: {
       defaultLimit: 50,
       limits: [20, 50, 100],
@@ -37,6 +37,7 @@ export const Order: CollectionConfig = {
               amount={doc.amount}
               uid={doc.uid}
               date={doc.date}
+              payment={doc.payment}
             />,
           )
 
