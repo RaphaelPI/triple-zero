@@ -2,7 +2,6 @@
 
 import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Media, Message } from "@/payload-types"
-import { format } from "date-fns"
 import { useTranslations } from "next-intl"
 import { useCallback } from "react"
 import { Image } from "../image"
@@ -38,9 +37,6 @@ export const MainMessage = () => {
       <div className="text-h1 font-bold italic">{t("mainMessage")}</div>
       <div className="panel flex flex-col-reverse lg:flex-row">
         <div className="flex flex-col justify-center p-8 lg:w-2/3">
-          {message.updatedAt && (
-            <div className="text-blue text-sm">{format(new Date(message.updatedAt), "PPp")}</div>
-          )}
           <RichText data={message?.message} />
         </div>
         {message.image && (
