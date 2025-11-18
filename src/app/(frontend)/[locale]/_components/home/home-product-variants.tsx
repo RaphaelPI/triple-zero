@@ -60,7 +60,7 @@ export const HomeProductVariants = async () => {
                     width={500}
                     height={250}
                     sizes="500px"
-                    className="mx-auto h-auto max-h-full w-auto max-w-full rounded-2xl md:rounded-r-none"
+                    className="mx-auto h-auto max-h-full w-auto max-w-lg rounded-2xl md:rounded-r-none"
                   />
                 )}
               </div>

@@ -1,5 +1,5 @@
 import { mongooseAdapter } from "@payloadcms/db-mongodb"
-
+// import { postgresAdapter } from "@payloadcms/db-postgres"
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
 import { FixedToolbarFeature, lexicalEditor, LinkFeature } from "@payloadcms/richtext-lexical"
 import { s3Storage } from "@payloadcms/storage-s3"
@@ -91,6 +91,11 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.SERVER_DATABASE_URI!,
   }),
+  // db: postgresAdapter({
+  //   pool: {
+  //     connectionString: process.env.SERVER_DATABASE_URI!,
+  //   },
+  // }),
   sharp,
   plugins: [
     payloadCloudPlugin(),
