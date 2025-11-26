@@ -40,34 +40,34 @@ export const ProductOption = ({
     const val = String(optionValue?.value)
     setValue((prev) => (prev === val && !required ? null : val))
 
-    if (!optionValue?.image) {
-      return
+    if (optionValue?.image) {
+      setImage((optionValue.image as Media).id)
     }
   }
 
-  const handleHover = (optionValue: ProductOptionValue, active: boolean) => () => {
-    if (readOnly && !active) {
-      return
-    }
+  // const handleHover = (optionValue: ProductOptionValue, active: boolean) => () => {
+  //   if (readOnly && !active) {
+  //     return
+  //   }
 
-    if (!optionValue.image) {
-      return
-    }
+  //   if (!optionValue.image) {
+  //     return
+  //   }
 
-    setImage((optionValue.image as Media).id)
-  }
+  //   setImage((optionValue.image as Media).id)
+  // }
 
-  const handleOut = (optionValue: ProductOptionValue, active: boolean) => () => {
-    if (readOnly && !active) {
-      return
-    }
+  // const handleOut = (optionValue: ProductOptionValue, active: boolean) => () => {
+  //   if (readOnly && !active) {
+  //     return
+  //   }
 
-    if (!optionValue.image) {
-      return
-    }
+  //   if (!optionValue.image) {
+  //     return
+  //   }
 
-    resetCurrentImage()
-  }
+  //   resetCurrentImage()
+  // }
 
   let title = <>{option.title}</>
   if (option.description) {
@@ -97,8 +97,8 @@ export const ProductOption = ({
             <div
               key={optionValue.value.value}
               onClick={handleClick(optionValue.value)}
-              onMouseEnter={handleHover(optionValue.value, active)}
-              onMouseLeave={handleOut(optionValue.value, active)}
+              // onMouseEnter={handleHover(optionValue.value, active)}
+              // onMouseLeave={handleOut(optionValue.value, active)}
             >
               <div
                 className={cn(

@@ -22,26 +22,30 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
       return
     }
 
+    if (color.image) {
+      setImage((color.image as Media).id)
+    }
+
     const c = color.color as Color
 
     setValue(String(c.color))
   }
 
-  const handleHover = (image: Media, active: boolean) => () => {
-    if (!image || (readOnly && !active)) {
-      return
-    }
+  // const handleHover = (image: Media, active: boolean) => () => {
+  //   if (!image || (readOnly && !active)) {
+  //     return
+  //   }
 
-    setImage((image as Media).id)
-  }
+  //   setImage((image as Media).id)
+  // }
 
-  const handleOut = (image: Media, active: boolean) => () => {
-    if (!image || (readOnly && !active)) {
-      return
-    }
+  // const handleOut = (image: Media, active: boolean) => () => {
+  //   if (!image || (readOnly && !active)) {
+  //     return
+  //   }
 
-    resetCurrentImage()
-  }
+  //   resetCurrentImage()
+  // }
 
   if (!colors) {
     return null
@@ -58,12 +62,7 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
         const hex = String(c.color)
         const active = Boolean(value ? value === hex : color?.default)
         const optionRender = (
-          <div
-            className="option-value-container"
-            onMouseEnter={handleHover(color.image as Media, active)}
-            onMouseLeave={handleOut(color.image as Media, active)}
-            key={c.id}
-          >
+          <div className="option-value-container" key={c.id}>
             <Popover content={c.name}>
               <div
                 style={{ backgroundColor: hex }}
