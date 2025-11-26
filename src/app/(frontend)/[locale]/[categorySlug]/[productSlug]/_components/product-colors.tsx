@@ -49,7 +49,7 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
 
   return (
     <>
-      {colors.map((color, index) => {
+      {colors.map((color) => {
         if (!color) {
           return null
         }

@@ -22,7 +22,6 @@ export const generateMetadata = async () => {
 
 export default async ({ searchParams }: Props) => {
   const { payment, orderId } = await searchParams
-  const t = await getTranslations()
   const locale = await getLocale()
 
   // Set the locale for date-fns

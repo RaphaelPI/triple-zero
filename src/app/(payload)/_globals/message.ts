@@ -20,6 +20,7 @@ export const Message: GlobalConfig = {
     {
       name: "message",
       type: "richText",
+      localized: true,
       required: true,
     },
     {

@@ -32,6 +32,7 @@ export const ConfirmationPending = () => {
     }
 
     createOrder()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

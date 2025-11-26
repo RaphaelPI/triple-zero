@@ -15,8 +15,8 @@ export const Pages: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc }) => {
-        await revalidateLocalePath({ path: `/p/${doc.slug}` })
+      async ({ doc, req }) => {
+        await revalidateLocalePath({ path: `/p/${doc.slug}`, req })
         return doc
       },
     ],

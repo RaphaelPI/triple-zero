@@ -392,6 +392,10 @@ export interface ProductOption {
    * C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit
    */
   title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
+   */
+  slug: string;
   values?:
     | {
         value: ProductOptionValue;
@@ -1086,6 +1090,7 @@ export interface ColorWithImageSelect<T extends boolean = true> {
  */
 export interface ProductOptionSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   values?:
     | T
     | {

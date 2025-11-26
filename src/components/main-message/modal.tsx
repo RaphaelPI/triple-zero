@@ -3,7 +3,7 @@
 import { useCookieState } from "@/hooks/use-cookie-state"
 import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Media, Message } from "@/payload-types"
-import { format, setDefaultOptions } from "date-fns"
+import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { useLocale, useTranslations } from "next-intl"
 import { useCallback } from "react"
@@ -33,7 +33,7 @@ export const MainMessageModal = () => {
 
   return (
     <Dialog open={!shown} onOpenChange={(open) => setShown(!open)}>
-      <DialogContent className="max-h-screen max-w-4xl overflow-y-auto bg-white">
+      <DialogContent className="mx-40 max-h-screen max-w-11/12 overflow-y-auto bg-white md:max-w-4xl">
         <DialogHeader>
           <DialogTitle>{t("mainMessage")}</DialogTitle>
         </DialogHeader>
@@ -46,9 +46,6 @@ export const MainMessageModal = () => {
             />
           )}
           <div>
-            {message.updatedAt && (
-              <div className="text-blue text-sm">{format(new Date(message.updatedAt), "PPp")}</div>
-            )}
             <RichText data={message?.message} />
           </div>
         </div>

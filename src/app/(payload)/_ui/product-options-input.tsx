@@ -64,8 +64,9 @@ export const ProductOptionsInput = (props: Props) => {
     // does the option already exist ?
     if (value?.some(([opt]) => opt.title === option.title)) {
       const newValue = value?.map(([opt, value]) =>
-        opt.title === option.title ? [opt, selectedOptionValue.value] : [opt, value],
+        opt.title === option.title ? [option, selectedOptionValue.value] : [opt, value],
       )
+
       setValue(newValue)
       return
     }

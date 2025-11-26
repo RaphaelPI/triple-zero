@@ -2,7 +2,7 @@ import { Amount } from "@/components/amount"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
-import { Locale } from "@/i18n/config"
+import { Locale, LOCALES } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
@@ -12,7 +12,7 @@ import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getNavData } from "../data"
 import { getMetadata } from "../metadata"
-import { getCategoryData, getProductsData } from "./data"
+import { getAllCategoriesData, getCategoryData, getProductsData } from "./data"
 
 export const dynamic = "force-static"
 
@@ -195,4 +195,17 @@ export default async (props: Props) => {
       </div>
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    const categories = await getAllCategoriesData(locale)
+    return categories.docs.map((category) => ({
+      categorySlug: category.slug,
+      locale,
+    }))
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }

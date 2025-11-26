@@ -5,7 +5,6 @@ import { Link } from "@/i18n/navigation"
 import { getTechnicalValues } from "@/lib/technical-values"
 import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
-import { getOptionSlug } from "../../[categorySlug]/[productSlug]/utils"
 import { getHomeProductVariantsData } from "../../data"
 
 export const HomeProductVariants = async () => {
@@ -30,17 +29,14 @@ export const HomeProductVariants = async () => {
           product.options?.forEach(({ option }) => {
             const optionValue = option.values?.find(({ value }) => value.defaultValue)?.value
 
-            if (
-              optionValue &&
-              !options.find(([opt]) => getOptionSlug(option) === getOptionSlug(opt))
-            ) {
+            if (optionValue && !options.find(([opt]) => option.slug === opt.slug)) {
               priceOptions.push([option, optionValue])
             }
           })
 
           const searchParams = new URLSearchParams()
           options.forEach(([option, optionValue]) => {
-            searchParams.set(getOptionSlug(option), optionValue.value)
+            searchParams.set(option.slug, optionValue.value)
           })
           const url = `/${category.slug}/${product.slug}?${searchParams.toString()}`
 

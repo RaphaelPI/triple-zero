@@ -1,11 +1,11 @@
-import { Locale } from "@/i18n/config"
+import { Locale, LOCALES } from "@/i18n/config"
 import { getOgImage } from "@/lib/seo"
 import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { ProductJsonLd } from "@/components/structured-data/product"
 import { Category, Color, Product, SizeGuide } from "@/payload-types"
-import { setRequestLocale } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getMetadata } from "../../metadata"
@@ -19,7 +19,7 @@ import { ProductPrice } from "./_components/product-price"
 import { ProductProvider } from "./_components/product-provider"
 import { ProductTechnicalValues } from "./_components/product-technical-values"
 import { ProductsRelated } from "./_components/products-related"
-import { getProductData } from "./data"
+import { getAllProductsData, getProductData } from "./data"
 
 export const dynamic = "force-static"
 
@@ -69,6 +69,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 export default async (props: Props) => {
   const { locale } = await props.params
   const { product, category, related } = await getData(props)
+  const t = await getTranslations()
 
   const technical = Object.values(product.technicalValues ?? {}).some((value) => value)
   return (
@@ -101,7 +102,7 @@ export default async (props: Props) => {
               >
                 {product.colors && (
                   <div className="w-full items-center gap-1 space-y-2 py-3 md:gap-2 xl:flex">
-                    <label className="block self-baseline leading-4 lg:w-32">Couleur</label>
+                    <label className="block self-baseline leading-4 lg:w-32">{t("color")}</label>
                     <div className="flex flex-1 flex-wrap gap-2">
                       <ProductColors
                         colors={product.colors
@@ -137,4 +138,18 @@ export default async (props: Props) => {
       )}
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    const products = await getAllProductsData(locale)
+    return products.docs.map((product: Product) => ({
+      productSlug: product.slug,
+      categorySlug: (product.category as Category).slug,
+      locale,
+    }))
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }

@@ -1,5 +1,6 @@
 import { Field } from "payload"
 import { ProductOptionValue } from "./product-option-value"
+import { Slug } from "./slug"
 
 export const ProductOption: Field = {
   name: "option",
@@ -18,6 +19,7 @@ export const ProductOption: Field = {
           "C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit",
       },
     },
+    Slug,
     {
       name: "values",
       type: "array",

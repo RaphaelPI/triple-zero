@@ -1,3 +1,4 @@
+import { LOCALES } from "@/i18n/config"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getMetadata } from "../../metadata"
@@ -5,7 +6,7 @@ import { BlocText } from "./_components/bloc-text"
 import { BlockImg } from "./_components/block-img"
 import { BlockTextImg } from "./_components/block-text-img"
 import { BlockTitle } from "./_components/block-title"
-import { getPageData } from "./data"
+import { getPageData, getPagesData } from "./data"
 
 export const dynamic = "force-static"
 
@@ -61,4 +62,14 @@ export default async ({ params }: Props) => {
       </div>
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    const pages = await getPagesData(locale)
+    return pages.map((page) => ({ pageSlug: page.slug, locale }))
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }
