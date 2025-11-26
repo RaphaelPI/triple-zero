@@ -13,7 +13,7 @@ const log =
     if (!isDev() && level === "info") {
       return
     }
-    // eslint-disable-next-line no-console
+
     console[level](LEVELS[level], " ❄️ ", message, ...optionalParams)
   }
 
