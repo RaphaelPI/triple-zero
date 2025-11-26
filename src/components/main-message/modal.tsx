@@ -33,7 +33,7 @@ export const MainMessageModal = () => {
 
   return (
     <Dialog open={!shown} onOpenChange={(open) => setShown(!open)}>
-      <DialogContent className="mx-40 max-h-screen max-w-11/12 overflow-y-auto bg-white md:max-w-4xl">
+      <DialogContent className="my-4 max-h-11/12 max-w-11/12 overflow-y-auto bg-white md:max-w-4xl">
         <DialogHeader>
           <DialogTitle>{t("mainMessage")}</DialogTitle>
         </DialogHeader>
