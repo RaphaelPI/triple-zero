@@ -1,6 +1,7 @@
 import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP, EMAIL, PHONE } from "@/constants"
+import { Link } from "@/i18n/navigation"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
+import NextLink from "next/link"
 import LogoMin from "src/assets/logo-min.svg"
 import Mountain from "src/assets/moutain.svg"
 import { getNavData } from "../data"
@@ -44,16 +45,16 @@ export const Footer = async () => {
         <Separator />
         <div>
           <div className="text-lg font-bold text-white">{t("contact")}</div>
-          <Link
+          <NextLink
             prefetch={false}
             href={`tel:${PHONE.replaceAll(" ", "")}`}
             className="block p-2 text-white md:p-0"
           >
             {PHONE}
-          </Link>
-          <Link prefetch={false} href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
+          </NextLink>
+          <NextLink prefetch={false} href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
             {EMAIL}
-          </Link>
+          </NextLink>
           <div className="text-white">
             {ADDRESS} {ADDRESS_ZIP} {ADDRESS_TOWN} {ADDRESS_COUNTRY}
           </div>
