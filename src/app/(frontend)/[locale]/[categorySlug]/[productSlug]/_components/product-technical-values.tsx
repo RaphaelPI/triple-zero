@@ -62,7 +62,7 @@ export const ProductTechnicalValues = () => {
             <Popover content={t("technicalValues.volume")} variant="dark">
               <div className="flex items-center gap-1 max-md:w-1/3 lg:gap-2">
                 <IconContainer>
-                  <Volume className="h-10 max-h-[80%] w-10 max-w-[80%] md:h-auto md:w-auto" />
+                  <Volume className="size-10 max-h-[80%] max-w-[80%] md:h-auto md:w-auto" />
                   <div className="text-lg md:hidden">{technicalValues?.volume}L</div>
                 </IconContainer>
                 <div className="hidden md:block">
@@ -79,18 +79,18 @@ export const ProductTechnicalValues = () => {
             </Popover>
           )}
           {product.technicalValues?.temperature && (
-            <Popover content={t("technicalValues.volume")} variant="dark">
+            <Popover content={t("technicalValues.temperature")} variant="dark">
               <div className="flex items-center gap-1 max-md:w-1/3 lg:gap-2">
                 <IconContainer>
                   <Temperature className="h-8 max-h-[60%] w-8 max-w-[60%] md:h-auto md:w-auto" />
-                  <div className="text-lg md:hidden">{technicalValues?.temperature} °C</div>
+                  <div className="text-lg md:hidden text-nowrap">{technicalValues?.temperature} °C</div>
                 </IconContainer>
                 <div className="hidden md:block">
                   <div className="line-clamp-1 flex cursor-default items-center text-xs md:text-sm">
                     <Info className="size-3 md:inline-block" />
                     {t("temperature")}
                   </div>
-                  <div className="font-semibold md:text-lg">{technicalValues?.temperature} °C</div>
+                  <div className="font-semibold md:text-lg text-nowrap">{technicalValues?.temperature} °C</div>
                 </div>
               </div>
             </Popover>
@@ -118,7 +118,7 @@ export const ProductTechnicalValues = () => {
 
 const IconContainer = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="bg-green border-dark mx-auto flex h-8 w-full flex-shrink-0 items-center justify-center gap-1 rounded-lg border px-2 font-semibold md:size-12 md:px-0">
+    <div className="bg-green border-dark mx-auto flex h-8 w-full shrink-0 items-center justify-center max-md:gap-0 gap-1 rounded-lg border px-1 font-semibold md:size-12 md:px-0">
       {children}
     </div>
   )

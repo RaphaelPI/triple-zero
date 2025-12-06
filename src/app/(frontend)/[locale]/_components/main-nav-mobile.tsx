@@ -82,7 +82,7 @@ export const MainNavMobile = ({ nav, showPromotions }: Props) => {
                 </li>
               )}
               <li>
-                <Link prefetch={false} className="link block text-nowrap" href={`/p/savoir-faire`}>
+                <Link prefetch={false} className="link block text-nowrap font-bold" href={`/p/savoir-faire`}>
                   {t("menu.knowledge")}
                 </Link>
               </li>

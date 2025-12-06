@@ -71,13 +71,13 @@ export const ProductOption = ({
 
   let title = <>{option.title}</>
   if (option.description) {
-    title = (
+    title = (<div className="flex items-center gap-1">
       <Popover content={option.description} variant="dark">
         <div className="flex cursor-default items-center gap-1 leading-4">
-          <Info className="size-3 flex-shrink-0" />
-          {option.title}
+          <Info className="size-4 md:size-3 shrink-0" />
         </div>
       </Popover>
+          {option.title}</div>
     )
   }
 
