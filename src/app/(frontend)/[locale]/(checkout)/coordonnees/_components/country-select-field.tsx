@@ -76,7 +76,7 @@ export const CountrySelectField = ({
                   <XCircleIcon className="" />
                 </button>
               )}
-              <SelectTrigger className="bg-grey-light border-blue-grey w-full flex-shrink-0 cursor-default rounded-lg border">
+              <SelectTrigger className="bg-grey-light border-blue-grey w-full shrink-0 cursor-default rounded-lg border">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent className="bg-white">

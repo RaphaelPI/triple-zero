@@ -27,62 +27,54 @@ export const CheckoutForm = () => {
   z.config(locale === "fr" ? fr() : en())
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(
+      formSchema.superRefine(async (data, ctx) => {
+        const deliveryFields: (keyof z.infer<typeof formSchema>)[] = [
+          "d_lastName",
+          "d_firstName",
+          "d_address",
+          "d_zip",
+          "d_city",
+          "d_country",
+        ]
+        const allEmpty = deliveryFields.every((field) => !data[field as keyof typeof data])
+        const allFilled = deliveryFields.every((field) => data[field as keyof typeof data])
+
+        if (!allEmpty && !allFilled) {
+          deliveryFields.forEach((field) => {
+            const fieldValue = data[field as keyof typeof data]
+            if (!fieldValue) {
+              ctx.addIssue({
+                code: "custom",
+                path: [field],
+                message: t("error.deliveryRequired"),
+              })
+            }
+          })
+        }
+
+        if (
+          data.country &&
+          data.d_country &&
+          isTTCCountry(data.country) !== isTTCCountry(data.d_country)
+        ) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["country"],
+            message: t("error.deliveryCountryTaxFree"),
+          })
+          ctx.addIssue({
+            code: "custom",
+            path: ["d_country"],
+            message: t("error.deliveryCountryTaxFree"),
+          })
+        }
+      }),
+    ),
     values: deliveryData,
   })
 
-  const validate = (values: z.infer<typeof formSchema>) => {
-    // delivery fields
-    const deliveryFields: (keyof z.infer<typeof formSchema>)[] = [
-      "d_lastName",
-      "d_firstName",
-      "d_address",
-      "d_zip",
-      "d_city",
-      "d_country",
-    ]
-    const allEmpty = deliveryFields.every((field) => !values[field as keyof typeof values])
-    const allFilled = deliveryFields.every((field) => values[field as keyof typeof values])
-
-    if (!allEmpty && !allFilled) {
-      deliveryFields.forEach((field) => {
-        const fieldValue = values[field as keyof typeof values]
-        if (!fieldValue) {
-          form.setError(field, {
-            message: t("error.deliveryRequired"),
-          })
-        }
-      })
-
-      form.setError("root", {
-        message: t("error.deliveryRequiredAll"),
-      })
-
-      return
-    }
-
-    if (
-      values.country &&
-      values.d_country &&
-      isTTCCountry(values.country) !== isTTCCountry(values.d_country)
-    ) {
-      form.setError("root", {
-        message: t("error.deliveryCountryTaxFree"),
-      })
-      form.setError("country", {
-        message: t("error.deliveryCountryTaxFree"),
-      })
-      form.setError("d_country", {
-        message: t("error.deliveryCountryTaxFree"),
-      })
-      return
-    }
-  }
-
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // validate values
-    validate(values)
-
     // Store data in session storage
     setDeliveryData(values)
 
@@ -105,7 +97,7 @@ export const CheckoutForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        onChange={() => validate(form.getValues())}
+        // onChange={() => validate(form.getValues())}
         className="space-y-2"
       >
         <section className="w-section px-section flex gap-8 max-lg:flex-col">
