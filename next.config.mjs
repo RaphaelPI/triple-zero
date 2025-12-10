@@ -5,6 +5,11 @@ import { withPayload } from "@payloadcms/next/withPayload"
 const withNextIntl = createNextIntlPlugin()
 
 const nextConfig = {
+  experimental: {
+    staticGenerationRetryCount: 1,
+    staticGenerationMaxConcurrency: 2,
+    staticGenerationMinPagesPerWorker: 25,
+  },
   // Your Next.js config here
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
