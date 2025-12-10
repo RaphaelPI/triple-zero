@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     index: env.SERVER_INDEXING_ENABLED,
     follow: env.SERVER_INDEXING_ENABLED,
   },
-  itunes: {
-    appId: "760028892",
-  },
   metadataBase: new URL(env.NEXT_PUBLIC_URL),
 }
 

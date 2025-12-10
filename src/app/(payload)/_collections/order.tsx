@@ -12,7 +12,7 @@ export const Order: CollectionConfig = {
   },
   admin: {
     group: "1 - Produits",
-    defaultColumns: ["uid", "status", "date", "amount", "customer", "email", "status", "payment"],
+    defaultColumns: ["uid", "payment", "status", "date", "amount", "customer", "email", "status"],
     pagination: {
       defaultLimit: 50,
       limits: [20, 50, 100],
@@ -37,6 +37,7 @@ export const Order: CollectionConfig = {
               amount={doc.amount}
               uid={doc.uid}
               date={doc.date}
+              payment={doc.payment}
             />,
           )
 
@@ -54,6 +55,7 @@ export const Order: CollectionConfig = {
             variables: {
               shippingInfo: doc.shippingInfo,
               order: content,
+              link: `https://www.laposte.fr/outils/suivre-vos-envois${doc.parcelId ? `?code=${doc.parcelId}` : ""}`,
             },
           })
         }
@@ -69,6 +71,20 @@ export const Order: CollectionConfig = {
       required: true,
       admin: {
         readOnly: true,
+      },
+    },
+    {
+      name: "delay",
+      label: "Délai de livraison",
+      type: "date",
+      required: true,
+      admin: {
+        description:
+          "Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.",
+        date: {
+          pickerAppearance: "dayOnly",
+          displayFormat: "PPPP (dd/MM/yyyy)",
+        },
       },
     },
     {
@@ -124,25 +140,8 @@ export const Order: CollectionConfig = {
       },
     },
     {
-      name: "delay",
-      label: "Délai de livraison",
-      type: "date",
-      required: true,
-      admin: {
-        description:
-          "Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.",
-        date: {
-          pickerAppearance: "dayOnly",
-          displayFormat: "PPPP (dd/MM/yyyy)",
-        },
-        position: "sidebar",
-      },
-      access: {
-        update: ({ data }) => !Boolean(data?.id),
-      },
-    },
-    {
       name: "payment",
+      label: "Méthode de paiement",
       type: "select",
       options: [
         {
@@ -258,6 +257,14 @@ export const Order: CollectionConfig = {
       name: "shippingInfo",
       type: "textarea",
       label: "Informations colis",
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "parcelId",
+      type: "text",
+      label: "Identifiant colis",
       admin: {
         hidden: true,
       },

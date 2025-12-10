@@ -17,6 +17,7 @@ const COMPRESSION_BAGS = [
 export const getTechnicalValues = (
   optionValues: [ProductOption, ProductOptionValue][],
   modificators?: Record<string, number>,
+  volumeThreshold?: boolean,
 ): Record<TechnicalValue, number> => {
   const stats: TechnicalValue[] = ["temperature", "volume", "weight", "price"]
   const technicalValues: Record<TechnicalValue, number> = {
@@ -63,6 +64,7 @@ export const getTechnicalValues = (
           if (option.weight && delta?.type === "weight" && sizeOption) {
             const sizeValue = String(sizeOption[1]?.title.toLowerCase())
             const modificator = modificators?.[sizeValue]
+
             if (modificator) {
               deltaValue = deltaValue + (deltaValue * modificator) / 100
             }
@@ -81,27 +83,24 @@ export const getTechnicalValues = (
   })
 
   // Get real volume
-  COMPRESSION_BAGS.forEach(([volumeReference], index) => {
-    if (COMPRESSION_BAGS.length < index + 1) {
-      return COMPRESSION_BAGS[index - 1]
-    }
-
-    // protect index outside array
-    const bagIndex = Math.min(index + 1, COMPRESSION_BAGS.length - 1)
-    if (
-      technicalValues.volume > volumeReference &&
-      technicalValues.volume <= COMPRESSION_BAGS[bagIndex][0]
-    ) {
-      technicalValues.volume = COMPRESSION_BAGS[bagIndex][0]
-      technicalValues.weight += COMPRESSION_BAGS[bagIndex][1]
-    }
+  const v = COMPRESSION_BAGS.find(([volumeReference], index) => {
+    const nextBagIndex = Math.min(index + 1, COMPRESSION_BAGS.length - 1)
+    return (
+      technicalValues.volume >= volumeReference &&
+      technicalValues.volume < COMPRESSION_BAGS[nextBagIndex][0]
+    )
   })
 
-  technicalValues.volume = Math.max(
-    Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),
-    COMPRESSION_BAGS[0][0],
-  )
-  technicalValues.price = formatAmountForStripe(technicalValues.price, "EUR") / 100
+  if (v && volumeThreshold) {
+    technicalValues.volume = v[0]
+    technicalValues.weight += v[1]
+    technicalValues.volume = Math.max(
+      Math.min(technicalValues.volume, COMPRESSION_BAGS[COMPRESSION_BAGS.length - 1][0]),
+      COMPRESSION_BAGS[0][0],
+    )
+  }
+
+  technicalValues.price = Math.round(formatAmountForStripe(technicalValues.price, "EUR") / 100)
   technicalValues.weight = Math.round(technicalValues.weight)
   technicalValues.temperature = Math.round(technicalValues.temperature)
 
@@ -135,5 +134,5 @@ export const getStartingPrice = (options: ProductOption[]) => {
     return getTechnicalValues(usedOptions).price
   }
 
-  throw new Error("No starting price found")
+  return 0
 }

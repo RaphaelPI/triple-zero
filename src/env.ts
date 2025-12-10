@@ -24,6 +24,7 @@ export const env = createEnv({
     SERVER_STRIPE_SECRET_KEY: z.string(),
     SERVER_MAILJET_API_KEY: z.string(),
     SERVER_MAILJET_API_SECRET: z.string(),
+    SERVER_DEPLOY_HOOK_URL: z.url(),
   },
   shared: {
     NODE_ENV: z.string().default("development"),

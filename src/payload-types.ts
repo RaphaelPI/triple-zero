@@ -190,7 +190,7 @@ export interface TextBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -219,7 +219,7 @@ export interface TextImgBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -259,7 +259,7 @@ export interface Category {
   id: string;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -278,10 +278,19 @@ export interface Product {
   /**
    * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
    */
-  technical?: boolean | null;
+  technicalValues?: {
+    price?: boolean | null;
+    volume?: boolean | null;
+    weight?: boolean | null;
+    temperature?: boolean | null;
+  };
+  /**
+   * Si vous cochez cette case, le volume du produits sera affiché en fonction des paliers de volume (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)
+   */
+  volumeThreshold?: boolean | null;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -317,21 +326,23 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  blocInfos: {
-    /**
-     * Remplace le titre par défaut du bloc d'information pour ce produit.
-     */
-    title: string;
-    infos: {
-      /**
-       * Remplace le titre par défaut du bloc d'information pour ce produit.
-       */
-      title?: string | null;
-      info: string | BlocInfo;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
+  blocInfos?:
+    | {
+        /**
+         * Remplace le titre par défaut du bloc d'information pour ce produit.
+         */
+        title: string;
+        infos: {
+          /**
+           * Remplace le titre par défaut du bloc d'information pour ce produit.
+           */
+          title?: string | null;
+          info: string | BlocInfo;
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -364,6 +375,10 @@ export interface ColorWithImage {
 export interface Color {
   id: string;
   name: string;
+  /**
+   * Si la case est cochée, la couleur sera visible
+   */
+  active?: boolean | null;
   color: string;
   updatedAt: string;
   createdAt: string;
@@ -373,7 +388,14 @@ export interface Color {
  * via the `definition` "ProductOption".
  */
 export interface ProductOption {
+  /**
+   * C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit
+   */
   title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
+   */
+  slug: string;
   values?:
     | {
         value: ProductOptionValue;
@@ -396,6 +418,10 @@ export interface ProductOption {
    * Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit
    */
   cartImage?: boolean | null;
+  /**
+   * Si la case est cochée, l'option sera visible
+   */
+  active?: boolean | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -436,7 +462,7 @@ export interface BlocInfo {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -457,14 +483,14 @@ export interface BlocInfo {
 export interface Order {
   id: string;
   uid: string;
-  week: string;
-  customer: string;
-  email: string;
-  date: string;
   /**
    * Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.
    */
   delay: string;
+  week: string;
+  customer: string;
+  email: string;
+  date: string;
   payment?: ('transfer' | 'card' | 'check') | null;
   amount: number;
   shippingFee: number;
@@ -478,6 +504,7 @@ export interface Order {
   locale?: ('fr' | 'en') | null;
   status?: ('cancelled' | 'pending' | 'paid' | 'shipped') | null;
   shippingInfo?: string | null;
+  parcelId?: string | null;
   comment?: string | null;
   detail?: {
     [k: string]: unknown;
@@ -493,7 +520,7 @@ export interface ProductVariant {
   id: string;
   title: string;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   description: string;
@@ -529,7 +556,7 @@ export interface Promotion {
   title: string;
   description?: string | null;
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   /**
@@ -581,7 +608,7 @@ export interface Page {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -606,7 +633,7 @@ export interface Page {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -643,7 +670,7 @@ export interface Page {
       }
   )[];
   /**
-   * Cela correspond à l'identifiant dans l'url de la page
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
    */
   slug: string;
   isPublished?: boolean | null;
@@ -669,6 +696,7 @@ export interface ShippingFee {
   value: number;
   countries: (
     | 'FR'
+    | 'BE'
     | 'CH'
     | 'GB'
     | 'US'
@@ -751,7 +779,6 @@ export interface ShippingFee {
     | 'AL'
     | 'AD'
     | 'AT'
-    | 'BE'
     | 'BA'
     | 'BG'
     | 'HR'
@@ -964,11 +991,11 @@ export interface CategorySelect<T extends boolean = true> {
  */
 export interface OrderSelect<T extends boolean = true> {
   uid?: T;
+  delay?: T;
   week?: T;
   customer?: T;
   email?: T;
   date?: T;
-  delay?: T;
   payment?: T;
   amount?: T;
   shippingFee?: T;
@@ -976,6 +1003,7 @@ export interface OrderSelect<T extends boolean = true> {
   locale?: T;
   status?: T;
   shippingInfo?: T;
+  parcelId?: T;
   comment?: T;
   detail?: T;
   updatedAt?: T;
@@ -987,7 +1015,15 @@ export interface OrderSelect<T extends boolean = true> {
  */
 export interface ProductSelect<T extends boolean = true> {
   category?: T;
-  technical?: T;
+  technicalValues?:
+    | T
+    | {
+        price?: T;
+        volume?: T;
+        weight?: T;
+        temperature?: T;
+      };
+  volumeThreshold?: T;
   title?: T;
   slug?: T;
   description?: T;
@@ -1054,6 +1090,7 @@ export interface ColorWithImageSelect<T extends boolean = true> {
  */
 export interface ProductOptionSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   values?:
     | T
     | {
@@ -1064,6 +1101,7 @@ export interface ProductOptionSelect<T extends boolean = true> {
   size?: T;
   weight?: T;
   cartImage?: T;
+  active?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1204,6 +1242,7 @@ export interface BlocInfoSelect<T extends boolean = true> {
  */
 export interface ColorSelect<T extends boolean = true> {
   name?: T;
+  active?: T;
   color?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1323,7 +1362,7 @@ export interface Faq {
         root: {
           type: string;
           children: {
-            type: string;
+            type: any;
             version: number;
             [k: string]: unknown;
           }[];
@@ -1351,7 +1390,7 @@ export interface Message {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];

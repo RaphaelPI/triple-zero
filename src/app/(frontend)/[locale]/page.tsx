@@ -1,12 +1,11 @@
 import { MainMessage } from "@/components/main-message"
-import { Locale } from "@/i18n/config"
+import { Locale, LOCALES } from "@/i18n/config"
 import { setRequestLocale } from "next-intl/server"
 import { HomeCategories } from "./_components/home/home-categories"
+import { HomeHero } from "./_components/home/home-hero"
 import { HomeProductVariants } from "./_components/home/home-product-variants"
 import { HomePromotions } from "./_components/home/home-promotions"
 import { getMetadata } from "./metadata"
-
-export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
@@ -28,7 +27,8 @@ export default async ({ params }: Props) => {
   setRequestLocale(locale)
 
   return (
-    <main className="bg-flake bg-flake-bl md:bg-flake-tr space-y-8 bg-no-repeat">
+    <main className="bg-flake bg-flake-bl md:bg-flake-tr space-y-4 bg-no-repeat">
+      <HomeHero />
       <HomePromotions />
       <MainMessage />
       <HomeProductVariants />
@@ -36,3 +36,5 @@ export default async ({ params }: Props) => {
     </main>
   )
 }
+
+export const generateStaticParams = async () => LOCALES.map((locale) => ({ locale }))

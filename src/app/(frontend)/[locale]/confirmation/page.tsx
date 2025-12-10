@@ -1,8 +1,10 @@
-import { formatDate, setDefaultOptions } from "date-fns"
+import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { getLocale, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
-import { getOrder, updateOrder } from "./data"
+import { ConfirmationPending } from "./_components/confirmation-pending"
+import { ConfirmationSuccess } from "./_components/confirmation-success"
+import { getOrder } from "./data"
 
 export const dynamic = "force-dynamic"
 
@@ -20,36 +22,19 @@ export const generateMetadata = async () => {
 
 export default async ({ searchParams }: Props) => {
   const { payment, orderId } = await searchParams
-  const t = await getTranslations()
   const locale = await getLocale()
 
   // Set the locale for date-fns
   setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
 
-  if (!orderId) {
+  if (!orderId && payment !== "1") {
     notFound()
   }
 
-  if (payment === "1") {
-    await updateOrder(orderId)
+  if (orderId) {
+    const order = await getOrder(orderId)
+    return <ConfirmationSuccess delay={order.delay} />
   }
 
-  const order = await getOrder(orderId)
-  return (
-    <div className="section space-y-8 py-32">
-      <div className="text-h1 font-semibold">{t("payment.confirmation.title")}</div>
-      <div className="space-y-4">
-        <div className="text-lg whitespace-pre-line">{t("payment.confirmation.description")}</div>
-        {order?.delay && (
-          <div className="border-blue rounded-lg border bg-white p-2 text-sm leading-tight italic">
-            {t.rich("checkout.confirmation-delay", {
-              date: () => formatDate(String(order?.delay), "dd/MM/yyyy"),
-              strong: () => <strong>{formatDate(String(order?.delay), "PPPP")}</strong>,
-            })}
-          </div>
-        )}
-      </div>
-      {/* <CartCleaner /> */}
-    </div>
-  )
+  return <ConfirmationPending />
 }

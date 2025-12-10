@@ -64,8 +64,8 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
       ])
       .filter(([, value]) => value)) as [ProductOption, ProductOptionValue][]
 
-  // Get active colors
-  const activeColor = (
+  // Get active color
+  let activeColor = (
     promotion?.color
       ? {
           color: promotion.color as Color,
@@ -74,6 +74,14 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
         }
       : product.colors?.find(({ color }) => (color.color as Color).color === params["color"])?.color
   ) as ColorWithImage | undefined
+
+  if (!activeColor) {
+    activeColor =
+      product.colors
+        ?.filter(({ color }) => (color.color as Color).active)
+        .find(({ color }) => color.default)?.color ||
+      product.colors?.filter(({ color }) => (color.color as Color).active)?.[0]?.color
+  }
 
   // IMAGES
   // Default images
@@ -93,9 +101,8 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
     const newIndex = images.findIndex(({ id: imageId }) => imageId === id)
     if (newIndex !== -1) {
       setLastIndex(newIndex)
+      setCurrentIndex(newIndex)
     }
-
-    setCurrentIndex(newIndex)
   }
 
   return (
@@ -104,6 +111,7 @@ export const ProductProvider = ({ children, product, promotion }: Props) => {
         technicalValues: getTechnicalValues(
           activeOptions,
           product.weightModificator as Record<string, number>,
+          product.volumeThreshold ?? true, // default to true
         ),
         activeOptions,
         activeColor,

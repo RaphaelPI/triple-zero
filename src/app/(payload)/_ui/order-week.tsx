@@ -19,7 +19,7 @@ interface Props {
   field: SelectField
 }
 
-export const OrderWeek = ({ path, field, ...props }: Props) => {
+export const OrderWeek = ({ path }: Props) => {
   const { value, setValue } = useField<Order["week"]>({ path })
   const [newWeek, setNewWeek] = useState<Order["week"]>()
 

@@ -19,9 +19,6 @@ const Header = async () => {
           <Link prefetch={false} href="/questions-frequentes" className="link">
             FAQ
           </Link>
-          <Link prefetch={false} href="/contact" className="link">
-            Contact
-          </Link>
           <div>
             {LOCALES.map((l) => (
               <Fragment key={l}>

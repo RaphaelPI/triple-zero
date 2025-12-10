@@ -2,10 +2,11 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { Skeleton } from "@/components/ui/skeleton"
 import { LucidePlus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 import { InputField } from "./input-field"
 
@@ -25,10 +26,26 @@ export const DeliveryFormFields = ({ form }: Props) => {
   const [open, setOpen] = useState(false)
   const t = useTranslations("delivery")
 
+  const handleCheckChange = () => {
+    setOpen((prev) => {
+      if (!prev) {
+        form.setValue("d_firstName", "")
+        form.setValue("d_lastName", "")
+        form.setValue("d_address", "")
+        form.setValue("d_address2", "")
+        form.setValue("d_zip", "")
+        form.setValue("d_city", "")
+        form.setValue("d_country", "")
+      }
+
+      return !prev
+    })
+  }
+
   return (
     <>
       <div className="mt-8 flex items-start gap-3">
-        <Checkbox id="toggle" defaultChecked onCheckedChange={() => setOpen((prev) => !prev)} />
+        <Checkbox id="toggle" defaultChecked onCheckedChange={handleCheckChange} />
         <Label htmlFor="toggle">{t("useDeliveryAddress")}</Label>
       </div>
       {open && (
@@ -87,13 +104,15 @@ export const DeliveryFormFields = ({ form }: Props) => {
               required
             />
           </div>
-          <CountrySelectField
-            control={form.control}
-            name="d_country"
-            label={t("country")}
-            placeholder={t("country")}
-            required
-          />
+          <Suspense fallback={<Skeleton className="h-14 w-full" />}>
+            <CountrySelectField
+              control={form.control}
+              name="d_country"
+              label={t("country")}
+              placeholder={t("country")}
+              required
+            />
+          </Suspense>
         </>
       )}
     </>

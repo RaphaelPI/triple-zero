@@ -43,6 +43,11 @@ export const getHomeProductVariantsData = cache(async () => {
   const [locale, payload] = await Promise.all([getLocale(), getClient()])
   const variants = await payload.find({
     collection: "product-variant",
+    where: {
+      active: {
+        equals: true,
+      },
+    },
     depth: 2,
     locale,
     limit: 999,

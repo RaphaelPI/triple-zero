@@ -1,6 +1,7 @@
 const COUNTRIES_FR: Record<string, Record<string, string>> = {
   "Pays fréquemment sélectionnés": {
     FR: "France",
+    BE: "Belgique",
     CH: "Suisse",
     GB: "Royaume-Uni",
     US: "États-Unis",
@@ -89,7 +90,7 @@ const COUNTRIES_FR: Record<string, Record<string, string>> = {
     AL: "Albanie",
     AD: "Andorre",
     AT: "Autriche",
-    BE: "Belgique",
+    // BE: "Belgique",
     BA: "Bosnie-Herzégovine",
     BG: "Bulgarie",
     HR: "Croatie",

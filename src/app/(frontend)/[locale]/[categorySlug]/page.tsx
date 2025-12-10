@@ -2,7 +2,7 @@ import { Amount } from "@/components/amount"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
-import { Locale } from "@/i18n/config"
+import { Locale, LOCALES } from "@/i18n/config"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
 import { cn } from "@/lib/utils"
@@ -12,7 +12,7 @@ import { notFound } from "next/navigation"
 import { cache } from "react"
 import { getNavData } from "../data"
 import { getMetadata } from "../metadata"
-import { getCategoryData, getProductsData } from "./data"
+import { getAllCategoriesData, getCategoryData, getProductsData } from "./data"
 
 export const dynamic = "force-static"
 
@@ -99,7 +99,7 @@ export default async (props: Props) => {
             })}
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full max-md:space-y-4">
           <Breadcrumbs
             items={[
               {
@@ -176,7 +176,7 @@ export default async (props: Props) => {
                         <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                           <h2 className="text-xl font-bold">{product.title}</h2>
                           <div className="line-clamp-2">{product.description}</div>
-                          {price && (
+                          {price > 0 && (
                             <div className="text-lg font-semibold">
                               {t("priceFrom")}
                               <Amount amount={price} />
@@ -195,4 +195,17 @@ export default async (props: Props) => {
       </div>
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    const categories = await getAllCategoriesData(locale)
+    return categories.docs.map((category) => ({
+      categorySlug: category.slug,
+      locale,
+    }))
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }

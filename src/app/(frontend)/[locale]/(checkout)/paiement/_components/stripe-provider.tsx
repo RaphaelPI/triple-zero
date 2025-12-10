@@ -1,12 +1,14 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/navigation"
 import { getStripe } from "@/lib/stripe.cient"
 import { cn } from "@/lib/utils"
 import { useCheckout } from "@/providers/checkout/checkout"
 import { CheckoutProvider } from "@stripe/react-stripe-js"
 import { StripeCheckoutOptions } from "@stripe/stripe-js"
 import { Loader2 } from "lucide-react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 import { useServerAction } from "zsa-react"
 import { CheckoutSkeleton } from "../../_components/checkout-skeleton"
@@ -23,7 +25,7 @@ export const StripeProvider = ({ children }: Props) => {
   const { cart, deliveryData, deliveryFee, loading, loadingShippingFees, currentDiscount } =
     useCheckout()
   const locale = useLocale()
-
+  const t = useTranslations()
   const { execute } = useServerAction(createCheckoutSession)
 
   if (loading || loadingShippingFees) {
@@ -48,6 +50,27 @@ export const StripeProvider = ({ children }: Props) => {
       setPending(false)
     }, 500)
     return stripeResponse.clientSecret
+  }
+
+  if (cart.lines.length === 0) {
+    return (
+      <section className="w-section px-section">
+        <div className="panel px-panel py-panel">{t("cart.empty")}...</div>
+      </section>
+    )
+  }
+
+  if (!deliveryData.country) {
+    return (
+      <section className="w-section px-section">
+        <div className="panel px-panel py-panel space-y-2">
+          <div>{t("payment.error.deliveryRequired")}</div>
+          <Link href="/coordonnees">
+            <Button>{t("checkout.step2")}</Button>
+          </Link>
+        </div>
+      </section>
+    )
   }
 
   const options: StripeCheckoutOptions = { fetchClientSecret }

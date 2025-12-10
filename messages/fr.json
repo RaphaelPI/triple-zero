@@ -1,7 +1,7 @@
 {
   "title": "Triple Zéro",
   "slogan": "Léger et chaud",
-  "description": "Fabrication artisanale de sacs de couchage et équipements haute montagne",
+  "description": "Fabrication artisanale française d'équipement en duvet d'oie",
   "contact": "Contact",
   "menu": {
     "products": "Produits",
@@ -20,10 +20,11 @@
   "liters": "litres",
   "technicalValues": {
     "title": "Caractéristiques techniques",
+    "price": "Livré avec sac de compression et sac de rangement.",
     "hint": " Tous nos produits sont artisanaux et faits mains. Ces valeurs sont des estimations et peuvent être différentes du produit final.",
     "weight": "Le poids comprend le produit et le sac de compression TripleZéro fournis avec le produit.",
-    "volume": "Volume obtenu avec les sacs de compression TripleZéro fournis avec le produit",
-    "temperature": "Texte à définir expliquant comment comprendre cette valeur"
+    "volume": "Volume obtenu avec les sacs de compression Triple Zero fournis avec le produit que l’on peut encore comprimer avec des sangles.",
+    "temperature": "Nos produits sont testés sur le terrain par des guides partenaires et les informations ci-dessus sont une moyenne tirée de leur retour. L’expérience montre que le ressenti froid est essentiel."
   },
   "sizeGuide": "Guide des tailles",
   "noImg": "Aucune image disponible",
@@ -36,7 +37,7 @@
     "add": "Ajouter au panier",
     "validate": "Valider la commande",
     "shippingFees": "Guide des frais de port",
-    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.\nSi aucun montant n’apparaît après saisie du pays, cela signifie que les frais seront établis sur devis.",
+    "shippingFeesDescription": "Les frais de port sont calculés en fonction du pays renseigné dans l’adresse de livraison.",
     "features": "Caractéristiques",
     "quantity": "Quantité",
     "priceVTA": "Prix",
@@ -104,7 +105,11 @@
     },
     "confirmation": {
       "title": "Merci pour votre commande",
-      "description": "Votre commande a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants."
+      "description": "Votre commande a bien été enregistrée et sera traitée dans les plus brefs délais.\nVous allez recevoir un email de confirmation dans quelques instants.",
+      "pending": "Finalisation de votre commande..."
+    },
+    "error": {
+      "deliveryRequired": "Vous devez saisir vos coordonnées avant de procéder au paiement"
     }
   },
   "product": {

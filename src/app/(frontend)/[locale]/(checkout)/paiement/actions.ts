@@ -1,6 +1,8 @@
 "use server"
 
+import { env } from "@/env"
 import { rawProcedure } from "@/lib/safe-action"
+import { slugify } from "@/lib/slugify"
 import { stripe } from "@/lib/stripe.server"
 import { formatAmountForStripe } from "@/lib/text"
 import { Cart, formSchema } from "@/providers/checkout/checkout"
@@ -93,7 +95,7 @@ export const createCheckoutSession = rawProcedure
         ]
 
         const metadata = detail.reduce(
-          (acc, [name, value]) => ({ ...acc, [name]: value }),
+          (acc, [name, value]) => ({ ...acc, [slugify(name).substring(0, 40)]: value }),
           {} as Record<string, string>,
         )
 
@@ -105,8 +107,7 @@ export const createCheckoutSession = rawProcedure
             product_data: {
               name: line.title,
               description: detail.map(([name, value]) => `${name}: ${value}`).join(", "),
-              // images: [new URL(line.image, env.NEXT_PUBLIC_URL).toString()],
-              images: [new URL(line.image, "https://www.raphael-pi-staging.fr").toString()],
+              images: [new URL(line.image, env.NEXT_PUBLIC_URL).toString()],
               metadata,
             },
             unit_amount: formatAmountForStripe(amount, "EUR", deliveryData.country),

@@ -3,16 +3,23 @@ import { Image } from "@/components/image"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
 import { getStartingPrice } from "@/lib/technical-values"
-import { Media, Product } from "@/payload-types"
+import { Category, Media, Product } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
 
 interface Props {
   products: Product[]
-  categorySlug: string
+  category: Category
 }
 
-export const ProductsRelated = async ({ products, categorySlug }: Props) => {
+export const ProductsRelated = async ({ products, category }: Props) => {
   const t = await getTranslations()
+
+  // Sort products by category order
+  products.sort((a, b) => {
+    const aOrder = category.order?.findIndex((order) => (order as Product).id === a.id)
+    const bOrder = category.order?.findIndex((order) => (order as Product).id === b.id)
+    return (aOrder ?? 0) - (bOrder ?? 0)
+  })
 
   return (
     <>
@@ -29,7 +36,7 @@ export const ProductsRelated = async ({ products, categorySlug }: Props) => {
             <li key={product.id}>
               <Link
                 prefetch={false}
-                href={`/${categorySlug}/${product.slug}`}
+                href={`/${category.slug}/${product.slug}`}
                 className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
               >
                 <div className="flex w-full items-center justify-center md:h-full md:w-5/12">
@@ -44,7 +51,7 @@ export const ProductsRelated = async ({ products, categorySlug }: Props) => {
                 <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                   <h2 className="text-xl font-bold">{product.title}</h2>
                   <div className="line-clamp-2">{product.description}</div>
-                  {price && (
+                  {price > 0 && (
                     <div className="text-lg font-semibold">
                       {t("priceFrom")}
                       <Amount amount={price} />

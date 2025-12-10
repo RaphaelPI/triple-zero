@@ -1,3 +1,4 @@
+import { revalidateLocalePath } from "@/lib/cache"
 import type { CollectionConfig } from "payload"
 import { ImgBlock } from "../_blocks/img"
 import { TextBlock } from "../_blocks/text"
@@ -11,6 +12,14 @@ export const Pages: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "slug", "updatedAt"],
     group: "2 - Contenu",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        await revalidateLocalePath({ path: `/p/${doc.slug}`, req })
+        return doc
+      },
+    ],
   },
   fields: [
     {

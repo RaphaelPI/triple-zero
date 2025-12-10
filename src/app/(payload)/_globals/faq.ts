@@ -1,3 +1,4 @@
+import { revalidateLocalePath } from "@/lib/cache"
 import { GlobalConfig } from "payload"
 
 export const Faq: GlobalConfig = {
@@ -5,6 +6,15 @@ export const Faq: GlobalConfig = {
   label: "FAQ",
   admin: {
     group: "2 - Contenu",
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        await revalidateLocalePath({ path: `/questions-frequentes`, type: "page", req })
+
+        return doc
+      },
+    ],
   },
   fields: [
     {

@@ -10,12 +10,10 @@ interface Props {
   field: SelectField
 }
 
-export const OrderStatus = ({ path, field, ...props }: Props) => {
+export const OrderStatus = ({ path, field }: Props) => {
   const { value, setValue } = useField<Order["status"]>({ path })
   const shippingInfoField = useField<Order["shippingInfo"]>({ path: "shippingInfo" })
-  // const { value: shippingInfo, setValue: setShippingInfo } = useField<Order["shippingInfo"]>({
-  //   path: `${path}.shippingInfo`,
-  // })
+  const parcelIdField = useField<Order["parcelId"]>({ path: "parcelId" })
   const option = field.options.find((o) => (o as OptionObject).value === value) || field.options[0]
 
   const handlePaid = () => {
@@ -65,12 +63,19 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
           )}
           {value === "paid" && (
             <div>
-              <div>Informations colis</div>
+              <div>Informations supplémentaires</div>
               <div>
                 <textarea
                   className="min-h-20 w-full"
                   onChange={(e) => shippingInfoField.setValue(e.target.value)}
                   value={shippingInfoField.value ?? ""}
+                />
+              </div>
+              <div>Identifiant colis</div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  onChange={(e) => parcelIdField.setValue(e.target.value.trim())}
                 />
               </div>
               <Button onClick={handleShipped} className="my-0 bg-blue-700 hover:bg-blue-600">
@@ -80,10 +85,12 @@ export const OrderStatus = ({ path, field, ...props }: Props) => {
           )}
           {value === "shipped" && (
             <div>
-              <div>Informations colis</div>
+              <div>Informations supplémentaires</div>
               <div className="rounded bg-white p-1 whitespace-pre-line">
                 {shippingInfoField.value ?? "Aucune information de colis"}
               </div>
+              <div>Identifiant colis</div>
+              <div className="rounded bg-white p-1 whitespace-pre-line">{parcelIdField.value}</div>
             </div>
           )}
           {value && !["cancelled", "shipped"].includes(value) && (

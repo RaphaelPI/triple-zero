@@ -1,4 +1,4 @@
-import { env } from "@/env"
+import { deployHook } from "@/lib/cache"
 import { CollectionConfig } from "payload"
 import { Slug } from "../_fields/slug"
 import { getProduct } from "../_ui/action"
@@ -38,9 +38,7 @@ export const Promotion: CollectionConfig = {
     ],
     afterChange: [
       async ({ doc }) => {
-        await fetch(`${env.NEXT_PUBLIC_URL}/api/cache/promotions/${doc.id}`, {
-          method: "POST",
-        })
+        await deployHook()
 
         return doc
       },

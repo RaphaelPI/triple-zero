@@ -17,6 +17,7 @@ export const CountryProvider = ({ children }: { children: React.ReactNode }) => 
     }
 
     getCountry()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, country])
 
   const getCountry = async () => {

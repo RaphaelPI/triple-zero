@@ -1,7 +1,10 @@
 import { getAmountFromCountry } from "./price"
 
 export const formatAmount = (amount: number) =>
-  new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(amount)
+  new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+  }).format(amount)
 
 export const formatAmountForStripe = (
   amount: number,

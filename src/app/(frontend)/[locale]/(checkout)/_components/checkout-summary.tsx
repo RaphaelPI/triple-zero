@@ -44,7 +44,14 @@ export const CheckoutSummary = ({ children }: Props) => {
       </div>
       <div className="panel-table-cell space-y-4 text-lg">
         <div>
-          <Popover content={discountContent}>
+          <Popover
+            content={
+              <div>
+                {discountContent}
+                {!currentDiscount && <div>{t("checkout.freeShippingDescription")}</div>}
+              </div>
+            }
+          >
             <div className="flex items-center gap-1">
               {t("cart.totalCart")} : <Amount amount={total} raw /> <Info className="size-4" />
             </div>

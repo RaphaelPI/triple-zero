@@ -17,9 +17,10 @@ import Close from "src/assets/close.svg"
 
 interface Props {
   nav: Nav
+  showPromotions: boolean
 }
 
-export const MainNavMobile = ({ nav }: Props) => {
+export const MainNavMobile = ({ nav, showPromotions }: Props) => {
   const [open, setOpen] = useState(false)
   const t = useTranslations()
   const pathname = usePathname()
@@ -73,13 +74,15 @@ export const MainNavMobile = ({ nav }: Props) => {
           ))}
           <div className="space-y-4 px-8 pb-3 text-2xl">
             <ol className="space-y-2">
+              {showPromotions && (
+                <li>
+                  <Link prefetch={false} href="/promotions" className="link block text-nowrap">
+                    {t("promotions.nav")}
+                  </Link>
+                </li>
+              )}
               <li>
-                <Link prefetch={false} href="/promotions" className="link block text-nowrap">
-                  {t("promotions.nav")}
-                </Link>
-              </li>
-              <li>
-                <Link prefetch={false} className="link block text-nowrap" href={`/p/savoir-faire`}>
+                <Link prefetch={false} className="link block text-nowrap font-bold" href={`/p/savoir-faire`}>
                   {t("menu.knowledge")}
                 </Link>
               </li>

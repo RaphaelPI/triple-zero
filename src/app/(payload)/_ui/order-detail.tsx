@@ -61,6 +61,7 @@ export const OrderDetail = ({ path }: Props) => {
         delay={formData.delay}
         uid={formData.uid}
         date={formData.date}
+        payment={formData.payment}
       />
     </div>
   )

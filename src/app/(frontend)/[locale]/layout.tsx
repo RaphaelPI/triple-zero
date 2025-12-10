@@ -13,6 +13,7 @@ import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { Footer } from "./_components/footer"
 import Header from "./_components/header"
+import { TopLoader } from "./_components/top-loader"
 import { Analytics } from "./_components/vendors/analytics"
 import { Providers } from "./providers"
 
@@ -62,6 +63,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`${barlow.className}`}>
+        <TopLoader />
         <Analytics />
         <Providers locale={locale} messages={messages}>
           <StructuredJSON />

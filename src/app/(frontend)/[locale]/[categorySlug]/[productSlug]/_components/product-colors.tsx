@@ -1,5 +1,6 @@
 "use client"
 
+import { Popover } from "@/components/popover"
 import { cn } from "@/lib/utils"
 import { Color, ColorWithImage, Media } from "@/payload-types"
 import { useQueryState } from "nuqs"
@@ -21,26 +22,30 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
       return
     }
 
+    if (color.image) {
+      setImage((color.image as Media).id)
+    }
+
     const c = color.color as Color
 
     setValue(String(c.color))
   }
 
-  const handleHover = (image: Media, active: boolean) => () => {
-    if (!image || (readOnly && !active)) {
-      return
-    }
+  // const handleHover = (image: Media, active: boolean) => () => {
+  //   if (!image || (readOnly && !active)) {
+  //     return
+  //   }
 
-    setImage((image as Media).id)
-  }
+  //   setImage((image as Media).id)
+  // }
 
-  const handleOut = (image: Media, active: boolean) => () => {
-    if (!image || (readOnly && !active)) {
-      return
-    }
+  // const handleOut = (image: Media, active: boolean) => () => {
+  //   if (!image || (readOnly && !active)) {
+  //     return
+  //   }
 
-    resetCurrentImage()
-  }
+  //   resetCurrentImage()
+  // }
 
   if (!colors) {
     return null
@@ -57,22 +62,19 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
         const hex = String(c.color)
         const active = Boolean(value ? value === hex : color?.default)
         const optionRender = (
-          <div
-            className="option-value-container"
-            onMouseEnter={handleHover(color.image as Media, active)}
-            onMouseLeave={handleOut(color.image as Media, active)}
-            key={c.id}
-          >
-            <div
-              style={{ backgroundColor: hex }}
-              className={cn("h-8 w-8 rounded-full border-2 border-white p-0", {
-                "ring-primary ring-[3px]": active,
-                "cursor-pointer": !readOnly,
-                "hover:opacity-80": !readOnly || (Boolean(color.image) && active),
-                "border-blue-grey": hex.toLowerCase() === "#ffffff" && !active,
-              })}
-              onClick={handleClick(color)}
-            />
+          <div className="option-value-container" key={c.id}>
+            <Popover content={c.name}>
+              <div
+                style={{ backgroundColor: hex }}
+                className={cn("h-8 w-8 rounded-full border-2 border-white p-0", {
+                  "ring-primary ring-[3px]": active,
+                  "cursor-pointer": !readOnly,
+                  "hover:opacity-80": !readOnly || (Boolean(color.image) && active),
+                  "border-blue-grey": hex.toLowerCase() === "#ffffff" && !active,
+                })}
+                onClick={handleClick(color)}
+              />
+            </Popover>
           </div>
         )
 

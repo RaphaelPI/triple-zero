@@ -5,8 +5,9 @@ import {
   TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_EN,
   TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_FR,
 } from "@/constants"
+import { env } from "@/env"
 import { logger } from "@/lib/logger"
-import { sendEmail } from "@/lib/mailjet.server"
+import { sendEmail, SendEmailProps } from "@/lib/mailjet.server"
 import { getClient } from "@/lib/payload"
 import { getNextAvailableWeek } from "@/lib/planning.server"
 import { rawProcedure } from "@/lib/safe-action"
@@ -156,10 +157,8 @@ export const saveOrder = rawProcedure
       }),
     )
 
-    // send email to customer
-    await sendEmail({
+    const options: SendEmailProps = {
       to: [{ Email: input.email, Name: input.customer }],
-      // bcc: [{ Email: "triplezero@triplezero.fr", Name: "Triple Zero" }],
       subject: t("email.orderConfirmation.subject"),
       templateId,
       variables: {
@@ -167,7 +166,14 @@ export const saveOrder = rawProcedure
         payment,
         delay: input.delay ? format(input.delay, "dd/MM/yyyy") : "",
       },
-    })
+    }
 
-    return order.id
+    if (env.NODE_ENV === "production") {
+      options.bcc = [{ Email: "triplezero@triplezero.fr", Name: "Triple Zero" }]
+    }
+
+    // send email to customer
+    await sendEmail(options)
+
+    return [order.id, order.delay]
   })

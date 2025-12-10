@@ -124,7 +124,7 @@ interface ICheckoutContext {
   totalToPay: number
   isPendingDelay: boolean
   delayDate?: string
-  storeOrder: (paymentType: string, comment?: string) => Promise<void>
+  storeOrder: (paymentType: string, comment?: string) => Promise<string>
   clearCart: () => void
 }
 
@@ -216,7 +216,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         colors: lineColors,
         quantity: 1,
         url: window.location.href,
-        price,
+        price: Math.round(price), // always round to avoid floating point on product
         discount,
         categorySlug: categorySlug ?? "",
         category: categoryTitle ?? "",
@@ -279,7 +279,13 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
       workTime: cart.lines.reduce((acc, line) => acc + line.worktime * line.quantity, 0),
     }
 
-    const [id] = await executeSaveOrder(data)
+    // store order in local storage for pending payment and validate it after payment
+    if (paymentType === "card") {
+      localStorage.setItem("pending-order", JSON.stringify(data))
+      return
+    }
+
+    const [[id]] = await executeSaveOrder(data)
     return id
   }
 

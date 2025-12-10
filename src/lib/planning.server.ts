@@ -59,7 +59,7 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
       })
 
       const ordersWeekWorktime = weekOrders.docs.reduce((acc, order) => acc + order.workTime, 0)
-      const weekWorktimeRemaining = Math.round(weekWorkTime - ordersWeekWorktime / 60)
+      // const weekWorktimeRemaining = Math.round(weekWorkTime - ordersWeekWorktime / 60)
 
       if (ordersWeekWorktime === 0) {
         return true

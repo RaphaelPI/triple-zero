@@ -5,7 +5,6 @@ import { Link } from "@/i18n/navigation"
 import { getTechnicalValues } from "@/lib/technical-values"
 import { Category, Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
-import { getOptionSlug } from "../../[categorySlug]/[productSlug]/utils"
 import { getHomeProductVariantsData } from "../../data"
 
 export const HomeProductVariants = async () => {
@@ -18,7 +17,7 @@ export const HomeProductVariants = async () => {
 
   return (
     <section className="section space-y-4 lg:space-y-8">
-      <h1>{t("variants")}</h1>
+      <div className="h1">{t("variants")}</div>
       <div className="space-y-4">
         {variants.docs.map((variant) => {
           const product = variant.reference.value as Product
@@ -30,17 +29,14 @@ export const HomeProductVariants = async () => {
           product.options?.forEach(({ option }) => {
             const optionValue = option.values?.find(({ value }) => value.defaultValue)?.value
 
-            if (
-              optionValue &&
-              !options.find(([opt]) => getOptionSlug(option) === getOptionSlug(opt))
-            ) {
+            if (optionValue && !options.find(([opt]) => option.slug === opt.slug)) {
               priceOptions.push([option, optionValue])
             }
           })
 
           const searchParams = new URLSearchParams()
           options.forEach(([option, optionValue]) => {
-            searchParams.set(getOptionSlug(option), optionValue.value)
+            searchParams.set(option.slug, optionValue.value)
           })
           const url = `/${category.slug}/${product.slug}?${searchParams.toString()}`
 
@@ -60,7 +56,7 @@ export const HomeProductVariants = async () => {
                     width={500}
                     height={250}
                     sizes="500px"
-                    className="mx-auto h-auto max-h-full w-auto max-w-full rounded-2xl md:rounded-r-none"
+                    className="mx-auto h-auto max-h-full w-md rounded-2xl md:rounded-r-none"
                   />
                 )}
               </div>

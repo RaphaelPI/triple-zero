@@ -18,8 +18,8 @@ export function getMetadata({
   title,
   description = "Choisissez les sacs de couchage TRIPLEZERO pour vos expés et treks, légers et chauds grâce à leur système de compartiments étanches garnis pur duvet d'oie 800 cuin minimum.",
   robots = {
-    index: true,
-    follow: true,
+    index: env.SERVER_INDEXING_ENABLED,
+    follow: env.SERVER_INDEXING_ENABLED,
   },
   openGraph = {},
   more = {},

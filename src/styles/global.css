@@ -87,7 +87,8 @@ body {
   }
 }
 
-h1 {
+h1,
+.h1 {
   @apply text-h1 leading-h1 font-bold italic;
 }
 

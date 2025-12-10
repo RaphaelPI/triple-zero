@@ -1,3 +1,4 @@
+import { Locale } from "@/i18n/config"
 import { getClient } from "@/lib/payload"
 import { getLocale } from "next-intl/server"
 import { Where } from "payload"
@@ -17,6 +18,21 @@ export const getCategoryData = cache(async (slug: string) => {
     locale,
     limit: 999,
   })
+
+  return category
+})
+
+export const getAllCategoriesData = cache(async (locale: Locale) => {
+  const payload = await getClient()
+  const category = await payload.find({
+    collection: "category",
+    select: {
+      slug: true,
+    },
+    locale,
+    limit: 999,
+  })
+
   return category
 })
 

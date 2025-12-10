@@ -2,11 +2,11 @@ import { RichText } from "@/components/rich-text"
 import { Link } from "@/i18n/navigation"
 import { Product } from "@/payload-types"
 
-interface ProductInfosProps {
-  bloc: Product["blocInfos"][number]
+interface Props {
+  bloc: NonNullable<Product["blocInfos"]>[number]
 }
 
-export const ProductInformations = ({ bloc }: ProductInfosProps) => {
+export const ProductInformations = ({ bloc }: Props) => {
   if (!bloc || bloc.infos?.length === 0) {
     return null
   }

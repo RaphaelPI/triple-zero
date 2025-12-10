@@ -1,4 +1,3 @@
-import { slugify } from "@/lib/slugify"
 import {
   Color,
   ColorWithImage,
@@ -19,7 +18,7 @@ export const getOptionsQueryNames = (options: ProductOption[], colors: ColorWith
   const names: UseQueryStatesKeysMap = {}
   options?.forEach(
     (option) =>
-      (names[getOptionSlug(option)] = parseAsString.withDefault(
+      (names[option.slug] = parseAsString.withDefault(
         option?.values?.find(({ value }) => value.defaultValue)?.value.value || "",
       )),
   )
@@ -86,7 +85,10 @@ export const getProductDefaultImages = (
   // Get default images from colors
   if (product.colors) {
     images.push(
-      ...(product.colors?.map(({ color }) => color.image as Media).filter((image) => image) ?? []),
+      ...(product.colors
+        ?.filter(({ color }) => (color.color as Color).active)
+        .map(({ color }) => color.image as Media)
+        .filter((image) => image) ?? []),
     )
   }
 
@@ -95,5 +97,5 @@ export const getProductDefaultImages = (
 }
 
 export const getOptionSlug = (option: ProductOption) => {
-  return slugify(option.title)
+  return option.slug
 }

@@ -1,5 +1,6 @@
 import { Field } from "payload"
 import { ProductOptionValue } from "./product-option-value"
+import { Slug } from "./slug"
 
 export const ProductOption: Field = {
   name: "option",
@@ -13,7 +14,12 @@ export const ProductOption: Field = {
       type: "text",
       required: true,
       localized: true,
+      admin: {
+        description:
+          "C'est le titre de l'option qui sera affiché à l'utilisateur sur la page produit",
+      },
     },
+    Slug,
     {
       name: "values",
       type: "array",
@@ -65,6 +71,16 @@ export const ProductOption: Field = {
       admin: {
         description:
           "Si cochée, ca sera l'image de cette option (si elle existe) qui sera affichée dans le panier/la commande. Si non cochée, ca sera l'image de la couleur sélectionnée (si elle existe. Sinon ca sera la 1ere image par defaut du produit",
+      },
+    },
+    {
+      name: "active",
+      label: "Active ?",
+      type: "checkbox",
+      defaultValue: true,
+      admin: {
+        description: "Si la case est cochée, l'option sera visible",
+        position: "sidebar",
       },
     },
   ],
