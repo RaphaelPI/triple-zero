@@ -14,12 +14,12 @@ export const ProductInformations = ({ blocs }: Props) => {
 
   return (
     <Tabs defaultValue={blocs[0].id!} className="w-full gap-0">
-      <TabsList className="w-full rounded-2xl rounded-b-none bg-black p-2">
+      <TabsList className="w-full rounded-2xl rounded-b-none bg-white/80 p-2">
         {blocs.map((bloc) => (
           <TabsTrigger
             key={bloc.id}
             value={bloc.id!}
-            className="xs:text-lg rounded-xl py-2 text-ellipsis text-white data-[state=active]:bg-white data-[state=active]:text-black md:py-4 md:text-xl"
+            className="xs:text-lg data-[state=active]:bg-blue-grey rounded-xl py-2 text-ellipsis text-black md:py-4 md:text-xl"
           >
             {bloc.title}
           </TabsTrigger>
