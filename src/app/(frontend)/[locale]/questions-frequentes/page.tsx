@@ -1,4 +1,4 @@
-import { Locale } from "@/i18n/config"
+import { Locale, LOCALES } from "@/i18n/config"
 import { Metadata } from "next"
 
 import { Breadcrumbs } from "@/components/breadcrumbs"
@@ -12,8 +12,6 @@ import { RichText } from "@payloadcms/richtext-lexical/react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { getMetadata } from "../metadata"
 import { getFaqData } from "./data"
-
-export const dynamic = "force-static"
 
 interface Props {
   params: Promise<{
@@ -76,4 +74,13 @@ export default async (props: Props) => {
       })}
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    return { locale }
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }

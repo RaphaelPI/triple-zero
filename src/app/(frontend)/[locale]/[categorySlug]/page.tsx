@@ -14,8 +14,6 @@ import { getNavData } from "../data"
 import { getMetadata } from "../metadata"
 import { getAllCategoriesData, getCategoryData, getProductsData } from "./data"
 
-export const dynamic = "force-static"
-
 interface Props {
   params: Promise<{
     locale: Locale
