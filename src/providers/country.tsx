@@ -29,7 +29,7 @@ export const CountryProvider = ({ children }: { children: React.ReactNode }) => 
       const data = await response.json()
 
       setCountry(data.country_code)
-    } catch (error) {
+    } catch (_) {
       setCountry("FR")
     } finally {
       setFetching(false)

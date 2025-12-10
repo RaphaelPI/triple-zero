@@ -48,7 +48,6 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
         return false
       }
 
-      const weekWorkTime = productionWeeks[planningWeek] ?? planning.defaultWorktime
       const weekOrders = await payload.find({
         collection: "order",
         where: {
@@ -59,8 +58,6 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
       })
 
       const ordersWeekWorktime = weekOrders.docs.reduce((acc, order) => acc + order.workTime, 0)
-      // const weekWorktimeRemaining = Math.round(weekWorkTime - ordersWeekWorktime / 60)
-
       if (ordersWeekWorktime === 0) {
         return true
       }
