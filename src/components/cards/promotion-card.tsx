@@ -36,6 +36,7 @@ export const PromotionCard = ({
           alt={title}
           className="h-auto max-h-full w-auto max-w-full"
           sizes="350px"
+          width={350}
         />
       </div>
       <div className="px-panel py-panel space-y-1 lg:space-y-2">
