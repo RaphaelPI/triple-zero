@@ -52,6 +52,21 @@ export const Product: CollectionConfig = {
               required: true,
             },
             {
+              name: "title",
+              label: "Titre",
+              type: "text",
+              localized: true,
+              required: true,
+            },
+            Slug,
+            {
+              name: "description",
+              label: "Description",
+              type: "textarea",
+              required: true,
+              localized: true,
+            },
+            {
               name: "technicalValues",
               type: "group",
               label: "Informations techniques",
@@ -95,20 +110,6 @@ export const Product: CollectionConfig = {
                 description:
                   "Si vous cochez cette case, le volume du produits sera affiché en fonction des paliers de volume (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)",
               },
-            },
-            {
-              name: "title",
-              label: "Titre",
-              type: "text",
-              required: true,
-            },
-            Slug,
-            {
-              name: "description",
-              label: "Description",
-              type: "textarea",
-              required: true,
-              localized: true,
             },
             {
               name: "images",

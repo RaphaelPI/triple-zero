@@ -275,6 +275,12 @@ export interface Category {
 export interface Product {
   id: string;
   category: string | Category;
+  title: string;
+  /**
+   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
+   */
+  slug: string;
+  description: string;
   /**
    * Si vous cochez cette case, ce produit aura les informations techniques de Poids, Volume et Température sur sa fiche. Ne pas cocher pour les produits literie.
    */
@@ -288,12 +294,6 @@ export interface Product {
    * Si vous cochez cette case, le volume du produits sera affiché en fonction des paliers de volume (6L, 7.5L, 9L, 10.5L, 12L, 13.5L)
    */
   volumeThreshold?: boolean | null;
-  title: string;
-  /**
-   * Cela correspond à l'identifiant dans l'url de la page. Cette valeur est générée automatiquement, ne rien saisir.
-   */
-  slug: string;
-  description: string;
   images: {
     image?: (string | null) | Media;
     id?: string | null;
@@ -1015,6 +1015,9 @@ export interface OrderSelect<T extends boolean = true> {
  */
 export interface ProductSelect<T extends boolean = true> {
   category?: T;
+  title?: T;
+  slug?: T;
+  description?: T;
   technicalValues?:
     | T
     | {
@@ -1024,9 +1027,6 @@ export interface ProductSelect<T extends boolean = true> {
         temperature?: T;
       };
   volumeThreshold?: T;
-  title?: T;
-  slug?: T;
-  description?: T;
   images?:
     | T
     | {
