@@ -68,11 +68,20 @@ export const HomeProductVariants = async () => {
                 <div className="whitespace-pre-line">{variant.description}</div>
                 <div>
                   <ul className="flex flex-wrap gap-1">
-                    {options.map(([option, optionValue]) => (
-                      <li key={option.title} className="bg-blue-grey rounded p-1 text-xs">
-                        {option.title} : {optionValue.title}
-                      </li>
-                    ))}
+                    {options.map(([option, optionValue]) => {
+                      const refTitle = product.options?.find(
+                        (pOption) => pOption.option.slug === option.slug,
+                      )?.option.title
+                      const refValueTitle = product.options
+                        ?.find((pOption) => pOption.option.slug === option.slug)
+                        ?.option.values?.find(({ value }) => value.value === optionValue.value)
+                        ?.value.title
+                      return (
+                        <li key={option.title} className="bg-blue-grey rounded p-1 text-xs">
+                          {refTitle} : {refValueTitle}
+                        </li>
+                      )
+                    })}
                   </ul>
                 </div>
                 <div className="text-lg font-semibold">
