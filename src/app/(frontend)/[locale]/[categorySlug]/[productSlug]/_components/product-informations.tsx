@@ -1,6 +1,5 @@
 import { RichText } from "@/components/rich-text"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Link } from "@/i18n/navigation"
 import { Product } from "@/payload-types"
 
 interface Props {
@@ -19,7 +18,7 @@ export const ProductInformations = ({ blocs }: Props) => {
           <TabsTrigger
             key={bloc.id}
             value={bloc.id!}
-            className="xs:text-lg data-[state=active]:bg-blue-grey rounded-xl py-2 text-ellipsis text-black md:py-4 md:text-xl"
+            className="xs:text-lg data-[state=active]:bg-blue-grey cursor-pointer rounded-xl py-2 text-ellipsis text-black md:py-4 md:text-xl"
           >
             {bloc.title}
           </TabsTrigger>
@@ -41,13 +40,6 @@ export const ProductInformations = ({ blocs }: Props) => {
                   <div id={id ?? ""} className="invisible absolute -top-16" />
                   <div className="group flex items-center gap-2 text-lg font-semibold">
                     {blocTitle || info.title}
-                    <Link
-                      prefetch={false}
-                      href={`#${id}`}
-                      className="text-blue inline-block opacity-0 group-hover:opacity-100"
-                    >
-                      #
-                    </Link>
                   </div>
                   <div className="text-sm">
                     <div className="pt-2">{info.content && <RichText data={info.content} />}</div>

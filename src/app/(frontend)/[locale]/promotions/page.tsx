@@ -1,9 +1,9 @@
 import { PromotionCard } from "@/components/cards/promotion-card"
+import { LOCALES } from "@/i18n/config"
 import { Media, Product, ProductOption, ProductOptionValue } from "@/payload-types"
 import { getTranslations } from "next-intl/server"
 import { getMetadata } from "../metadata"
 import { getPromotionsData } from "./data"
-export const dynamic = "force-static"
 
 export const generateMetadata = async () => {
   const t = await getTranslations()
@@ -48,4 +48,13 @@ export default async () => {
       </section>
     </main>
   )
+}
+
+export const generateStaticParams = async () => {
+  const actions = LOCALES.map(async (locale) => {
+    return { locale }
+  })
+
+  const params = await Promise.all(actions)
+  return params.flat()
 }
