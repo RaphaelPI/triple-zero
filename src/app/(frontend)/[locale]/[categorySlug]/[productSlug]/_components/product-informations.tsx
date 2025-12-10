@@ -1,50 +1,63 @@
 import { RichText } from "@/components/rich-text"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Link } from "@/i18n/navigation"
 import { Product } from "@/payload-types"
 
 interface Props {
-  bloc: NonNullable<Product["blocInfos"]>[number]
+  blocs: NonNullable<Product["blocInfos"]>
 }
 
-export const ProductInformations = ({ bloc }: Props) => {
-  if (!bloc || bloc.infos?.length === 0) {
+export const ProductInformations = ({ blocs }: Props) => {
+  if (!blocs || blocs.length === 0) {
     return null
   }
 
   return (
-    <div>
-      <div className="rounded-t-2xl border-8 border-b-0 border-white bg-white lg:w-1/3">
-        <div className="bg-blue-grey w-full rounded-2xl px-12 py-4 text-center">{bloc.title}</div>
-      </div>
-      <div className="panel rounded-tl-none max-lg:rounded-tr-none">
-        {bloc.infos?.map(({ id, info, title: blocTitle }) => {
-          if (!info || typeof info === "string") {
-            return null
-          }
+    <Tabs defaultValue={blocs[0].id!} className="w-full gap-0">
+      <TabsList className="w-full rounded-2xl rounded-b-none bg-white/80 p-2">
+        {blocs.map((bloc) => (
+          <TabsTrigger
+            key={bloc.id}
+            value={bloc.id!}
+            className="xs:text-lg data-[state=active]:bg-blue-grey rounded-xl py-2 text-ellipsis text-black md:py-4 md:text-xl"
+          >
+            {bloc.title}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {blocs.map((bloc) => (
+        <TabsContent key={bloc.id} value={bloc.id!}>
+          <div className="panel rounded-t-none">
+            {bloc.infos?.map(({ id, info, title: blocTitle }) => {
+              if (!info || typeof info === "string") {
+                return null
+              }
 
-          return (
-            <div
-              key={id}
-              className="px-panel border-blue-grey relative border-b py-4 last:border-none"
-            >
-              <div id={id ?? ""} className="invisible absolute -top-16" />
-              <div className="group flex items-center gap-2 text-lg font-bold">
-                {blocTitle || info.title}
-                <Link
-                  prefetch={false}
-                  href={`#${id}`}
-                  className="text-blue inline-block opacity-0 group-hover:opacity-100"
+              return (
+                <div
+                  key={id}
+                  className="px-panel border-blue-grey relative border-b py-4 last:border-none"
                 >
-                  #
-                </Link>
-              </div>
-              <div className={`text-sm`}>
-                <div className="pt-2">{info.content && <RichText data={info.content} />}</div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
+                  <div id={id ?? ""} className="invisible absolute -top-16" />
+                  <div className="group flex items-center gap-2 text-lg font-semibold">
+                    {blocTitle || info.title}
+                    <Link
+                      prefetch={false}
+                      href={`#${id}`}
+                      className="text-blue inline-block opacity-0 group-hover:opacity-100"
+                    >
+                      #
+                    </Link>
+                  </div>
+                  <div className="text-sm">
+                    <div className="pt-2">{info.content && <RichText data={info.content} />}</div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </TabsContent>
+      ))}
+    </Tabs>
   )
 }

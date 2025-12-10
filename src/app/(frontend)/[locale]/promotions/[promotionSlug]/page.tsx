@@ -116,11 +116,11 @@ export default async (props: Props) => {
           <ProductTechnicalValues />
         </ProductProvider>
       </div>
-      <section className="section space-y-8">
-        {product.blocInfos?.map((bloc) => (
-          <ProductInformations key={bloc.id} bloc={bloc} />
-        ))}
-      </section>
+      {product.blocInfos && product.blocInfos.length > 0 && (
+        <section className="section space-y-4 lg:space-y-8">
+          <ProductInformations blocs={product.blocInfos} />
+        </section>
+      )}
     </main>
   )
 }

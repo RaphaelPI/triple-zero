@@ -115,8 +115,7 @@ export default async (props: Props) => {
               <ul className="space-y-8">
                 {products.map((product, index) => {
                   const image = product.images[0].image as Media
-                  // const image2 = product.images[1]?.image
-                  // const image3 = product.images[2]?.image
+
                   const price = getStartingPrice([
                     ...(product.options?.map((option) => option.option) ?? []),
                     ...(product.advanced?.map((advanced) => advanced.option) ?? []),
@@ -132,10 +131,6 @@ export default async (props: Props) => {
                         <div
                           className={cn(
                             "flex w-full items-center justify-center md:h-full md:w-5/12",
-                            {
-                              // "grid grid-cols-2 max-sm:grid-cols-1": image2,
-                              // "max-md:grid-cols-3": image3,
-                            },
                           )}
                         >
                           {image && (
@@ -143,39 +138,14 @@ export default async (props: Props) => {
                               priority={index < 3}
                               media={image}
                               alt={product.title}
-                              className={cn("mx-auto h-auto max-h-full w-auto max-w-full", {
-                                // "md:border-blue-light w-full object-contain object-center md:border-r":
-                                //   image2,
-                                // "md:row-span-2": image3,
-                              })}
+                              width={500}
+                              className={cn("mx-auto h-auto max-h-full w-auto max-w-full")}
                             />
                           )}
-                          {/* {image2 && (
-                            <Image
-                              priority={index < 3}
-                              media={image2 as Media}
-                              alt={product.title}
-                              className={cn("mx-auto h-60 w-full object-contain md:h-full", {
-                                "md:border-blue-light object-center max-sm:hidden md:border-r":
-                                  image2,
-                                "md:border-b": image3,
-                              })}
-                            />
-                          )}
-                          {image3 && (
-                            <Image
-                              priority={index < 3}
-                              media={image3 as Media}
-                              alt={product.title}
-                              className={cn(
-                                "md:border-blue-light mx-auto h-60 w-full object-contain max-sm:hidden md:h-full md:border-r",
-                              )}
-                            />
-                          )} */}
                         </div>
                         <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8">
                           <h2 className="text-xl font-bold">{product.title}</h2>
-                          <div className="line-clamp-2">{product.description}</div>
+                          <div className="line-clamp-3 md:line-clamp-2">{product.description}</div>
                           {price > 0 && (
                             <div className="text-lg font-semibold">
                               {t("priceFrom")}

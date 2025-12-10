@@ -44,11 +44,10 @@ export const HomeProductVariants = async () => {
             <Link
               href={url}
               prefetch={false}
-              className="panel ring-blue px-panel py-panel relative block hover:ring-8"
+              className="panel ring-blue px-panel py-panel relative block hover:ring-8 lg:flex lg:gap-8"
               key={variant.id}
             >
-              <div className="lg:float-left lg:mr-8 lg:mb-8">
-                {/* <div className="flex w-full items-center justify-center lg:h-full lg:w-5/12"> */}
+              <div className="shrink-0 lg:w-5/12">
                 {image && (
                   <Image
                     media={image}
@@ -60,7 +59,6 @@ export const HomeProductVariants = async () => {
                   />
                 )}
               </div>
-              {/* <div className="w-full flex-1 space-y-4 px-8 pb-8 md:pt-8"> */}
               <div className="space-y-4">
                 <div>
                   <div className="bg-green inline-block rounded-lg px-3 py-1">{category.title}</div>
