@@ -23,7 +23,7 @@ export const ProductOption = ({
   guide,
   readOnly = false,
 }: ProductOptionProps) => {
-  const { setImage, resetCurrentImage, activeOptions } = useProduct()
+  const { setImage, activeOptions } = useProduct()
   const [_, setValue] = useQueryState(getOptionSlug(option))
   const value = activeOptions.find(([o]) => getOptionSlug(o) === getOptionSlug(option))?.[1]?.value
 
@@ -45,39 +45,17 @@ export const ProductOption = ({
     }
   }
 
-  // const handleHover = (optionValue: ProductOptionValue, active: boolean) => () => {
-  //   if (readOnly && !active) {
-  //     return
-  //   }
-
-  //   if (!optionValue.image) {
-  //     return
-  //   }
-
-  //   setImage((optionValue.image as Media).id)
-  // }
-
-  // const handleOut = (optionValue: ProductOptionValue, active: boolean) => () => {
-  //   if (readOnly && !active) {
-  //     return
-  //   }
-
-  //   if (!optionValue.image) {
-  //     return
-  //   }
-
-  //   resetCurrentImage()
-  // }
-
   let title = <>{option.title}</>
   if (option.description) {
-    title = (<div className="flex items-center gap-1">
-      <Popover content={option.description} variant="dark">
-        <div className="flex cursor-default items-center gap-1 leading-4">
-          <Info className="size-4 md:size-3 shrink-0" />
-        </div>
-      </Popover>
-          {option.title}</div>
+    title = (
+      <div className="flex items-center gap-1">
+        <Popover content={option.description} variant="dark">
+          <div className="flex cursor-default items-center gap-1 leading-4">
+            <Info className="size-4 shrink-0 md:size-3" />
+          </div>
+        </Popover>
+        {option.title}
+      </div>
     )
   }
 
@@ -94,12 +72,7 @@ export const ProductOption = ({
           )
 
           return (
-            <div
-              key={optionValue.value.value}
-              onClick={handleClick(optionValue.value)}
-              // onMouseEnter={handleHover(optionValue.value, active)}
-              // onMouseLeave={handleOut(optionValue.value, active)}
-            >
+            <div key={optionValue.value.value} onClick={handleClick(optionValue.value)}>
               <div
                 className={cn(
                   "bg-blue-light min-w-10 rounded-md border-2 border-white px-2 py-1 text-center select-none md:px-4",

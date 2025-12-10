@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
-  const { setImage, resetCurrentImage, activeColor } = useProduct()
+  const { setImage, activeColor } = useProduct()
   const [_, setValue] = useQueryState(name)
   const value = (activeColor?.color as Color)?.color
 
@@ -30,22 +30,6 @@ export const ProductColors = ({ colors, name, readOnly = false }: Props) => {
 
     setValue(String(c.color))
   }
-
-  // const handleHover = (image: Media, active: boolean) => () => {
-  //   if (!image || (readOnly && !active)) {
-  //     return
-  //   }
-
-  //   setImage((image as Media).id)
-  // }
-
-  // const handleOut = (image: Media, active: boolean) => () => {
-  //   if (!image || (readOnly && !active)) {
-  //     return
-  //   }
-
-  //   resetCurrentImage()
-  // }
 
   if (!colors) {
     return null
