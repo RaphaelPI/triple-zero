@@ -44,6 +44,8 @@ next-env.d.ts
 /supabase
 local
 
+dump
+
 # Playwright
 node_modules/
 /test-results/
