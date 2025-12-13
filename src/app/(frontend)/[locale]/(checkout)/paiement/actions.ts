@@ -80,8 +80,7 @@ export const createCheckoutSession = rawProcedure
           shipping_rate_data: {
             display_name: "Livraison standard",
             fixed_amount: {
-              amount: formatAmountForStripe(0, "EUR"),
-              // amount: formatAmountForStripe(input.deliveryFee ?? 0, "EUR"),
+              amount: formatAmountForStripe(input.deliveryFee ?? 0, "EUR"),
               currency: "EUR",
             },
             tax_behavior: "exclusive",
@@ -111,7 +110,7 @@ export const createCheckoutSession = rawProcedure
               images: [new URL(line.image, env.NEXT_PUBLIC_URL).toString()],
               metadata,
             },
-            unit_amount: formatAmountForStripe(1, "EUR", deliveryData.country),
+            unit_amount: formatAmountForStripe(amount, "EUR", deliveryData.country),
           },
         }
       }),

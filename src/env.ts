@@ -15,6 +15,7 @@ export const env = createEnv({
   },
   server: {
     SERVER_INDEXING_ENABLED: z.string().optional().transform(booleanTransformer),
+    SERVER_TEST_ENV: z.string().optional().transform(booleanTransformer),
     SERVER_DATABASE_URI: z.string(),
     SERVER_PAYLOAD_SECRET: z.string(),
     SERVER_S3_BUCKET: z.string(),
