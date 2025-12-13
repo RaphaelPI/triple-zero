@@ -101,19 +101,19 @@ export const PaymentForm = () => {
   const payments = [
     {
       title: t("payment.card.title"),
-      icon: <CreditCardIcon className="size-6 flex-shrink-0" />,
+      icon: <CreditCardIcon className="size-6 shrink-0" />,
       value: "card",
       content: <CreditCard />,
     },
     {
       title: t("payment.transfer.title"),
-      icon: <BanknoteArrowUpIcon className="size-6 flex-shrink-0" />,
+      icon: <BanknoteArrowUpIcon className="size-6 shrink-0" />,
       value: "transfer",
       content: <BankTransfer />,
     },
     {
       title: t("payment.check.title"),
-      icon: <MailIcon className="size-6 flex-shrink-0" />,
+      icon: <MailIcon className="size-6 shrink-0" />,
       value: "check",
       content: <Check />,
     },
@@ -140,7 +140,7 @@ export const PaymentForm = () => {
                       <div className="flex items-center justify-start gap-4">
                         <div
                           className={cn(
-                            "ring-blue-logo size-6 flex-shrink-0 rounded-full border-4 border-white opacity-60 ring-1 transition-colors group-hover:bg-black",
+                            "ring-blue-logo size-6 shrink-0 rounded-full border-4 border-white opacity-60 ring-1 transition-colors group-hover:bg-black",
                             {
                               "bg-black opacity-100 group-hover:bg-black":
                                 paymentType === payment.value,
