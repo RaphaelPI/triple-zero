@@ -20,7 +20,7 @@ export const BlockTextImg = ({ block }: Props) => {
           <RichText data={block.content} />
         </div>
         {block.image && (
-          <div className={cn("w-full flex-shrink-0 md:w-1/3")}>
+          <div className={cn("w-full shrink-0 md:w-1/3")}>
             <Image media={block.image as Media} />
           </div>
         )}

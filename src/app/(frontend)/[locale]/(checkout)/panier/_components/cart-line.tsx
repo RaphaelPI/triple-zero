@@ -73,7 +73,7 @@ export const CartLine = ({ line, index }: CartLineProps) => {
             >
               <LucideMinus />
             </Button>
-            <div className="bg-blue-light border-blue-grey w-10 flex-shrink-0 cursor-default rounded-lg border py-1 text-center select-none">
+            <div className="bg-blue-light border-blue-grey w-10 shrink-0 cursor-default rounded-lg border py-1 text-center select-none">
               {line.quantity}
             </div>
             <Button

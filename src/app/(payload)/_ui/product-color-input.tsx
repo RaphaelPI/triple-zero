@@ -53,7 +53,7 @@ export const ProductColorInput = (props: Props) => {
     <div className="mb-4 space-y-2">
       <div>Couleur</div>
       <Select onValueChange={handleChange} value={selectedValue}>
-        <SelectTrigger className="bg-grey-light border-dark w-full flex-shrink-0 cursor-default rounded-lg border">
+        <SelectTrigger className="bg-grey-light border-dark w-full shrink-0 cursor-default rounded-lg border">
           <SelectValue placeholder="Sélectionner une valeur" />
         </SelectTrigger>
         <SelectContent className="bg-white">

@@ -45,7 +45,7 @@ export const PlanningOrderLine = ({ line }: CartLineProps) => {
         </div>
         <div className="p-2 xl:w-1/4">
           <div className="flex items-center gap-1">
-            <div className="bg-blue-light border-blue-grey w-10 flex-shrink-0 cursor-default rounded-lg border py-1 text-center select-none dark:bg-gray-800">
+            <div className="bg-blue-light border-blue-grey w-10 shrink-0 cursor-default rounded-lg border py-1 text-center select-none dark:bg-gray-800">
               {line.quantity}
             </div>
           </div>
