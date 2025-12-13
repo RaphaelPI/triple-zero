@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <>
-      {!env.SERVER_INDEXING_ENABLED && (
+      {env.SERVER_TEST_ENV && (
         <div className="bg-green-700 p-2 text-center text-white">
           Ceci est un environnement de test
         </div>
