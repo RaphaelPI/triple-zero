@@ -82,7 +82,7 @@ export const getProductDefaultImages = (
     )
   }
 
-  // Get default Images from options
+  // Get default Images from advanced options
   if (product.advanced) {
     images.push(
       ...(product.advanced
