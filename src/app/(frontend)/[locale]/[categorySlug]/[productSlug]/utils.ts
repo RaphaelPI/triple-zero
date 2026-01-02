@@ -82,6 +82,16 @@ export const getProductDefaultImages = (
     )
   }
 
+  // Get default Images from options
+  if (product.advanced) {
+    images.push(
+      ...(product.advanced
+        ?.map(({ option }) => option.values?.map(({ value }) => value.image as Media) ?? [])
+        .flat()
+        .filter((image) => image) ?? []),
+    )
+  }
+
   // Get default images from colors
   if (product.colors) {
     images.push(
