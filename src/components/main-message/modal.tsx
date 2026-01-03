@@ -10,7 +10,7 @@ import { useCallback } from "react"
 import { Image } from "../image"
 import { RichText } from "../rich-text"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
-import { getMainMessage } from "./action"
+import { getMainMessageByLocale } from "./action"
 
 export const MainMessageModal = () => {
   const locale = useLocale()
@@ -20,16 +20,27 @@ export const MainMessageModal = () => {
   setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
 
   const fetchMessage = useCallback(async () => {
-    const m = await getMainMessage()
+    const m = await getMainMessageByLocale()
     return m
   }, [])
 
-  const [message] = useSessionStorageState<Message | null>("main-message", null, fetchMessage)
+  const [message] = useSessionStorageState<{ locale: string; mainMessage: Message }[] | null>(
+    "main-messages",
+    null,
+    fetchMessage,
+  )
   const [shown, setShown] = useCookieState<boolean>("main-message-shown", false)
 
-  if (!message || !message.active || !message.modal) {
+  if (!message) {
     return null
   }
+
+  const localeMessage = message.find((m) => m.locale === locale)
+  if (!localeMessage) {
+    return null
+  }
+
+  const { mainMessage } = localeMessage
 
   return (
     <Dialog open={!shown} onOpenChange={(open) => setShown(!open)}>
@@ -38,15 +49,15 @@ export const MainMessageModal = () => {
           <DialogTitle>{t("mainMessage")}</DialogTitle>
         </DialogHeader>
         <div className="h-full space-y-4">
-          {message.image && (
+          {mainMessage.image && (
             <Image
-              media={message.image as Media}
+              media={mainMessage.image as Media}
               width={1000}
               className="max-h-72 w-full rounded-2xl object-cover max-sm:hidden"
             />
           )}
           <div>
-            <RichText data={message?.message} />
+            <RichText data={mainMessage?.message} />
           </div>
         </div>
       </DialogContent>
