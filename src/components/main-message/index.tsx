@@ -2,22 +2,29 @@
 
 import { useSessionStorageState } from "@/hooks/use-storage-state"
 import { Media, Message } from "@/payload-types"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useCallback } from "react"
 import { Image } from "../image"
 import { RichText } from "../rich-text"
 import { Skeleton } from "../ui/skeleton"
-import { getMainMessage } from "./action"
+import { getMainMessageByLocale } from "./action"
 
 export const MainMessage = () => {
   const t = useTranslations()
+  const locale = useLocale()
 
   const fetchMessage = useCallback(async () => {
-    const m = await getMainMessage()
+    const m = await getMainMessageByLocale()
     return m
   }, [])
 
-  const [message] = useSessionStorageState<Message | null>("main-message", null, fetchMessage)
+  const [message] = useSessionStorageState<{ locale: string; mainMessage: Message }[] | null>(
+    "main-messages",
+    null,
+    fetchMessage,
+  )
+
+  console.log("message", message)
 
   if (message == null) {
     return (
@@ -28,20 +35,26 @@ export const MainMessage = () => {
     )
   }
 
-  if (!message || !message.active) {
+  if (!message) {
     return null
   }
 
+  const localeMessage = message.find((m) => m.locale === locale)
+  if (!localeMessage) {
+    return null
+  }
+
+  const { mainMessage } = localeMessage
   return (
     <section className="section space-y-4">
       <div className="text-h1 font-bold italic">{t("mainMessage")}</div>
       <div className="panel flex flex-col-reverse lg:flex-row">
         <div className="flex flex-col justify-center p-8 lg:w-2/3">
-          <RichText data={message?.message} />
+          <RichText data={mainMessage?.message} />
         </div>
-        {message.image && (
+        {mainMessage.image && (
           <Image
-            media={message.image as Media}
+            media={mainMessage.image as Media}
             width={1000}
             className="max-h-72 w-full rounded-t-2xl object-cover lg:max-h-none lg:w-1/3 lg:rounded-tl-none lg:rounded-r-2xl"
           />
