@@ -3,7 +3,7 @@
 import { usePathname } from "@/i18n/navigation"
 import { getUrl } from "@/lib/url"
 import { cn } from "@/lib/utils"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Fragment } from "react"
 import { BreadcrumbJsonLd } from "./structured-data/breadcrumb"
 import {
@@ -28,10 +28,11 @@ interface Props {
 export const Breadcrumbs = ({ items, className }: Props) => {
   const path = usePathname()
   const locale = useLocale()
+  const t = useTranslations()
 
   const breadcrumbItems: BreadcrumbItem[] = [
     {
-      label: "Accueil",
+      label: t("home"),
       href: "/",
     },
     ...items,
