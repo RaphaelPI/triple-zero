@@ -39,7 +39,7 @@ export const MainNav = async () => {
                       <ListItem
                         key={category.id}
                         title={category.title}
-                        href={`/${category.slug}`}
+                        href={`/c/${category.slug}`}
                         className="hover:bg-grey-light rounded-lg p-4"
                       >
                         {category.description}

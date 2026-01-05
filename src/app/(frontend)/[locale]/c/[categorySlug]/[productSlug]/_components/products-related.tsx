@@ -36,7 +36,7 @@ export const ProductsRelated = async ({ products, category }: Props) => {
             <li key={product.id}>
               <Link
                 prefetch={false}
-                href={`/${category.slug}/${product.slug}`}
+                href={`/c/${category.slug}/${product.slug}`}
                 className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
               >
                 <div className="flex w-full items-center justify-center md:h-full md:w-5/12">

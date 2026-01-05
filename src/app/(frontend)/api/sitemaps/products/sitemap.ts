@@ -12,7 +12,7 @@ function getPageUrl(
   product: { id: string; category: string | Category; slug: string },
   locale: Locale,
 ) {
-  return `${env.NEXT_PUBLIC_URL}/${locale}/${(product.category as Category).slug}/${product.slug}`
+  return `${env.NEXT_PUBLIC_URL}/${locale}/c/${(product.category as Category).slug}/${product.slug}`
 }
 
 export async function generateSitemaps() {

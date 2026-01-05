@@ -8,7 +8,7 @@ import { getSitemap } from "@/lib/sitemap"
 export const revalidate = 86400
 
 function getPageUrl(category: { slug: string }, locale: Locale) {
-  return `${env.NEXT_PUBLIC_URL}/${locale}/${category.slug}`
+  return `${env.NEXT_PUBLIC_URL}/${locale}/c/${category.slug}`
 }
 
 export async function generateSitemaps() {

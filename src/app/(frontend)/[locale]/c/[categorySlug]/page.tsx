@@ -10,8 +10,8 @@ import { Category, Media, Product } from "@/payload-types"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
-import { getNavData } from "../data"
-import { getMetadata } from "../metadata"
+import { getNavData } from "../../data"
+import { getMetadata } from "../../metadata"
 import { getAllCategoriesData, getCategoryData, getProductsData } from "./data"
 
 export const dynamic = "force-static"
@@ -83,7 +83,7 @@ export default async (props: Props) => {
                         <li key={slug}>
                           <Link
                             prefetch={false}
-                            href={`/${slug}`}
+                            href={`/c/${slug}`}
                             className={cn("link inline-block rounded-lg px-3 py-1", {
                               "bg-green": categorySlug === slug,
                             })}
@@ -104,7 +104,7 @@ export default async (props: Props) => {
             items={[
               {
                 label: category.title,
-                href: `/${category.slug}`,
+                href: `/c/${category.slug}`,
               },
             ]}
           />
@@ -125,7 +125,7 @@ export default async (props: Props) => {
                     <li key={product.id}>
                       <Link
                         prefetch={false}
-                        href={`/${category.slug}/${product.slug}`}
+                        href={`/c/${category.slug}/${product.slug}`}
                         className="panel ring-blue relative flex flex-wrap gap-8 hover:ring-8 md:h-64"
                       >
                         <div

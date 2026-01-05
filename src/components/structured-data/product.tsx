@@ -105,7 +105,7 @@ export const ProductJsonLd = ({ product, locale }: Props) => {
     .filter((img) => img)
     .map((img) => getUrl(String(img)))
 
-  const url = getUrl(`/${(product.category as Category).slug}/${product.slug}`, locale)
+  const url = getUrl(`/c/${(product.category as Category).slug}/${product.slug}`, locale)
   const t = useTranslations()
   const material = t("product.material")
 
