@@ -26,6 +26,9 @@ export const PlanningWeeks = async ({ payload, field }: Props) => {
                 week: {
                   equals: week,
                 },
+                status: {
+                  not_equals: "cancelled",
+                },
               },
             })
 
