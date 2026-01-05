@@ -33,7 +33,7 @@ export const Footer = async () => {
 
                 return (
                   <li key={category.id}>
-                    <Link prefetch={false} href={`/${category.slug}`} className="link">
+                    <Link prefetch={false} href={`/c/${category.slug}`} className="link">
                       {category.title}
                     </Link>
                   </li>
@@ -74,4 +74,4 @@ export const Footer = async () => {
   )
 }
 
-const Separator = () => <div className="mx-auto h-[1px] w-full bg-[#232323] md:w-1/2" />
+const Separator = () => <div className="mx-auto h-px w-full bg-[#232323] md:w-1/2" />

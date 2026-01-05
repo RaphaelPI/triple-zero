@@ -38,7 +38,7 @@ export const HomeProductVariants = async () => {
           options.forEach(([option, optionValue]) => {
             searchParams.set(option.slug, optionValue.value)
           })
-          const url = `/${category.slug}/${product.slug}?${searchParams.toString()}`
+          const url = `/c/${category.slug}/${product.slug}?${searchParams.toString()}`
 
           return (
             <Link

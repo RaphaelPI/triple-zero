@@ -8,7 +8,7 @@ import { Category, Color, Product, SizeGuide } from "@/payload-types"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { cache } from "react"
-import { getMetadata } from "../../metadata"
+import { getMetadata } from "../../../metadata"
 import { getProductsData } from "../data"
 import { ProductAddToCart } from "./_components/product-add-to-cart"
 import { ProductColors } from "./_components/product-colors"
@@ -59,7 +59,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   return getMetadata({
     locale,
-    pathname: `/${category.slug}/${product.slug}`,
+    pathname: `/c/${category.slug}/${product.slug}`,
     title: product.title,
     description: product.description,
     images: product.images?.map(({ image }) => getOgImage(image)),
@@ -78,8 +78,8 @@ export default async (props: Props) => {
       <div className="w-section px-section pt-section">
         <Breadcrumbs
           items={[
-            { label: category.title, href: `/${category.slug}` },
-            { label: product.title, href: `/${category.slug}/${product.slug}` },
+            { label: category.title, href: `/c/${category.slug}` },
+            { label: product.title, href: `/c/${category.slug}/${product.slug}` },
           ]}
         />
         <h1 className="mb-4">{product.title}</h1>
