@@ -24,8 +24,6 @@ export const MainMessage = () => {
     fetchMessage,
   )
 
-  console.log("message", message)
-
   if (message == null) {
     return (
       <section className="section space-y-4">
