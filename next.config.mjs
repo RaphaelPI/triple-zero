@@ -134,10 +134,6 @@ const nextConfig = {
     staticGenerationRetryCount: 1,
     staticGenerationMaxConcurrency: 2,
     staticGenerationMinPagesPerWorker: 25,
-    staleTimes: {
-      dynamic: 30,
-      static: 10,
-    },
   },
   // Your Next.js config here
   webpack: (webpackConfig) => {
