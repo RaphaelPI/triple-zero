@@ -10,7 +10,7 @@ export const HomeCategories = async () => {
       <Marquee>
         {categories.docs.flatMap(({ id, title, slug }) => (
           <div key={id} className="text-4xl leading-snug font-bold italic">
-            <Link href={`/${slug}`} className="link">
+            <Link href={`/c/${slug}`} className="link">
               {title}
             </Link>
             <span className="mx-4 not-italic">❆</span>
