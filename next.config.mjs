@@ -134,6 +134,10 @@ const nextConfig = {
     staticGenerationRetryCount: 1,
     staticGenerationMaxConcurrency: 2,
     staticGenerationMinPagesPerWorker: 25,
+    staleTimes: {
+      dynamic: 30,
+      static: 10,
+    },
   },
   // Your Next.js config here
   webpack: (webpackConfig) => {
@@ -156,6 +160,7 @@ const nextConfig = {
         hostname: "localhost",
       },
     ],
+    minimumCacheTTL: 31536000, // 1 year
   },
   redirects: async () => {
     return [
@@ -186,6 +191,11 @@ const nextConfig = {
       {
         source: "/faq.php",
         destination: "/fr/questions-frequentes",
+        permanent: true,
+      },
+      {
+        source: "/duvets_couettes.php",
+        destination: "/fr/sacs-de-couchage",
         permanent: true,
       },
     ]
