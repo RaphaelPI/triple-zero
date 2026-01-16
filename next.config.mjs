@@ -156,6 +156,7 @@ const nextConfig = {
         hostname: "localhost",
       },
     ],
+    minimumCacheTTL: 31536000, // 1 year
   },
   redirects: async () => {
     return [
@@ -186,6 +187,11 @@ const nextConfig = {
       {
         source: "/faq.php",
         destination: "/fr/questions-frequentes",
+        permanent: true,
+      },
+      {
+        source: "/duvets_couettes.php",
+        destination: "/fr/sacs-de-couchage",
         permanent: true,
       },
     ]

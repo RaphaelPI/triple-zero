@@ -1,13 +1,28 @@
 import { env } from "@/env"
 import { LOCALES } from "@/i18n/config"
-import { revalidatePath } from "next/cache"
 import { PayloadRequest } from "payload"
-import { logger } from "../logger"
 
 interface Props {
   type?: "layout" | "page"
   path: string
   req?: PayloadRequest
+}
+
+const callRevalidateRoute = async (pathname: string, type?: "layout" | "page") => {
+  const url = new URL("/api/revalidate", env.NEXT_PUBLIC_URL)
+  url.searchParams.set("pathname", pathname)
+  if (type) {
+    url.searchParams.set("type", type)
+  }
+
+  console.log(`Revalidating path: ${url.toString()}`)
+
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "x-revalidate-token": env.SERVER_REVALIDATE_SECRET,
+    },
+  })
 }
 
 export const revalidateLocalePath = async ({ path, type, req }: Props) => {
@@ -16,10 +31,11 @@ export const revalidateLocalePath = async ({ path, type, req }: Props) => {
     await req.payload.db.commitTransaction(req.transactionID as string)
   }
 
-  LOCALES.forEach((locale) => {
-    logger.log(`Revalidating path: /${locale}${path}`)
-    revalidatePath(`/${locale}${path}`, type)
-  })
+  await Promise.all(
+    LOCALES.map(async (locale) => {
+      await callRevalidateRoute(`/${locale}${path}`, type)
+    }),
+  )
 }
 
 export const revalidateGlobalPath = async ({ path, type, req }: Props) => {
@@ -27,8 +43,8 @@ export const revalidateGlobalPath = async ({ path, type, req }: Props) => {
   if (req) {
     await req.payload.db.commitTransaction(req.transactionID as string)
   }
-  logger.log(`Revalidating global path: ${path}`)
-  revalidatePath(path, type)
+
+  await callRevalidateRoute(path, type)
 }
 
 export const revalidateGenericPath = async ({ path, type, req }: Props) => {
@@ -37,7 +53,7 @@ export const revalidateGenericPath = async ({ path, type, req }: Props) => {
     await req.payload.db.commitTransaction(req.transactionID as string)
   }
 
-  revalidatePath(path, type)
+  await callRevalidateRoute(path, type)
 }
 
 export const deployHook = async () => {
