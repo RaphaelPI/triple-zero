@@ -15,7 +15,7 @@ export const Category: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc }) => {
-        await revalidateLocalePath({ path: `/${doc.slug}` })
+        await revalidateLocalePath({ path: `/c/${doc.slug}` })
 
         // TODO revalidate product page for similar product order ?
         return doc
@@ -25,7 +25,7 @@ export const Category: CollectionConfig = {
       async ({ doc }) => {
         await Promise.all([
           revalidateLocalePath({ path: `/` }),
-          revalidateLocalePath({ path: `/${doc.slug}` }),
+          revalidateLocalePath({ path: `/c/${doc.slug}` }),
         ])
         return doc
       },
