@@ -19,8 +19,8 @@ const revalidateProduct: CollectionAfterChangeHook<ProductType> = async ({ doc, 
 
   await req.payload.db.commitTransaction(req.transactionID as string)
 
-  revalidateLocalePath({ path: `/${categorySlug}/${doc.slug}` })
-  revalidateLocalePath({ path: `/${categorySlug}` })
+  revalidateLocalePath({ path: `/c/${categorySlug}/${doc.slug}` })
+  revalidateLocalePath({ path: `/c/${categorySlug}` })
 
   return doc
 }
