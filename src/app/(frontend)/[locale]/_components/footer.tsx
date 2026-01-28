@@ -1,4 +1,5 @@
-import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP, EMAIL, PHONE } from "@/constants"
+import { ADDRESS, ADDRESS_COUNTRY, ADDRESS_TOWN, ADDRESS_ZIP, PHONE } from "@/constants"
+import { env } from "@/env"
 import { Link } from "@/i18n/navigation"
 import { getTranslations } from "next-intl/server"
 import NextLink from "next/link"
@@ -52,8 +53,12 @@ export const Footer = async () => {
           >
             {PHONE}
           </NextLink>
-          <NextLink prefetch={false} href={`mailto:${EMAIL}`} className="p-2 text-white md:p-0">
-            {EMAIL}
+          <NextLink
+            prefetch={false}
+            href={`mailto:${env.NEXT_PUBLIC_EMAIL}`}
+            className="p-2 text-white md:p-0"
+          >
+            {env.NEXT_PUBLIC_EMAIL}
           </NextLink>
           <div className="text-white">
             {ADDRESS} {ADDRESS_ZIP} {ADDRESS_TOWN} {ADDRESS_COUNTRY}

@@ -1,4 +1,5 @@
-import { EMAIL, PHONE } from "@/constants"
+import { PHONE } from "@/constants"
+import { env } from "@/env"
 import { Link } from "@/i18n/navigation"
 import { getTranslations } from "next-intl/server"
 import { Stepper } from "./_components/stepper"
@@ -44,8 +45,12 @@ export default async ({ children }: Props) => {
             {PHONE}
           </Link>{" "}
           |{" "}
-          <Link prefetch={false} href={`mailto:${EMAIL}`} className="text-dark p-2 md:p-0">
-            {EMAIL}
+          <Link
+            prefetch={false}
+            href={`mailto:${env.NEXT_PUBLIC_EMAIL}`}
+            className="text-dark p-2 md:p-0"
+          >
+            {env.NEXT_PUBLIC_EMAIL}
           </Link>
         </div>
       </section>

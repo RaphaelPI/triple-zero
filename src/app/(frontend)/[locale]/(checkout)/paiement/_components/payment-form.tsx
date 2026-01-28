@@ -124,6 +124,20 @@ export const PaymentForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <section className="w-section px-section flex gap-8 max-lg:flex-col">
           <div className="panel px-panel py-panel flex-1 space-y-8">
+            <div className="bg-grey-light space-y-4 rounded-lg p-4">
+              <FormField
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("payment.comment")}</FormLabel>
+                    <FormControl>
+                      <Textarea className="border-blue-grey border bg-white" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <Accordion
               type="single"
               className="w-full"
@@ -156,20 +170,6 @@ export const PaymentForm = () => {
                 )
               })}
             </Accordion>
-            <div className="border-t border-gray-100 pt-8">
-              <FormField
-                name="comment"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("payment.comment")}</FormLabel>
-                    <FormControl>
-                      <Textarea className="bg-grey-light" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
           </div>
           <CheckoutSummary>
             {form.formState.errors.root && (

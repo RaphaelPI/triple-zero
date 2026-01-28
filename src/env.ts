@@ -12,6 +12,7 @@ export const env = createEnv({
     NEXT_PUBLIC_URL: z.url(),
     NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string().optional(),
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: z.string(),
+    NEXT_PUBLIC_EMAIL: z.email(),
   },
   server: {
     SERVER_INDEXING_ENABLED: z.string().optional().transform(booleanTransformer),
@@ -37,5 +38,6 @@ export const env = createEnv({
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
+    NEXT_PUBLIC_EMAIL: process.env.NEXT_PUBLIC_EMAIL,
   },
 })

@@ -62,53 +62,8 @@ export const OrderView = ({
       style={{ fontSize: "14px" }}
     >
       <tbody>
-        {/* <tr>
-      <td width="600" height="50" align="center" valign="middle">
-        <table width="600" border={0} cellSpacing={0} cellPadding={0}>
-          <tbody>
-            <tr>
-              <td width="220" height="25" align="left" valign="bottom">
-                www.triplezero.fr
-              </td>
-              <td width="240" align="center" valign="bottom">
-                triplezero@triplezero.fr
-              </td>
-              <td width="220" align="right" valign="bottom">
-                Téléphone : 05.63.72.46.63
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td height="30">&nbsp;</td>
-    </tr> */}
         <tr>
           <td height="840" align="left" valign="top">
-            {/* <table width="600" border={0} cellSpacing={0} cellPadding={0}>
-          <tbody>
-            <tr>
-              <td align="left" valign="middle">
-                Bonjour,
-                <br />
-                Merci pour votre commande qui sera livrée par La Poste, en Colissimo suivi à
-                la date et adresse indiquées
-                <br />
-                sur la présente confirmation de commande, ou en cas d'absence, un avis de
-                passage sera déposé.
-                <br />
-                Votre règlement par carte bancaire en ligne a bien été enregistré et la
-                commande est mise en route.
-                <br />
-                Le délai indiqué correspond au départ de chez nous, délai de la poste: 48H.
-              </td>
-            </tr>
-            <tr>
-              <td height="20">&nbsp;</td>
-            </tr>
-          </tbody>
-        </table> */}
             <table
               width="600"
               border={0}
