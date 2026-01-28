@@ -32,7 +32,7 @@ export interface SendEmailProps {
 export const sendEmail = async ({
   to,
   bcc,
-  from = { Email: "triplezero@triplezero.fr", Name: "Triple Zero" },
+  from = { Email: env.NEXT_PUBLIC_EMAIL, Name: "Triple Zero" },
   subject,
   templateId,
   variables,

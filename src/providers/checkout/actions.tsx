@@ -169,7 +169,7 @@ export const saveOrder = rawProcedure
     }
 
     if (env.NODE_ENV === "production") {
-      options.bcc = [{ Email: "triplezero@triplezero.fr", Name: "Triple Zero" }]
+      options.bcc = [{ Email: env.NEXT_PUBLIC_EMAIL, Name: "Triple Zero" }]
     }
 
     // send email to customer

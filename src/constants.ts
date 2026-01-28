@@ -1,5 +1,5 @@
 export const PHONE = "05 63 72 46 63"
-export const EMAIL = "triplezero@triplezero.fr"
+// export const EMAIL = env.NEXT_PUBLIC_EMAIL
 export const ADDRESS = "1, Chemin de la Fontaine"
 export const ADDRESS_ZIP = "F-81540"
 export const ADDRESS_TOWN = "Durfort"
