@@ -4,6 +4,7 @@ import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types"
 
 import { env } from "@/env"
 import { LOCALES } from "@/i18n/config"
+import { getTranslations } from "next-intl/server"
 import { OGImageConfig } from "payload"
 
 export const DEFAULT_OG_IMAGE = {
@@ -12,11 +13,11 @@ export const DEFAULT_OG_IMAGE = {
   height: 140,
 }
 
-export function getMetadata({
+export const getMetadata = async ({
   locale = "fr",
   pathname,
   title,
-  description = "Choisissez les sacs de couchage TRIPLEZERO pour vos expés et treks, légers et chauds grâce à leur système de compartiments étanches garnis pur duvet d'oie 800 cuin minimum.",
+  description,
   robots = {
     index: env.SERVER_INDEXING_ENABLED,
     follow: env.SERVER_INDEXING_ENABLED,
@@ -33,8 +34,10 @@ export function getMetadata({
   openGraph?: OpenGraph
   images?: OGImageConfig[]
   more?: Metadata
-}): Metadata {
-  const siteName = "TRIPLE ZERO pur duvet d'oie"
+}): Promise<Metadata> => {
+  const t = await getTranslations()
+  const siteName = t("seo_title")
+  const desc = description ?? t("seo_description")
   const pageTitle = title ? `${siteName} - ${title}` : siteName
 
   if (!pathname) {
@@ -54,7 +57,7 @@ export function getMetadata({
   const canonical = new URL(`/${locale}${pathname}`, env.NEXT_PUBLIC_URL).toString()
   return {
     title: pageTitle,
-    description,
+    description: desc,
     openGraph: {
       siteName,
       type: "website",
@@ -62,13 +65,13 @@ export function getMetadata({
       locale,
       images,
       title: pageTitle,
-      description,
+      description: desc,
       ...openGraph,
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
-      description,
+      description: desc,
     },
     robots,
     alternates: {
