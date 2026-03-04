@@ -19,7 +19,9 @@
     "test": "npm run test:int && npm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation\" npm exec playwright test",
     "test:int": "vitest run --config ./vitest.config.mts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dump:prod": "mongodump --uri=\"mongodb+srv://dbuser:09DXongBCv6zSOAN@site-web-prod.ftynfnx.mongodb.net/?retryWrites=true&w=majority&appName=site-web-prod\" --archive=\"mongodump-test-db.gz\" --db=test",
+    "restore:staging": "mongorestore --uri=\"mongodb+srv://dbuser:58U0yNv6FtOXKhnk@site-web-dev.hjgbuqq.mongodb.net/?retryWrites=true&w=majority&appName=site-web-dev\" ./dump --drop"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

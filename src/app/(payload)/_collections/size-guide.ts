@@ -16,7 +16,7 @@ export const SizeGuide: CollectionConfig = {
     afterChange: [
       async ({ doc, req }) => {
         await revalidateGlobalPath({
-          path: `/(frontend)/[locale]/[categorySlug]/[productSlug]`,
+          path: `/(frontend)/[locale]/c/[categorySlug]/[productSlug]`,
           type: "page",
           req,
         })
