@@ -29,6 +29,7 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
           equals: planningWeek,
         },
       },
+      limit: 100,
     })
 
     const ordersWeekWorktime = weekOrders.docs.reduce((acc, order) => acc + order.workTime, 0)
@@ -56,6 +57,7 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
             equals: planningWeek,
           },
         },
+        limit: 100,
       })
 
       const ordersWeekWorktime = weekOrders.docs.reduce((acc, order) => acc + order.workTime, 0)
