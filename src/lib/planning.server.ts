@@ -28,6 +28,9 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
         week: {
           equals: planningWeek,
         },
+        status: {
+          not_equals: "cancelled",
+        },
       },
       limit: 100,
     })
@@ -55,6 +58,9 @@ export const getNextAvailableWeek = async (orderWorkTime: number) => {
         where: {
           week: {
             equals: planningWeek,
+          },
+          status: {
+            not_equals: "cancelled",
           },
         },
         limit: 100,

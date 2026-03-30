@@ -10,6 +10,7 @@ export const getWeekOrder = async (week: Order["week"]) => {
         equals: week,
       },
     },
+    limit: 100,
   })
 
   return weekOrder.docs
