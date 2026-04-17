@@ -55,7 +55,7 @@ export const Order: CollectionConfig = {
             variables: {
               shippingInfo: doc.shippingInfo,
               order: content,
-              link: `https://www.laposte.fr/outils/suivre-vos-envois${doc.parcelId ? `?code=${doc.parcelId}` : ""}`,
+              link: `https://www.dhl.com/fr-fr/home/suivi.html${doc.parcelId ? `?tracking-id=${doc.parcelId}&submit=1` : ""}`,
             },
           })
         }
