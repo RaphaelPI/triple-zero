@@ -37,8 +37,14 @@ export const getMetadata = async ({
 }): Promise<Metadata> => {
   const t = await getTranslations()
   const siteName = t("seo_title")
-  const desc = description ?? t("seo_description")
-  const pageTitle = title ? `${siteName} - ${title}` : siteName
+  // No fallback to the home description: pages without an explicit description
+  // (editorial pages with empty meta) must not inherit the generic homepage meta.
+  const desc = description
+  let pageTitle = title ? title : siteName
+
+  if (!pageTitle.includes(" | Triple Zéro")) {
+    pageTitle += " | Triple Zéro"
+  }
 
   if (!pathname) {
     return {
