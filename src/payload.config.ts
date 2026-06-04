@@ -24,6 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      afterDashboard: ["/app/(payload)/_ui/admin/dashboard-kpis#DashboardKPIs"],
       graphics: {
         Logo: "/app/(payload)/_ui/admin/logo#Logo",
         Icon: "/app/(payload)/_ui/admin/icon#Icon",
