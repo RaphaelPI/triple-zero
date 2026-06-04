@@ -1,5 +1,5 @@
 import config from "@payload-config"
-import { addWeeks, format, parse, setDay } from "date-fns"
+import { addWeeks, format, parse, startOfWeek } from "date-fns"
 import { unstable_cache } from "next/cache"
 import { getPayload } from "payload"
 
@@ -22,20 +22,21 @@ const getOrdersChartData = unstable_cache(
         ],
       },
       select: {
-        week: true,
+        date: true,
         amount: true,
       },
     })
 
     const weekMap = new Map<string, { total: number; count: number }>()
     for (const order of docs) {
-      if (!order.week || order.amount == null) continue
-      const entry = weekMap.get(order.week) ?? { total: 0, count: 0 }
-      weekMap.set(order.week, { total: entry.total + order.amount, count: entry.count + 1 })
+      if (!order.date || order.amount == null) continue
+      const weekStart = startOfWeek(new Date(order.date), { weekStartsOn: 1 })
+      const weekKey = format(weekStart, "dd/MM/yyyy")
+      const entry = weekMap.get(weekKey) ?? { total: 0, count: 0 }
+      weekMap.set(weekKey, { total: entry.total + order.amount, count: entry.count + 1 })
     }
 
-    const currentWeekDate = setDay(new Date(), 6, { weekStartsOn: 1 })
-    const currentWeekStr = format(currentWeekDate, "dd/MM/yyyy")
+    const currentWeekStr = format(startOfWeek(new Date(), { weekStartsOn: 1 }), "dd/MM/yyyy")
 
     const sortedEntries = Array.from(weekMap.entries()).sort(([a], [b]) => {
       const dateA = parse(a, "dd/MM/yyyy", new Date())
@@ -68,7 +69,7 @@ export async function DashboardKPIs() {
   return (
     <div style={{ padding: "1.5rem 0" }}>
       <h2 style={{ marginBottom: "1rem", fontSize: "1.1rem", fontWeight: 600 }}>
-        Chiffre d&apos;affaires par semaine de production
+        Chiffre d&apos;affaires par semaine de commande
       </h2>
       <OrdersChart data={data} />
     </div>
