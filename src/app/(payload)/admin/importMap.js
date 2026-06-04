@@ -32,6 +32,7 @@ import { TableInput as TableInput_25bc32041e38218841919f050144471d } from '../..
 import { PlanningWeeks as PlanningWeeks_9ad932ee2c6ae362b9f913159cc77101 } from '../../../app/(payload)/_ui/planning/planning-weeks'
 import { Icon as Icon_4bdc41d560a037dcc24ded3bf2808643 } from '../../../app/(payload)/_ui/admin/icon'
 import { Logo as Logo_1db285e76e3b0971e44f5ee3a13f49c9 } from '../../../app/(payload)/_ui/admin/logo'
+import { DashboardKPIs as DashboardKPIs_e961b6f0af39f6f15867363ee16c10e6 } from '../../../app/(payload)/_ui/admin/dashboard-kpis'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -70,6 +71,7 @@ export const importMap = {
   "/app/(payload)/_ui/planning/planning-weeks#PlanningWeeks": PlanningWeeks_9ad932ee2c6ae362b9f913159cc77101,
   "/app/(payload)/_ui/admin/icon#Icon": Icon_4bdc41d560a037dcc24ded3bf2808643,
   "/app/(payload)/_ui/admin/logo#Logo": Logo_1db285e76e3b0971e44f5ee3a13f49c9,
+  "/app/(payload)/_ui/admin/dashboard-kpis#DashboardKPIs": DashboardKPIs_e961b6f0af39f6f15867363ee16c10e6,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
