@@ -51,8 +51,10 @@ export function OrdersChart({ data }: Props) {
             allowDecimals={false}
           />
           <Tooltip
-            formatter={(value: number, name: string) =>
-              name === "total" ? [`${value.toFixed(2)}€`, "CA"] : [value, "Commandes"]
+            formatter={(value, name) =>
+              name === "total"
+                ? [`${Number(value).toFixed(2)}€`, "CA"]
+                : [value, "Commandes"]
             }
           />
           <Legend formatter={(value) => (value === "total" ? "CA (€)" : "Nb commandes")} />
