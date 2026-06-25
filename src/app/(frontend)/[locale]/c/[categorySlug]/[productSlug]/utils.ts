@@ -24,7 +24,8 @@ export const getOptionsQueryNames = (options: ProductOption[], colors: ColorWith
   )
 
   names.color = parseAsString.withDefault(
-    (colors?.find((color) => color.default)?.color as Color)?.color || "",
+    (colors?.find((color) => color.default && (color.color as Color).active)?.color as Color)
+      ?.color || "",
   )
 
   return names
