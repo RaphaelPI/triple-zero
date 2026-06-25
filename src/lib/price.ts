@@ -37,11 +37,5 @@ export const isTTCCountry = (country: string) => {
     "BG",
     "HR",
     "CZ",
-
-    // // Hors UE
-    // "GB",
-    // "CH",
-    // "NO",
-    // "IS",
   ].includes(country.toUpperCase())
 }

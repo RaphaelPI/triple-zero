@@ -59,7 +59,7 @@ export const OrderDetail = ({ path }: Props) => {
         shippingFee={formData.shippingFee}
         amount={formData.amount}
         delay={formData.delay}
-        uid={formData.uid}
+        uid={formData.uid ?? ""}
         date={formData.date}
         payment={formData.payment}
       />

@@ -1,6 +1,7 @@
 import { OrderWeek as OrderWeek_29111d34a642fb6bb1f698eff080ce3b } from '../../../app/(payload)/_ui/order-week'
 import { OrderStatus as OrderStatus_d4a03b9308b0b69dc52786b19fe60761 } from '../../../app/(payload)/_ui/order-status'
 import { OrderDetail as OrderDetail_02fda89d6d18ac2a7138be3bf9cf06c2 } from '../../../app/(payload)/_ui/order-detail'
+import { PreOrderStatus as PreOrderStatus_7e6d87557d7e56599dcd438b75268c16 } from '../../../app/(payload)/_ui/pre-order-status'
 import { ListRowLabel as ListRowLabel_5802bbf3b0640519a2a1058e65044b54 } from '../../../app/(payload)/_ui/list-row-label'
 import { ProductOptionsInput as ProductOptionsInput_5c5b1c5bc4e3785128db69afb997e564 } from '../../../app/(payload)/_ui/product-options-input'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -40,6 +41,7 @@ export const importMap = {
   "/app/(payload)/_ui/order-week#OrderWeek": OrderWeek_29111d34a642fb6bb1f698eff080ce3b,
   "/app/(payload)/_ui/order-status#OrderStatus": OrderStatus_d4a03b9308b0b69dc52786b19fe60761,
   "/app/(payload)/_ui/order-detail#OrderDetail": OrderDetail_02fda89d6d18ac2a7138be3bf9cf06c2,
+  "/app/(payload)/_ui/pre-order-status#PreOrderStatus": PreOrderStatus_7e6d87557d7e56599dcd438b75268c16,
   "/app/(payload)/_ui/list-row-label#ListRowLabel": ListRowLabel_5802bbf3b0640519a2a1058e65044b54,
   "/app/(payload)/_ui/product-options-input#ProductOptionsInput": ProductOptionsInput_5c5b1c5bc4e3785128db69afb997e564,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,

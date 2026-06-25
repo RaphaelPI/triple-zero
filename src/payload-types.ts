@@ -74,6 +74,7 @@ export interface Config {
   collections: {
     category: Category;
     order: Order;
+    'pre-order': PreOrder;
     product: Product;
     'product-variant': ProductVariant;
     promotion: Promotion;
@@ -93,6 +94,7 @@ export interface Config {
   collectionsSelect: {
     category: CategorySelect<false> | CategorySelect<true>;
     order: OrderSelect<false> | OrderSelect<true>;
+    'pre-order': PreOrderSelect<false> | PreOrderSelect<true>;
     product: ProductSelect<false> | ProductSelect<true>;
     'product-variant': ProductVariantSelect<false> | ProductVariantSelect<true>;
     promotion: PromotionSelect<false> | PromotionSelect<true>;
@@ -517,6 +519,37 @@ export interface Order {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pre-order".
+ */
+export interface PreOrder {
+  id: string;
+  /**
+   * Correspond à la date de départ de livraison de chez Triple Zéro au moment de la commande.
+   */
+  delay: string;
+  customer: string;
+  email: string;
+  date: string;
+  amount: number;
+  shippingFee: number;
+  /**
+   * Temps de travail en minutes
+   */
+  workTime: number;
+  /**
+   * La langue dans laquelle la commande a été faite
+   */
+  locale?: ('fr' | 'en') | null;
+  status?: ('processed' | 'pending') | null;
+  comment?: string | null;
+  detail?: {
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "product-variant".
  */
 export interface ProductVariant {
@@ -706,6 +739,7 @@ export interface ShippingFee {
     | 'DE'
     | 'IT'
     | 'ES'
+    | 'ZA'
     | 'DZ'
     | 'AO'
     | 'BJ'
@@ -714,41 +748,41 @@ export interface ShippingFee {
     | 'BI'
     | 'CM'
     | 'CV'
-    | 'CF'
-    | 'TD'
     | 'CG'
+    | 'CI'
     | 'DJ'
     | 'EG'
     | 'GA'
     | 'GM'
     | 'GN'
-    | 'CI'
     | 'KE'
     | 'LS'
     | 'LR'
     | 'LY'
     | 'MG'
     | 'ML'
-    | 'MR'
-    | 'MU'
     | 'MA'
+    | 'MU'
+    | 'MR'
     | 'MZ'
     | 'NA'
     | 'NE'
-    | 'RW'
+    | 'UG'
+    | 'CF'
+    | 'TZ'
     | 'RE'
+    | 'RW'
     | 'SH'
     | 'SN'
     | 'SC'
     | 'SL'
-    | 'ZA'
     | 'SD'
-    | 'TZ'
+    | 'TD'
     | 'TG'
     | 'TN'
-    | 'UG'
     | 'ZM'
     | 'AF'
+    | 'SA'
     | 'AM'
     | 'AZ'
     | 'BD'
@@ -758,22 +792,21 @@ export interface ShippingFee {
     | 'HK'
     | 'IN'
     | 'ID'
-    | 'IR'
     | 'IQ'
     | 'IL'
     | 'JP'
     | 'JO'
-    | 'LA'
     | 'LB'
     | 'MO'
     | 'MV'
     | 'NP'
     | 'PK'
     | 'PH'
-    | 'SA'
+    | 'SY'
+    | 'LA'
+    | 'IR'
     | 'SG'
     | 'LK'
-    | 'SY'
     | 'TW'
     | 'TH'
     | 'TR'
@@ -784,32 +817,32 @@ export interface ShippingFee {
     | 'AT'
     | 'BA'
     | 'BG'
-    | 'HR'
     | 'CY'
-    | 'CZ'
+    | 'HR'
     | 'DK'
     | 'EE'
+    | 'RU'
     | 'FI'
     | 'GI'
     | 'GR'
-    | 'VA'
     | 'HU'
-    | 'IS'
     | 'IE'
+    | 'IS'
     | 'LV'
     | 'LI'
     | 'LT'
     | 'LU'
     | 'MT'
-    | 'MD'
     | 'MC'
-    | 'NL'
     | 'NO'
+    | 'NL'
     | 'PL'
     | 'PT'
+    | 'MD'
+    | 'CZ'
     | 'RO'
-    | 'RU'
     | 'SM'
+    | 'VA'
     | 'SK'
     | 'SI'
     | 'SE'
@@ -818,7 +851,6 @@ export interface ShippingFee {
     | 'BZ'
     | 'BM'
     | 'CA'
-    | 'KY'
     | 'CR'
     | 'CU'
     | 'GD'
@@ -826,6 +858,7 @@ export interface ShippingFee {
     | 'GT'
     | 'HT'
     | 'HN'
+    | 'KY'
     | 'JM'
     | 'MQ'
     | 'MX'
@@ -833,22 +866,22 @@ export interface ShippingFee {
     | 'PA'
     | 'PM'
     | 'AR'
-    | 'BO'
     | 'BR'
     | 'CL'
     | 'CO'
     | 'EC'
-    | 'FK'
+    | 'BO'
     | 'GF'
+    | 'FK'
     | 'PY'
     | 'PE'
     | 'UY'
     | 'VE'
     | 'AU'
     | 'FJ'
-    | 'PF'
     | 'NC'
     | 'NZ'
+    | 'PF'
     | 'WF'
   )[];
   updatedAt: string;
@@ -909,6 +942,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'order';
         value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'pre-order';
+        value: string | PreOrder;
       } | null)
     | ({
         relationTo: 'product';
@@ -1024,6 +1061,25 @@ export interface OrderSelect<T extends boolean = true> {
   status?: T;
   shippingInfo?: T;
   parcelId?: T;
+  comment?: T;
+  detail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pre-order_select".
+ */
+export interface PreOrderSelect<T extends boolean = true> {
+  delay?: T;
+  customer?: T;
+  email?: T;
+  date?: T;
+  amount?: T;
+  shippingFee?: T;
+  workTime?: T;
+  locale?: T;
+  status?: T;
   comment?: T;
   detail?: T;
   updatedAt?: T;

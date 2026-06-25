@@ -2,14 +2,15 @@ import { setDefaultOptions } from "date-fns"
 import { enGB, fr } from "date-fns/locale"
 import { getLocale, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
-import { ConfirmationPending } from "./_components/confirmation-pending"
+import { ContactSection } from "../_components/contact-section"
+import { AlreadyHandled } from "./_components/already-handled"
 import { ConfirmationSuccess } from "./_components/confirmation-success"
-import { getOrder } from "./data"
+import { createOrderFromPreOrder, getOrder } from "./data"
 
 export const dynamic = "force-dynamic"
 
 interface Props {
-  searchParams: Promise<{ payment: string; orderId: string }>
+  searchParams: Promise<{ id: string; type: "order" | "pre-order" }>
 }
 
 export const generateMetadata = async () => {
@@ -21,20 +22,33 @@ export const generateMetadata = async () => {
 }
 
 export default async ({ searchParams }: Props) => {
-  const { payment, orderId } = await searchParams
+  const { id, type } = await searchParams
   const locale = await getLocale()
 
   // Set the locale for date-fns
   setDefaultOptions({ locale: locale === "fr" ? fr : enGB })
 
-  if (!orderId && payment !== "1") {
+  if (!id && !["order", "pre-order"].includes(type)) {
     notFound()
   }
 
-  if (orderId) {
-    const order = await getOrder(orderId)
-    return <ConfirmationSuccess delay={order.delay} />
+  let content = null
+  if (id && type === "pre-order") {
+    try {
+      const order = await createOrderFromPreOrder(id)
+      content = <ConfirmationSuccess delay={order.delay} />
+    } catch (error) {
+      content = <AlreadyHandled />
+    }
+  } else if (id && type === "order") {
+    const order = await getOrder(id)
+    content = <ConfirmationSuccess delay={order.delay} />
   }
 
-  return <ConfirmationPending />
+  return (
+    <>
+      {content}
+      <ContactSection />
+    </>
+  )
 }

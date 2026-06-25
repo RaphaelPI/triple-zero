@@ -134,7 +134,9 @@
     "freeShipping": "Offert",
     "freeShippingDescription": "Les frais de port sont offerts pour les commandes de plus de 2000€.",
     "delay": "La date d’expédition prévue est actuellement fixée au <strong>{date}</strong>, au départ de chez nous.",
-    "confirmation-delay": "La date d’expédition prévue pour votre commande est fixée au <strong>{date}</strong>, au départ de chez nous."
+    "confirmation-delay": "La date d’expédition prévue pour votre commande est fixée au <strong>{date}</strong>, au départ de chez nous.",
+    "already-handled": "Votre commande a déjà été traitée.",
+    "already-handled-description": "Si vous avez des questions, n'hésitez pas à nous contacter."
   },
   "notFound": {
     "title": "404 - Page introuvable",
