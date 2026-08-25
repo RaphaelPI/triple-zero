@@ -1,19 +1,11 @@
 "use server"
 
-import { OrderView } from "@/components/order-view"
-import {
-  TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_EN,
-  TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_FR,
-} from "@/constants"
-import { env } from "@/env"
 import { logger } from "@/lib/logger"
-import { sendEmail, SendEmailProps } from "@/lib/mailjet.server"
+import { sendOrderConfirmationEmail } from "@/lib/order-email.server"
 import { getClient } from "@/lib/payload"
 import { getNextAvailableWeek } from "@/lib/planning.server"
 import { rawProcedure } from "@/lib/safe-action"
 import { OrderCartLine } from "@/types/global"
-import { format } from "date-fns"
-import { getLocale, getTranslations } from "next-intl/server"
 import z from "zod"
 
 const FREE_SHIPPING_TOTAL = 2000
@@ -124,56 +116,48 @@ export const saveOrder = rawProcedure
       }
     })
 
-    // Prepare email content
-    const { renderToString } = await import("react-dom/server")
-    const content = renderToString(
-      <OrderView
-        deliveryData={input.detail.deliveryData}
-        lines={input.detail.lines}
-        detail={input.detail}
-        comment={input.comment}
-        shippingFee={input.shippingFee}
-        amount={input.amount}
-        uid={input.uid}
-        date={input.date}
-      />,
-    )
-    const locale = await getLocale()
-    const t = await getTranslations({ locale })
-    const templateId =
-      locale === "fr"
-        ? TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_FR
-        : TEMPLATE_EMAIL_ORDER_CONFIRMATION_CUSTOMER_EN
-
-    const payment = renderToString(
-      t.rich(`email.orderConfirmation.${input.payment as "card" | "check" | "transfer"}`, {
-        strong: (chunks) => <strong>{chunks}</strong>,
-        br: () => (
-          <>
-            <br />
-            <br />
-          </>
-        ),
-      }),
-    )
-
-    const options: SendEmailProps = {
-      to: [{ Email: input.email, Name: input.customer }],
-      subject: t("email.orderConfirmation.subject"),
-      templateId,
-      variables: {
-        order: content,
-        payment,
-        delay: input.delay ? format(input.delay, "dd/MM/yyyy") : "",
-      },
-    }
-
-    if (env.NODE_ENV === "production") {
-      options.bcc = [{ Email: env.NEXT_PUBLIC_EMAIL, Name: "Triple Zero" }]
-    }
-
-    // send email to customer
-    await sendEmail(options)
+    await sendOrderConfirmationEmail(order)
 
     return [order.id, order.delay]
+  })
+
+/**
+ *
+ */
+export const savePreOrder = rawProcedure
+  .createServerAction()
+  .input(
+    z.object({
+      amount: z.number(),
+      date: z.string(),
+      delay: z.string().optional(),
+      status: z.enum(["pending", "paid", "shipped"]),
+      shippingFee: z.number(),
+      detail: z.object({
+        total: z.number(),
+        totalWithDiscount: z.number(),
+        discount: z.number().optional(),
+        lines: z.array(z.any()),
+        deliveryData: z.any(),
+        ttc: z.boolean(),
+      }),
+      payment: z.enum(["card", "check", "transfer"]),
+      uid: z.string(),
+      workTime: z.number(),
+      comment: z.string().optional(),
+      customer: z.string(),
+      email: z.string(),
+    }),
+  )
+  .handler(async ({ input }) => {
+    const payload = await getClient()
+    const orderWeek = await getNextAvailableWeek(input.workTime)
+
+    // Create order
+    const preOrder = await payload.create({
+      collection: "pre-order",
+      data: { ...input, week: orderWeek },
+    })
+
+    return [preOrder.id, preOrder.delay]
   })

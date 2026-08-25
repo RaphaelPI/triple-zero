@@ -22,7 +22,7 @@ export const Amount = ({ amount, className, raw = false, quantity = 1 }: Props) 
   if (!tax) {
     return (
       <span className={cn("relative inline-block", className)}>
-        {formatAmount(amountToDisplay)} HT {amount}
+        {formatAmount(amountToDisplay)} HT
       </span>
     )
   }

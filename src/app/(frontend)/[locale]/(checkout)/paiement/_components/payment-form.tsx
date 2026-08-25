@@ -75,12 +75,12 @@ export const PaymentForm = () => {
   }
 
   const onSubmit = async (values: any) => {
-    const orderId = await storeOrder(paymentType, values.comment)
+    const { type, id } = await storeOrder(paymentType, values.comment)
     const returnUrl = `${env.NEXT_PUBLIC_URL}/confirmation`
 
-    if (paymentType === "card") {
+    if (type === "pre-order") {
       const result = await checkout.confirm({
-        returnUrl: `${returnUrl}?payment=1`,
+        returnUrl: `${returnUrl}?id=${id}&type=${type}`,
       })
 
       if (result.type === "error") {
@@ -95,7 +95,7 @@ export const PaymentForm = () => {
       return
     }
 
-    push(`${returnUrl}?orderId=${orderId}`)
+    push(`${returnUrl}?id=${id}&type=${type}`)
   }
 
   const payments = [

@@ -8,7 +8,7 @@ import { isTTCCountry } from "@/lib/price"
 import { formatAmountForStripe } from "@/lib/text"
 import { uuid } from "@/lib/uuid"
 import { Color, ColorWithImage, ProductOption, ProductOptionValue } from "@/payload-types"
-import { getDelay, getShippingFees, saveOrder } from "@/providers/checkout/actions"
+import { getDelay, getShippingFees, saveOrder, savePreOrder } from "@/providers/checkout/actions"
 import { useTranslations } from "next-intl"
 import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -124,7 +124,10 @@ interface ICheckoutContext {
   totalToPay: number
   isPendingDelay: boolean
   delayDate?: string
-  storeOrder: (paymentType: string, comment?: string) => Promise<string>
+  storeOrder: (
+    paymentType: string,
+    comment?: string,
+  ) => Promise<{ type: "order" | "pre-order"; id: string }>
   clearCart: () => void
 }
 
@@ -146,6 +149,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
 
   const { isPending: isPendingDelay, data: delayDate } = useServerActionQuery(getDelay)
   const { execute: executeSaveOrder } = useServerAction(saveOrder)
+  const { execute: executeSavePreOrder } = useServerAction(savePreOrder)
 
   // Get cart total
   const total = cart.lines.reduce((t, line) => {
@@ -250,7 +254,10 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
     setCart(newCart)
   }
 
-  const storeOrder = async (paymentType: string, comment?: string) => {
+  const storeOrder = async (
+    paymentType: string,
+    comment?: string,
+  ): Promise<{ type: "pre-order" | "order"; id: string }> => {
     const data = {
       amount: totalToPay,
       date: new Date().toISOString(),
@@ -281,12 +288,12 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
 
     // store order in local storage for pending payment and validate it after payment
     if (paymentType === "card") {
-      localStorage.setItem("pending-order", JSON.stringify(data))
-      return
+      const [[id]] = await executeSavePreOrder(data)
+      return { type: "pre-order", id }
     }
 
     const [[id]] = await executeSaveOrder(data)
-    return id
+    return { type: "order", id }
   }
 
   return (

@@ -32,17 +32,13 @@ export function OrdersChart({ data }: Props) {
               <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#16a34a" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#16a34a" stopOpacity={0} />
+              <stop offset="5%" stopColor="#9ca3af" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#9ca3af" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="week" tick={{ fontSize: 11 }} />
-          <YAxis
-            yAxisId="left"
-            tick={{ fontSize: 11 }}
-            tickFormatter={(v) => `${v}€`}
-          />
+          <YAxis yAxisId="left" tick={{ fontSize: 11 }} tickFormatter={(v) => `${v}€`} />
           <YAxis
             yAxisId="right"
             orientation="right"
@@ -52,12 +48,18 @@ export function OrdersChart({ data }: Props) {
           />
           <Tooltip
             formatter={(value, name) =>
-              name === "total"
-                ? [`${Number(value).toFixed(2)}€`, "CA"]
-                : [value, "Commandes"]
+              name === "total" ? [`${Number(value).toFixed(2)}€`, "CA"] : [value, "Commandes"]
             }
           />
           <Legend formatter={(value) => (value === "total" ? "CA (€)" : "Nb commandes")} />
+          <Area
+            yAxisId="right"
+            type="monotone"
+            dataKey="count"
+            stroke="#f1f1f1"
+            strokeWidth={2}
+            fill="url(#colorCount)"
+          />
           <Area
             yAxisId="left"
             type="monotone"
@@ -65,14 +67,6 @@ export function OrdersChart({ data }: Props) {
             stroke="#2563eb"
             strokeWidth={2}
             fill="url(#colorTotal)"
-          />
-          <Area
-            yAxisId="right"
-            type="monotone"
-            dataKey="count"
-            stroke="#16a34a"
-            strokeWidth={2}
-            fill="url(#colorCount)"
           />
         </AreaChart>
       </ResponsiveContainer>
