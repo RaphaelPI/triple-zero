@@ -103,6 +103,7 @@ export const getTechnicalValues = (
   technicalValues.price = Math.round(formatAmountForStripe(technicalValues.price, "EUR") / 100)
   technicalValues.weight = Math.round(technicalValues.weight)
   technicalValues.temperature = Math.round(technicalValues.temperature)
+  technicalValues.volume = Math.round(technicalValues.volume)
 
   return technicalValues
 }
