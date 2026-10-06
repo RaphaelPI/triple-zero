@@ -9,6 +9,7 @@ import dynamic from "next/dynamic"
 import { Suspense, useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 import { InputField } from "./input-field"
+import { useShippingCountry } from "./use-shipping-country"
 
 const CountrySelectField = dynamic(
   () => import("./country-select-field").then((mod) => mod.CountrySelectField),
@@ -23,29 +24,31 @@ interface Props {
 
 export const DeliveryFormFields = ({ form }: Props) => {
   const [address2, setAddress2] = useState(false)
-  const [open, setOpen] = useState(false)
+  // Open if a delivery address was previously filled
+  const [open, setOpen] = useState(() => !!form.getValues("d_country"))
   const t = useTranslations("delivery")
+  const updateShippingCountry = useShippingCountry()
 
   const handleCheckChange = () => {
-    setOpen((prev) => {
-      if (!prev) {
-        form.setValue("d_firstName", "")
-        form.setValue("d_lastName", "")
-        form.setValue("d_address", "")
-        form.setValue("d_address2", "")
-        form.setValue("d_zip", "")
-        form.setValue("d_city", "")
-        form.setValue("d_country", "")
-      }
+    // Reset delivery address both when opening and closing so hidden fields are never used
+    form.setValue("d_firstName", "")
+    form.setValue("d_lastName", "")
+    form.setValue("d_address", "")
+    form.setValue("d_address2", "")
+    form.setValue("d_zip", "")
+    form.setValue("d_city", "")
+    form.setValue("d_country", "")
 
-      return !prev
-    })
+    // Fall back to billing country for shipping fees
+    updateShippingCountry(form.getValues("country"))
+
+    setOpen((prev) => !prev)
   }
 
   return (
     <>
       <div className="mt-8 flex items-start gap-3">
-        <Checkbox id="toggle" defaultChecked onCheckedChange={handleCheckChange} />
+        <Checkbox id="toggle" defaultChecked={!open} onCheckedChange={handleCheckChange} />
         <Label htmlFor="toggle">{t("useDeliveryAddress")}</Label>
       </div>
       {open && (
@@ -111,6 +114,7 @@ export const DeliveryFormFields = ({ form }: Props) => {
               label={t("country")}
               placeholder={t("country")}
               required
+              onChange={updateShippingCountry}
             />
           </Suspense>
         </>

@@ -6,10 +6,8 @@ import { lazy, Suspense, useState } from "react"
 import { UseFormReturn } from "react-hook-form"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import { isTTCCountry } from "@/lib/price"
-import { useCheckout } from "@/providers/checkout/checkout"
-import { toast } from "sonner"
 import { InputField } from "./input-field"
+import { useShippingCountry } from "./use-shipping-country"
 
 const CountrySelectField = lazy(() =>
   import("./country-select-field").then((mod) => ({
@@ -24,20 +22,13 @@ interface Props {
 export const BillingFormFields = ({ form }: Props) => {
   const [address2, setAddress2] = useState(false)
   const t = useTranslations()
-  const { setShippingFeesCountry, shippingFeesCountry } = useCheckout()
+  const updateShippingCountry = useShippingCountry()
 
   const handleCountryChange = (value: string) => {
-    if (isTTCCountry(value) && shippingFeesCountry && !isTTCCountry(shippingFeesCountry)) {
-      toast.info(t("delivery.ue-info"))
-    } else if (
-      !isTTCCountry(value) &&
-      (!shippingFeesCountry || isTTCCountry(shippingFeesCountry))
-    ) {
-      toast.info(t("delivery.non-ue-info"))
-    }
+    // Delivery address country takes precedence for shipping fees
+    if (form.getValues("d_country")) return
 
-    // country
-    setShippingFeesCountry(value)
+    updateShippingCountry(value)
   }
 
   return (

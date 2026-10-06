@@ -174,8 +174,9 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   }, [])
 
   useEffect(() => {
-    if (deliveryData.country) {
-      setShippingFeesCountry(deliveryData.country)
+    const country = deliveryData.d_country || deliveryData.country
+    if (country) {
+      setShippingFeesCountry(country)
     }
   }, [deliveryData])
 
